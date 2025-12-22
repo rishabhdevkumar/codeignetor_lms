@@ -1,0 +1,84 @@
+<?php
+
+namespace Config;
+
+// Create a new instance of our RouteCollection class.
+$routes = Services::routes();
+
+/*
+ * --------------------------------------------------------------------
+ * Router Setup
+ * --------------------------------------------------------------------
+ */
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+// The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
+// where controller filters or CSRF protection are bypassed.
+// If you don't want to define all routes, please use the Auto Routing (Improved).
+// Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
+// $routes->setAutoRoute(false);
+
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
+// $routes->get('/', 'Home::index');
+
+
+$routes->get('/', 'Dashboard::index');
+
+$routes->get('/Material', 'Material\Material::index');
+$routes->get('/Material/add', 'Material\Material::add');
+$routes->post('/Material/insertData', 'Material\Material::insertData');
+$routes->get('/Material/edit/(:num)', 'Material\Material::edit/$1');
+$routes->post('/Material/edit/(:num)', 'Material\Material::edit/$1');
+$routes->get('/Material/view/(:num)', 'Material\Material::view/$1');
+
+$routes->get('/MRMaterial', 'Material\MRMaterial::index');
+$routes->get('/MRMaterial/add', 'Material\MRMaterial::add');
+$routes->post('/MRMaterial/add', 'Material\MRMaterial::add');
+$routes->get('/MRMaterial/edit/(:num)', 'Material\MRMaterial::edit/$1');
+$routes->post('/MRMaterial/edit/(:num)', 'Material\MRMaterial::edit/$1');
+$routes->get('/MRMaterial/view/(:num)', 'Material\MRMaterial::view/$1');
+
+$routes->get('/Machine', 'Machine\Machine::index');
+$routes->get('/Machine/add', 'Machine\Machine::add');
+$routes->post('/Machine/insertData', 'Machine\Machine::insertData');
+$routes->get('/Machine/edit/(:num)', 'Machine\Machine::edit/$1');
+$routes->post('/Machine/updateData/(:num)', 'Machine\Machine::updateData/$1');
+$routes->get('/Machine/view/(:num)', 'Machine\Machine::view/$1');
+
+$routes->get('/Customer', 'Customer\Customer::index');
+$routes->get('/Customer/add', 'Customer\Customer::add');
+$routes->get('/Customer/edit/(:num)', 'Customer\Customer::edit/$1');
+$routes->post('/Customer/updateData/(:num)', 'Customer\Customer::updateData/$1');
+
+$routes->get('/users', 'UserController::index');
+$routes->get('/production-planning', 'ProductionPlanning\PlanningProductionController::index');
+$routes->post('/production-planning/uploadXlsx', 'ProductionPlanning\PlanningProductionController::uploadXlsx');
+$routes->get('/api/indents', 'OrderGeneration\IndentApiController::getIndentSummary');
+$routes->post('api/update-sap-details', 'OrderGeneration\IndentApiController::updateSapDetails');
+
+/*
+ * --------------------------------------------------------------------
+ * Additional Routing
+ * --------------------------------------------------------------------
+ *
+ * There will often be times that you need additional routing and you
+ * need it to be able to override any defaults in this file. Environment
+ * based routes is one such time. require() additional route files here
+ * to make that happen.
+ *
+ * You will have access to the $routes object within that file without
+ * needing to reload it.
+ */
+if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}

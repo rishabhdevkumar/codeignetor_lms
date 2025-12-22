@@ -1,0 +1,39 @@
+/* styles.css */
+
+
+.sidebar {
+  box-shadow: 7px 0px 6px -5px rgba(0, 0, 0, 0.1);
+  background-color: aliceblue;
+}
+.sidebar ul li.active > a {
+  border-right: 5px solid;
+}
+.content {
+  left: 300px;
+}
+.markdown-section {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 30px 30px 40px;
+  position: relative;
+}
+.markdown-section p.warn {
+  /* background: #f0f8ff; */
+  /* border-left: 5px solid #29ff9e;  */
+  border-left: 5px solid #42b983; 
+  color: #000; /* Black text */
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-size: 1em;
+  line-height: 1.5em;
+  white-space: pre-wrap; /* Ensure white-space and line breaks are preserved */
+}
+
+/* Optional: Specific color for tip blocks (?>) */
+.markdown-section blockquote:before {
+  content: "TIP: ";
+  color: #00f; /* Blue color for "TIP" label */
+  font-weight: bold;
+}
+
+
