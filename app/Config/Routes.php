@@ -34,6 +34,8 @@ $routes->set404Override();
 
 $routes->get('/', 'Dashboard::index');
 
+$routes->get('/MasterManagement', 'MasterManagement::index');
+
 $routes->get('/Material', 'Material\Material::index');
 $routes->get('/Material/add', 'Material\Material::add');
 $routes->post('/Material/insertData', 'Material\Material::insertData');
@@ -61,8 +63,13 @@ $routes->get('/Customer/edit/(:num)', 'Customer\Customer::edit/$1');
 $routes->post('/Customer/updateData/(:num)', 'Customer\Customer::updateData/$1');
 
 $routes->get('/users', 'UserController::index');
+
 $routes->get('/production-planning', 'ProductionPlanning\PlanningProductionController::index');
+$routes->get('/production-planning-calendar', 'ProductionPlanning\PlanningProductionController::calendarView');
 $routes->post('/production-planning/uploadXlsx', 'ProductionPlanning\PlanningProductionController::uploadXlsx');
+$routes->get('/production-planning/allocation', 'ProductionPlanning\AllocationAndCommitmentController::createAllocation');
+
+
 $routes->get('/api/indents', 'OrderGeneration\IndentApiController::getIndentSummary');
 $routes->post('api/update-sap-details', 'OrderGeneration\IndentApiController::updateSapDetails');
 

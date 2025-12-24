@@ -1,2 +1,4 @@
 writable
-app/config/Database.php
+vendor
+.env
+app\Config\Database.php

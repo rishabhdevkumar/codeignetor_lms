@@ -91,24 +91,23 @@
                     <li class="nav-item ">
                         <a class="nav-link " href="<?php echo base_url()?>">Dashboard </a>
                     </li>
+                     <li class="nav-item ">
+                        <a class="nav-link " href="<?php echo base_url()?>MasterManagement">Master </a>
+                    </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo base_url()?>MRMaterial">Mother Roll Material</a>
+                        <a class="nav-link" href="<?php echo base_url()?>production-planning">Planning Calendar Upload</a>
                     </li> 
                     <li class="nav-item ">
-                        <a class="nav-link" href="<?php echo base_url()?>Material">Finish Material</a>
-                    </li>  
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="<?php echo base_url()?>Machine">Machine</a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="<?php echo base_url()?>Customer">Customer</a>
-                    </li>    
+                        <a class="nav-link" href="<?php echo base_url()?>production-planning-calendar">Calendar View</a>
+                    </li> 
+                   
                 </ul>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <img src="<?php echo base_url()?>assets/img/license.png" class="img-responsive">
+                    <i class="fa fa-user" style="color:#A3243C; font-size:30px;"></i>
+                    <!-- <img src="<?php echo base_url()?>assets/img/license.png" class="img-responsive"> -->
                 </li>
                 <!-- <li>
                     <a class="" style="margin-top:0px" href="<?php echo base_url()?>" ><i class="fa fa-arrow-circle-left"></i> Dashboard</a>	
