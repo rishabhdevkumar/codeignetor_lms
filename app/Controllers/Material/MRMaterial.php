@@ -51,8 +51,13 @@ class MRMaterial extends Controller
 
 		$result["title"] = "Add Material";
 
+		echo view('header', $result);
+		echo view('mrmaterial/add_mrmaterial_view', $result);
+		echo view('footer');
+	}
 
-		if ($this->request->getMethod() === 'POST') {
+	public function insertData()
+	{
 
 			$arr = [
 				'MR_MATERIAL_CODE'     => $this->request->getPost('material_code'),
@@ -83,15 +88,9 @@ class MRMaterial extends Controller
 			}
 
 			if ($insert) {
-				return redirect()->back()->with('success', 'Material Created');
+				return redirect()->to('/MRMaterial')->with('success', 'MR Material Created');
 			}
 		}
-
-
-		echo view('header', $result);
-		echo view('mrmaterial/add_mrmaterial_view', $result);
-		echo view('footer');
-	}
 
 	public function edit($id)
 	{
@@ -107,8 +106,13 @@ class MRMaterial extends Controller
 
 		$result["title"] = "Edit Material";
 
-		if ($this->request->getMethod() === 'POST') {
+		echo view('header', $result);
+		echo view('mrmaterial/edit_mrmaterial_view', $result);
+		echo view('footer');
+	}
 
+	public function updateData()
+	{
 
 			$arr = [
 				'MR_MATERIAL_CODE'     => $this->request->getPost('material_code'),
@@ -124,15 +128,11 @@ class MRMaterial extends Controller
 			$update = $this->crudModel->updateData('pp_mr_material_master', $arr, $condition);
 
 			if ($update) {
-				// $this->session->set_flashdata("message","<div class='alert alert-success'>Material Updated</div>");
-				redirect('Material');
+				return redirect()->to('/MRMaterial')->with('success', 'Material Updated');
+				// redirect('Material');
 			}
 		}
 
-		echo view('header', $result);
-		echo view('mrmaterial/edit_mrmaterial_view', $result);
-		echo view('footer');
-	}
 
 	public function view($id)
 	{

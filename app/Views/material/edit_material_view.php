@@ -18,7 +18,7 @@ $material_id        = old('ID', $material['ID']);
 
 
 <div class="row" style="float:left;width:100%">
-	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/Material/edit/' . $material_id) ?>" style="width:100%">
+	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/Material/updateData/' . $material_id) ?>" style="width:100%">
 		<input type="hidden" name="material_id" value="<?php echo $material_id; ?>">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
@@ -48,7 +48,6 @@ $material_id        = old('ID', $material['ID']);
 
 									</div>
 								</div>
-
 
 								<div class="hr-line-dashed"></div>
 
