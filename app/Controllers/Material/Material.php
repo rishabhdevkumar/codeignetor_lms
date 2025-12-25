@@ -30,11 +30,6 @@ class Material extends BaseController
 
 	public function index()
 	{
-		//  if (!$this->session->get('user_id')) {
-		// return redirect()->to('/auth/logout');
-		// // }
-
-		// echo "<pre>";print_R("HI");die();
 		$result = [];
 
 		// Page title
@@ -53,11 +48,7 @@ class Material extends BaseController
 
 	public function add()
 	{
-
 		$result["title"] = "Add Material";
-
-
-		
 
 		echo view('header', $result);
 		echo view('material/add_material_view', $result);
@@ -66,8 +57,6 @@ class Material extends BaseController
 
 	public function insertData()
 	{
-		// if ($this->request->getMethod(true) === 'POST') {
-
 			$arr = [
 				'FINISH_MATERIAL_CODE'  => $this->request->getPost('material_code'),
 				'SAP_PLANT'             => $this->request->getPost('sap_plant'),
@@ -98,9 +87,8 @@ class Material extends BaseController
 			}
 
 			if ($insert) {
-				return redirect()->back()->with('success', 'Material Created');
+				return redirect()->to('/Material')->with('success', 'Material Created');
 			}
-		// }
 
 	}
 
@@ -118,8 +106,13 @@ class Material extends BaseController
 
 		$result["title"] = "Edit Material";
 
-		if ($this->request->getMethod() === 'POST') {
+		echo view('header', $result);
+		echo view('material/edit_material_view', $result);
+		echo view('footer');
+	}
 
+	public function updateData()
+	{
 
 			$arr = [
 				'FINISH_MATERIAL_CODE'  => $this->request->getPost('material_code'),
@@ -139,14 +132,10 @@ class Material extends BaseController
 			$update = $this->crudModel->updateData('pp_finish_material_master', $arr, $condition);
 
 			if ($update) {
-				// $this->session->set_flashdata("message","<div class='alert alert-success'>Material Updated</div>");
-				redirect('Material');
+				return redirect()->to('/Material')->with('success', 'Material Updated');
+				// redirect('Material');
 			}
-		}
 
-		echo view('header', $result);
-		echo view('material/edit_material_view', $result);
-		echo view('footer');
 	}
 
 	public function view($id)

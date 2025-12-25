@@ -11,8 +11,8 @@
 			<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 			
 	<div class="">
-			<div class="col-sm-6" style="float:left;margin-top:20px">
-				<div class="ibox float-e-margins card">
+			<div class="col-sm-8" style="float:left;margin-top:20px">
+				<div>
 					<div class="ibox-title">
 						<h5><?php echo $title; ?><small> </small></h5>
 					</div>
@@ -24,18 +24,22 @@
 									<div class="form-group">
 										<div class="row">
 
-											<div class="col-sm-6 col-xs-12">
+											<div class="col-sm-4 col-xs-12">
 												<label>Material Code</label>
 												<input type="text" class="form-control" name="material_code" id="material_code" maxlength="20" value="<?php echo set_value('material_code'); ?>">
 												<div class="error"></div>
 											</div>
 
-											<div class="col-sm-6 col-xs-12">
+											<div class="col-sm-4 col-xs-12">
 												<label>SAP Plant</label>
 												<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo set_value('sap_plant'); ?>">
 												<div class="error"></div>
 											</div>
 
+											<div class="col-sm-4 col-xs-12">
+												<label>Grade</label>
+												<input type="text" class="form-control" name="grade" id="grade" maxlength="20" value="<?php echo set_value('grade'); ?>">
+												<div class="error"></div>
 										</div>
 									</div>
 
@@ -45,25 +49,13 @@
 									<div class="form-group">
 										<div class="row">
 
-											<div class="col-sm-6 col-xs-12">
-												<label>Grade</label>
-												<input type="text" class="form-control" name="grade" id="grade" maxlength="5" value="<?php echo set_value('grade'); ?>">
-												<div class="error"></div>
-											</div>
+											
 
 											<div class="col-sm-6 col-xs-12">
 												<label>GSM</label>
 												<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" value="<?php echo set_value('gsm'); ?>">
 												<div class="error"></div>
 											</div>
-
-										</div>
-									</div>
-
-									<div class="hr-line-dashed"></div>
-
-									<div class="form-group">
-										<div class="row">
 
 											<div class="col-sm-6 col-xs-12">
 												<label>UOM</label>
@@ -79,6 +71,16 @@
 
 										</div>
 									</div>
+
+									<div class="hr-line-dashed"></div>
+
+									<!-- <div class="form-group">
+										<div class="row">
+
+											
+
+										</div>
+									</div> -->
 
 									<div class="form-group">
 										<div class="row">

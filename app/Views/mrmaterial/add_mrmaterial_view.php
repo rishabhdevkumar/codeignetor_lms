@@ -8,9 +8,9 @@
 			<?= $error ?>
 		</div>
 	<?php endif; ?>
-	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Material/add') ?>" enctype="multipart/form-data" style="width:100%">
-		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
-		<div class="col-sm-6" style="float:left;margin-top:20px">
+	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/MRMaterial/insertData') ?>" enctype="multipart/form-data" style="width:100%">
+		<div class="col-sm-2" style="float:left;margin-top:20px"></div>
+		<div class="col-sm-8" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
 					<h5><?php echo $title; ?><small> </small></h5>
@@ -22,19 +22,12 @@
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>Material Code</label>
 											<input type="text" class="form-control" name="material_code" id="material_code" maxlength="20" value="<?php echo set_value('material_code'); ?>">
 											<div class="error"></div>
 										</div>
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>SAP Plant</label>
 											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo set_value('sap_plant'); ?>">
 											<div class="error"></div>
@@ -44,21 +37,16 @@
 
 								<div class="hr-line-dashed"></div>
 
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Grade</label>
-											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" value="<?php echo set_value('grade'); ?>">
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
-
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
+											<label>Grade</label>
+											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" value="<?php echo set_value('grade'); ?>">
+											<div class="error"></div>
+										</div>
+										<div class="col-sm-6 col-xs-12">
 											<label>GSM</label>
 											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" value="<?php echo set_value('gsm'); ?>">
 											<div class="error"></div>
@@ -66,15 +54,7 @@
 									</div>
 								</div>
 
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description"><?php echo set_value('description'); ?></textarea>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
+								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
@@ -98,20 +78,15 @@
 									</div>
 								</div>
 
-								<!-- <div class="form-group">
+								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-6 col-xs-12">
-											<label>Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" id="machine_output">
+										<div class="col-sm-12 col-xs-12">
+											<label>Description</label>
+											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description" style="resize: none"><?php echo set_value('description'); ?></textarea>
 											<div class="error"></div>
 										</div>
 									</div>
-								</div> -->
-
-								<br><br>
-								
-
-								<div class="hr-line-dashed"></div>
+								</div>
 
 								<div class="hr-line-dashed"></div>
 
