@@ -1,0 +1,442 @@
+INFO - 2025-12-25 04:36:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:36:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:36:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:37:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:37:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-25 10:07:39 --> ErrorException: Undefined variable $machine
+in APPPATH\Views\customer\edit_customer_view.php on line 2.
+ 1 APPPATH\Views\customer\edit_customer_view.php(2): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $machine', 'C:\\xampp\\htdocs\\lms\\app\\Views\\customer\\edit_customer_view.php', 2)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\lms\\app\\Views\\customer\\edit_customer_view.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('customer/edit_customer_view', [], true)
+ 5 APPPATH\Controllers\Customer\Customer.php(110): view('customer/edit_customer_view', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Customer\Customer->edit('1')
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Customer\Customer))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 04:37:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:38:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:45:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:45:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:45:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:45:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:47:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:47:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:47:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:50:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:50:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:50:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:50:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:51:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:51:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:51:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:55:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:56:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:58:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:58:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:58:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 04:58:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:01:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:01:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:07:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:08:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:08:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:08:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:38:32 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:38:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:38:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:38:32 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:08:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:38:47 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:38:47 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:38:47 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:38:47 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'433333354\', \'refee\', \'A\', \'4353\', NULL, NULL, NULL, NULL, NULL, NULL, \'efjergf\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:08:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:09:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:10:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:10:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:10:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:13:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:13:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:13:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:13:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:13:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:14:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:15:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:16:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:16:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:16:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:16:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:16:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:17:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:17:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:17:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:18:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:18:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:18:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:19:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:49:11 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:49:11 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:49:11 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'546354\', \'rfgh\', \'A\', \'35436\', NULL, NULL, NULL, NULL, NULL, NULL, \'fdhjg hfd\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'546354\', \'rfgh\', \'A\', \'35436\', NULL, NULL, NULL, NULL, NULL, NULL, \'fdhjg hfd\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:49:11 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'546354\', \'rfgh\', \'A\', \'35436\', NULL, NULL, NULL, NULL, NULL, NULL, \'fdhjg hfd\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'546354\', \'rfgh\', \'A\', \'35436\', NULL, NULL, NULL, NULL, NULL, NULL, \'fdhjg hfd\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'546354\', \'rfgh\', \'A\', \'35436\', NULL, NULL, NULL, NULL, NULL, NULL, \'fdhjg hfd\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:20:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:20:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:50:42 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:50:42 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:50:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:50:42 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:21:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:51:11 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:51:11 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:51:11 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:51:11 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:51:17 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:51:17 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:51:17 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:51:17 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'634434\', \'retge\', \'A\', \'56347\', NULL, NULL, NULL, NULL, NULL, NULL, \'frusyfuys\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:21:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:21:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:22:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:22:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:23:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:24:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-25 10:54:10 --> mysqli_sql_exception: Column 'UOM' cannot be null in C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp...', 0)
+#1 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp...')
+#2 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp...')
+#3 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp...', Array, false)
+#4 C:\xampp\htdocs\lms\app\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\lms\app\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_mater...', Array)
+#6 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+#7 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+#8 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\lms\public\index.php(82): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\lms\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2025-12-25 10:54:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 2 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 5 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:54:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'tyrtyryr\', \'rewre\', \'A\', \'fjdyu\', NULL, NULL, NULL, NULL, NULL, NULL, \'ferfgeh fuds\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'tyrtyryr\', \'rewre\', \'A\', \'fjdyu\', NULL, NULL, NULL, NULL, NULL, NULL, \'ferfgeh fuds\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 4 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 7 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+CRITICAL - 2025-12-25 10:54:10 --> [Caused by] mysqli_sql_exception: Column 'UOM' cannot be null
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'tyrtyryr\', \'rewre\', \'A\', \'fjdyu\', NULL, NULL, NULL, NULL, NULL, NULL, \'ferfgeh fuds\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'tyrtyryr\', \'rewre\', \'A\', \'fjdyu\', NULL, NULL, NULL, NULL, NULL, NULL, \'ferfgeh fuds\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (\'tyrtyryr\', \'rewre\', \'A\', \'fjdyu\', NULL, NULL, NULL, NULL, NULL, NULL, \'ferfgeh fuds\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2307): CodeIgniter\Database\BaseConnection->query('INSERT INTO `pp_finish_material_master` (`FINISH_MATERIAL_CODE`, `SAP_PLANT`, `GRADE`, `GSM`, `UOM`, `ITEM_TYPE`, `WIDTH`, `LENGTH`, `MR_MATERIAL_CODE`, `PACKAGING_TIME`, `DESCRIPTION`) VALUES (:FINISH_MATERIAL_CODE:, :SAP_PLANT:, :GRADE:, :GSM:, :UOM:, :ITEM_TYPE:, :WIDTH:, :LENGTH:, :MR_MATERIAL_CODE:, :PACKAGING_TIME:, :DESCRIPTION:)', [...], false)
+ 5 APPPATH\Models\Crud_Model.php(53): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Material\Material.php(90): App\Models\Crud_Model->saveData('pp_finish_material_master', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(943): App\Controllers\Material\Material->insertData()
+ 8 SYSTEMPATH\CodeIgniter.php(503): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Material\Material))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(82): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs\\lms\\public\\index.php')
+INFO - 2025-12-25 05:25:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:26:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:26:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:26:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-12-25 05:26:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

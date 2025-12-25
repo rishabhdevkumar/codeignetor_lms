@@ -40,14 +40,14 @@ $routes->get('/Material', 'Material\Material::index');
 $routes->get('/Material/add', 'Material\Material::add');
 $routes->post('/Material/insertData', 'Material\Material::insertData');
 $routes->get('/Material/edit/(:num)', 'Material\Material::edit/$1');
-$routes->post('/Material/edit/(:num)', 'Material\Material::edit/$1');
+$routes->post('/Material/updateData/(:num)', 'Material\Material::updateData/$1');
 $routes->get('/Material/view/(:num)', 'Material\Material::view/$1');
 
 $routes->get('/MRMaterial', 'Material\MRMaterial::index');
 $routes->get('/MRMaterial/add', 'Material\MRMaterial::add');
-$routes->post('/MRMaterial/add', 'Material\MRMaterial::add');
+$routes->post('/MRMaterial/insertData', 'Material\MRMaterial::insertData');
 $routes->get('/MRMaterial/edit/(:num)', 'Material\MRMaterial::edit/$1');
-$routes->post('/MRMaterial/edit/(:num)', 'Material\MRMaterial::edit/$1');
+$routes->post('/MRMaterial/updateData/(:num)', 'Material\MRMaterial::updateData/$1');
 $routes->get('/MRMaterial/view/(:num)', 'Material\MRMaterial::view/$1');
 
 $routes->get('/Machine', 'Machine\Machine::index');
