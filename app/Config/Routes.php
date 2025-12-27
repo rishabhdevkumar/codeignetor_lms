@@ -76,6 +76,13 @@ $routes->get('/CustomerQuota/edit/(:num)', 'Customer\CustomerQuota::edit/$1');
 $routes->post('/CustomerQuota/updateData/(:num)', 'Customer\CustomerQuota::updateData/$1');
 $routes->get('/CustomerQuota/view/(:num)', 'Customer\CustomerQuota::view/$1');
 
+$routes->get('/MachineAvailability', 'Machine\MachineAvailability::index');
+$routes->get('/MachineAvailability/add', 'Machine\MachineAvailability::add');
+$routes->post('/MachineAvailability/insertData', 'Machine\MachineAvailability::insertData');
+$routes->get('/MachineAvailability/edit/(:num)', 'Machine\MachineAvailability::edit/$1');
+$routes->post('/MachineAvailability/updateData/(:num)', 'Machine\MachineAvailability::updateData/$1');
+$routes->get('/MachineAvailability/view/(:num)', 'Machine\MachineAvailability::view/$1');
+
 $routes->get('/users', 'UserController::index');
 
 $routes->get('/production-planning', 'ProductionPlanning\PlanningProductionController::index');
