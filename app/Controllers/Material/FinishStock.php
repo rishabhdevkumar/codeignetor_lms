@@ -79,19 +79,8 @@ class FinishStock extends BaseController
 
 	}
 
-
     public function edit($id)
     {
-        // $data['finishstock'] = $this->finishstockModel->all_finish_stock(['PP_ID' => $id])[0] ?? null;
-
-        // if (!$data['finishstock']) {
-        //     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Stock not found");
-        // }
-
-        // $data['title'] = "Edit Finish Stock";
-        // echo view('header', $data);
-        // echo view('finishstock/edit_finishstock_view', $data);
-        // echo view('footer');
 
         $arr = array('PP_ID' => $id);
 		$dataList = $this->finishstockModel->all_finishstock($arr);
@@ -120,11 +109,29 @@ class FinishStock extends BaseController
         ];
 
         $condition = ['PP_ID' => $this->request->getPost('finishstock_id')];
-
-        $this->crudModel->updateData('pp_finish_stock', $data, $condition);
+		$update = $this->crudModel->updateData('pp_finish_stock', $data, $condition);
+        // $this->crudModel->updateData('pp_finish_stock', $data, $condition);
 
         return redirect()->to('/FinishStock')->with('success', 'Stock Updated');
     }
+
+	public function view($id)
+	{
+		$arr = array('PP_ID' => $id);
+		$dataList = $this->finishstockModel->all_finishstock($arr);
+
+		$result["finishstock"] = $dataList[0];
+
+		if (!$result['finishstock']) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Stock not found");
+		}
+
+		$result["title"] = "View Stock";
+
+		echo view('header', $result);
+		echo view('finishstock/view_finishstock_view', $result);
+		echo view('footer');
+	}
 
     public function delete($id)
     {

@@ -18,7 +18,7 @@
     </div>
 
     <form method="post" action="<?= base_url('FinishStock/updateData/'.$finishstock_id); ?>">
-        <!-- <input type="hidden" name="material_id" value="<?php echo $finishstock_id; ?>"> -->
+        <input type="hidden" name="finishstock_id" value="<?php echo $finishstock_id; ?>">
         <div class="row">
 
             <div class="col-md-6">
