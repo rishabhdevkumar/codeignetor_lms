@@ -28,7 +28,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'root',
-        'password'     => '',
+        'password'     => '@1234#1234',
         'database'     => 'newsrmuat_new',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
@@ -165,8 +165,8 @@ class Database extends Config
     public array $tests = [
         'DSN'         => '',
         'hostname'    => '127.0.0.1',
-        'username'    => '',
-        'password'    => '',
+        'username'    => 'root',
+        'password'    => '@1234#1234',
         'database'    => ':memory:',
         'DBDriver'    => 'SQLite3',
         'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS

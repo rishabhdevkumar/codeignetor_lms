@@ -62,6 +62,27 @@ $routes->get('/Customer/add', 'Customer\Customer::add');
 $routes->get('/Customer/edit/(:num)', 'Customer\Customer::edit/$1');
 $routes->post('/Customer/updateData/(:num)', 'Customer\Customer::updateData/$1');
 
+$routes->get('/FinishStock', 'Material\FinishStock::index');
+$routes->get('/FinishStock/add', 'Material\FinishStock::add');
+$routes->post('/FinishStock/insertData', 'Material\FinishStock::insertData');
+$routes->get('/FinishStock/edit/(:num)', 'Material\FinishStock::edit/$1');
+$routes->post('/FinishStock/updateData/(:num)', 'Material\FinishStock::updateData/$1');
+$routes->get('/FinishStock/view/(:num)', 'Material\FinishStock::view/$1');
+
+$routes->get('/CustomerQuota', 'Customer\CustomerQuota::index');
+$routes->get('/CustomerQuota/add', 'Customer\CustomerQuota::add');
+$routes->post('/CustomerQuota/insertData', 'Customer\CustomerQuota::insertData');
+$routes->get('/CustomerQuota/edit/(:num)', 'Customer\CustomerQuota::edit/$1');
+$routes->post('/CustomerQuota/updateData/(:num)', 'Customer\CustomerQuota::updateData/$1');
+$routes->get('/CustomerQuota/view/(:num)', 'Customer\CustomerQuota::view/$1');
+
+$routes->get('/MachineAvailability', 'Machine\MachineAvailability::index');
+$routes->get('/MachineAvailability/add', 'Machine\MachineAvailability::add');
+$routes->post('/MachineAvailability/insertData', 'Machine\MachineAvailability::insertData');
+$routes->get('/MachineAvailability/edit/(:num)', 'Machine\MachineAvailability::edit/$1');
+$routes->post('/MachineAvailability/updateData/(:num)', 'Machine\MachineAvailability::updateData/$1');
+$routes->get('/MachineAvailability/view/(:num)', 'Machine\MachineAvailability::view/$1');
+
 $routes->get('/users', 'UserController::index');
 
 $routes->get('/production-planning', 'ProductionPlanning\PlanningProductionController::index');

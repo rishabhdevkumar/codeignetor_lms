@@ -17,7 +17,7 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 
 <div class="row" style="float:left;width:100%">
-	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/Machine/updateData/' . $machine_id) ?>" style="width:100%">
+	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/Customer/updateData/' . $machine_id) ?>" style="width:100%">
 		<input type="hidden" name="machine_id" value="<?php echo $machine_id; ?>">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
