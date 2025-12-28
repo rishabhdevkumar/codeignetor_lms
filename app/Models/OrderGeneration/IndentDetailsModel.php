@@ -11,7 +11,7 @@ class IndentDetailsModel extends Model
 
     protected $allowedFields = [
         'in_no', 'item_type', 'item_variety', 'gsm', 'request_date',
-        'material_code', 'line_item',
+        'material_code', 'line_item', 'sap_init',
         'quantity'
     ];
 }

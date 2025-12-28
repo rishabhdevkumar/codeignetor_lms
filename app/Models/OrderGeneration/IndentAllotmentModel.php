@@ -23,6 +23,11 @@ class IndentAllotmentModel extends Model
         'FINISHING_DATE',
         'DOOR_STEP_DEL_DATE',
         'CUSTOMER_TYPE',
+        'CALENDAR_TYPE',
+        'PO_NO',
+        'PO_LINE_ITEM',
+        'SCHEDULE_LINE_ITEM',
+        'FULFILLMENT_FLAG',
         'SAP_ORDER_NO',
         'SAP_REMARKS'
     ];

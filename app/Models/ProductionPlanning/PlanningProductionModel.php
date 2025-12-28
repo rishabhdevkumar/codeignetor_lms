@@ -28,6 +28,7 @@ class PlanningProductionModel extends Model
         'KC2_UTILISED_QTY_MT',
         'KC1_BALANCE_QTY_MT',
         'KC2_BALANCE_QTY_MT',
+        'CALENDAR_TYPE',
         'UPLOADED_BY',
         'UPLOADED_DATE'
     ];

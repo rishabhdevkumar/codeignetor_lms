@@ -23,9 +23,20 @@ class PlanningProductionController extends BaseController
 
         $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MR_FG_CODE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MOTHER_ROLL_CODE')
             ->findAll();
         return view('ProductionPlanning/index', $data);
+    }
+
+    public function calendarView()
+    {
+
+        $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE, pp_mr_material_master.GRADE, pp_mr_material_master.GSM')
+            ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MOTHER_ROLL_CODE')
+            ->findAll();
+
+        return view('ProductionPlanning/calendarView', $data);
     }
 
     /* -------------------------------------------------------------
@@ -44,7 +55,7 @@ class PlanningProductionController extends BaseController
         $this->model->save([
             'VERSION' => $this->request->getPost('VERSION'),
             'MACHINE' => $this->request->getPost('MACHINE'),
-            'SAP_MR_FG_CODE' => $this->request->getPost('SAP_MR_FG_CODE'),
+            'SAP_MOTHER_ROLL_CODE' => $this->request->getPost('SAP_MOTHER_ROLL_CODE'),
             'QTY_MT' => $this->request->getPost('QTY_MT'),
             'FROM_DATE_TIME' => $this->request->getPost('FROM_DATE_TIME'),
             'TO_DATE_TIME' => $this->request->getPost('TO_DATE_TIME'),
@@ -85,7 +96,7 @@ class PlanningProductionController extends BaseController
         $this->model->update($id, [
             'VERSION' => $this->request->getPost('VERSION'),
             'MACHINE' => $this->request->getPost('MACHINE'),
-            'SAP_MR_FG_CODE' => $this->request->getPost('SAP_MR_FG_CODE'),
+            'SAP_MOTHER_ROLL_CODE' => $this->request->getPost('SAP_MOTHER_ROLL_CODE'),
             'QTY_MT' => $this->request->getPost('QTY_MT'),
             'FROM_DATE_TIME' => $this->request->getPost('FROM_DATE_TIME'),
             'TO_DATE_TIME' => $this->request->getPost('TO_DATE_TIME'),
@@ -257,7 +268,7 @@ class PlanningProductionController extends BaseController
                     $data = [
                         'VERSION' => 1,
                         'MACHINE' => $machinePPId,
-                        'SAP_MR_FG_CODE' => $motherRollPPId,
+                        'SAP_MOTHER_ROLL_CODE' => $motherRollPPId,
                         'QTY_MT' => $plannedQty,
                         'BALANCE_QTY' => $plannedQty,
                         'KC1_QTY_MT' => $kc1Quota,

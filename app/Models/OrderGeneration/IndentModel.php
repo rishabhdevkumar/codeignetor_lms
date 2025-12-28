@@ -11,6 +11,6 @@ class IndentModel extends Model
 
     protected $allowedFields = [
         'in_no', 'in_date', 'sold_to_code', 'bill_to_code', 'ship_to_code',
-        'market_segment', 'order_type', 'po_no'
+        'market_segment', 'order_type', 'po_no', 'sap_init'
     ];
 }
