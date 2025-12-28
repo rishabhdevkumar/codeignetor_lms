@@ -16,7 +16,7 @@ class PlanningProductionModel extends Model
     protected $allowedFields    = [
         'VERSION',
         'MACHINE',
-        'SAP_MOTHER_ROLL_CODE',
+        'SAP_MR_FG_CODE',
         'QTY_MT',
         'FROM_DATE_TIME',
         'TO_DATE_TIME',

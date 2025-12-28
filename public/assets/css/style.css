@@ -8811,15 +8811,13 @@ body {
   gap: 16px;
 }
 
-.card {
+.master-card {
   height: 120px;
   border-radius: 6px;
   /* color: #fff; */
   font-size: 16px;
   font-weight: 600;
   display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -8853,12 +8851,12 @@ body {
 /* Color Variants */
 .bg-red {
   background-color: #c0392b;
-  background-image: linear-gradient(15deg, #750404 0%, #D91414 100%);
+  background-image: linear-gradient(15deg, #750404 0%, #D91414 50%);
 }
 
 .bg-maroon {
   background-color: #b8323a;
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 50%);
 }
 
 /* Responsive */

@@ -10,7 +10,7 @@
 		<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Material/insertData') ?>" enctype="multipart/form-data" style="width:100%">
 			<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 			
-	<div class="">
+
 			<div class="col-sm-6" style="float:left;margin-top:20px">
 				<div class="ibox float-e-margins card">
 					<div class="ibox-title">
@@ -162,7 +162,7 @@
 					</div>
 				</div>
 			</div>
-	</div>
+	
 
 
 
