@@ -58,11 +58,6 @@ class MRMaterial extends Controller
 
 	public function insertData()
 	{
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 			$arr = [
 				'MR_MATERIAL_CODE'     => $this->request->getPost('material_code'),
 				'SAP_PLANT'            => $this->request->getPost('sap_plant'),
@@ -92,11 +87,7 @@ class MRMaterial extends Controller
 			}
 
 			if ($insert) {
-<<<<<<< HEAD
 				return redirect()->to('/MRMaterial')->with('success', 'MR Material Created');
-=======
-				return redirect()->to('/MRMaterial')->with('success', 'MRMaterial Created');
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 			}
 		}
 
@@ -136,19 +127,11 @@ class MRMaterial extends Controller
 			$update = $this->crudModel->updateData('pp_mr_material_master', $arr, $condition);
 
 			if ($update) {
-<<<<<<< HEAD
 				return redirect()->to('/MRMaterial')->with('success', 'Material Updated');
-=======
-				return redirect()->to('/MRMaterial')->with('success', 'MRMaterial Updated');
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 				// redirect('Material');
 			}
 		}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 	public function view($id)
 	{
 		$arr = array('PP_ID' => $id);
