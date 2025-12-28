@@ -9,13 +9,8 @@
 		</div>
 	<?php endif; ?>
 	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/MRMaterial/insertData') ?>" enctype="multipart/form-data" style="width:100%">
-<<<<<<< HEAD
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
-=======
-		<div class="col-sm-2" style="float:left;margin-top:20px"></div>
-		<div class="col-sm-8" style="float:left;margin-top:20px">
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
 					<h5><?php echo $title; ?><small> </small></h5>

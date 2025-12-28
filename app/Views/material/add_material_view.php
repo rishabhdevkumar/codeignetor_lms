@@ -10,15 +10,9 @@
 		<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Material/insertData') ?>" enctype="multipart/form-data" style="width:100%">
 			<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 			
-<<<<<<< HEAD
 
 			<div class="col-sm-6" style="float:left;margin-top:20px">
 				<div class="ibox float-e-margins card">
-=======
-	<div class="">
-			<div class="col-sm-8" style="float:left;margin-top:20px">
-				<div>
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 					<div class="ibox-title">
 						<h5><?php echo $title; ?><small> </small></h5>
 					</div>

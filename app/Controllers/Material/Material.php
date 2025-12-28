@@ -49,10 +49,6 @@ class Material extends BaseController
 	public function add()
 	{
 		$result["title"] = "Add Material";
-<<<<<<< HEAD
-	
-=======
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 
 		echo view('header', $result);
 		echo view('material/add_material_view', $result);
@@ -115,11 +111,7 @@ class Material extends BaseController
 		echo view('footer');
 	}
 
-<<<<<<< HEAD
 	public function updateData($id)
-=======
-	public function updateData()
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 	{
 
 			$arr = [
@@ -143,12 +135,8 @@ class Material extends BaseController
 				return redirect()->to('/Material')->with('success', 'Material Updated');
 				// redirect('Material');
 			}
-
-<<<<<<< HEAD
-=======
 	}
 
->>>>>>> a6925c6df4e3f5b56456845976c6dff9d8589c58
 	public function view($id)
 	{
 		$arr = array('ID' => $id);
