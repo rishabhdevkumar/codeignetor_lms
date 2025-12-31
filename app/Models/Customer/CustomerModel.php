@@ -11,6 +11,9 @@ class CustomerModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
 
+    protected $useAutoIncrement = true;
+    protected $useSoftDeletes   = false;
+
     protected $allowedFields = [
         'cust_no',
         'cust_name',

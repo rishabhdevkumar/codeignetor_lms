@@ -95,7 +95,7 @@ class AllocationAndCommitmentController extends BaseController
                 } else {
                     $material = $this->materialModel
                         ->select('ID, FINISH_MATERIAL_CODE, MR_MATERIAL_CODE, PACKAGING_TIME')
-                        ->where('GRADE', value: $od['item_variety'])
+                        ->where('GRADE', $od['item_variety'])
                         ->where('GSM', $od['gsm'])
                         ->where('WIDTH', $od['width'])
                         ->where('LENGTH', $od['length'])
@@ -116,7 +116,7 @@ class AllocationAndCommitmentController extends BaseController
 
                 // Check Stock allocation
                 $finishStockData = $this->finishStock
-                    ->where('FINISH_MATERIAL_CODE', value: $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'])
+                    ->where('FINISH_MATERIAL_CODE', $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'])
                     ->first();
 
                 $requiredQty = $pendingIndents[$key]['order_details'][$odKey]['quantity'];

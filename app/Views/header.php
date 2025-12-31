@@ -101,7 +101,9 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="<?php echo base_url()?>production-planning-calendar">Calendar View</a>
                     </li> 
-                   
+                    <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url()?>production-planning/allocation">Indent Allocation</a>
+                    </li>
                 </ul>
             </div>
 

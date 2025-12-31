@@ -10,6 +10,9 @@ class FinishStockModel extends Model
     protected $primaryKey = 'PP_ID';
     protected $returnType = 'array';
 
+    protected $useAutoIncrement = true;
+    protected $useSoftDeletes   = false;
+    
     protected $allowedFields = [
         'FINISH_MATERIAL_CODE',
         'SAP_PLANT',
