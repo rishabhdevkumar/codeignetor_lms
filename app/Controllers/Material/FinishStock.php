@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Material;
 
+use CodeIgniter\RESTful\ResourceController;
 use App\Controllers\BaseController;
 use App\Models\Crud_Model;
 use App\Models\Material\FinishStockModel;
@@ -138,4 +139,5 @@ class FinishStock extends BaseController
         $this->crudModel->del('pp_finish_stock', ['PP_ID' => $id]);
         return redirect()->to('/FinishStock')->with('success', 'Stock Deleted');
     }
+
 }

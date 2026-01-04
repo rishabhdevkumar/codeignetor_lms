@@ -21,22 +21,33 @@ class PlanningProductionController extends BaseController
     public function index()
     {
 
-        $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE')
+        $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MR_FG_CODE')
+            // ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MR_FG_CODE')
             ->findAll();
+
+        $data['title'] = "Production Planning";
+
+        echo view('header', $data);
         return view('ProductionPlanning/index', $data);
+        echo view('footer');
     }
 
     public function calendarView()
     {
 
-        $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE, pp_mr_material_master.GRADE, pp_mr_material_master.GSM')
+        $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, COALESCE(pp_finish_material_master.GRADE, pp_mr_material_master.GRADE) AS GRADE,
+                        COALESCE(pp_finish_material_master.GSM,   pp_mr_material_master.GSM)   AS GSM ')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.PP_ID = pp_production_planning_master.SAP_MR_FG_CODE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE','left')
+            ->join('pp_finish_material_master', 'pp_finish_material_master.FINISH_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE','left')
             ->findAll();
 
+        $data['title'] = "Production Planning";
+
+        echo view('header', $data);
         return view('ProductionPlanning/calendarView', $data);
+        echo view('footer');
     }
 
     /* -------------------------------------------------------------
@@ -44,7 +55,11 @@ class PlanningProductionController extends BaseController
     ------------------------------------------------------------- */
     public function create()
     {
+        $data['title'] = "Production Planning";
+
+        echo view('header', $data);
         return view('ProductionPlanning/create');
+        echo view('footer');
     }
 
     /* -------------------------------------------------------------
@@ -85,7 +100,11 @@ class PlanningProductionController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Record not found");
         }
 
+        $data['title'] = "Production Planning";
+
+        echo view('header', $data);
         return view('ProductionPlanning/edit', $data);
+        echo view('footer');
     }
 
     /* -------------------------------------------------------------
@@ -163,7 +182,7 @@ class PlanningProductionController extends BaseController
                     // exit;
 
                     // Skip header or empty rows
-                    if ($i == 0 || empty($row[0])){
+                    if ($i == 0 || empty($row[0])) {
                         continue;
                     }
 
@@ -219,7 +238,6 @@ class PlanningProductionController extends BaseController
 
                         // Machine changed → reset clock
                         $startDateTime = clone $initialStartDateTime;
-
                     } else {
                         // Same machine → compare grade/gsm
                         $gradeChanged = ($grade !== $prevGrade);
@@ -275,7 +293,7 @@ class PlanningProductionController extends BaseController
                     $data = [
                         'VERSION' => 1,
                         'MACHINE' => $machinePPId,
-                        'SAP_MR_FG_CODE' => $motherRollPPId,
+                        'SAP_MR_FG_CODE' => $machineMaterialCode,
                         'QTY_MT' => $plannedQty,
                         'BALANCE_QTY' => $plannedQty,
                         'KC1_QTY_MT' => $kc1Quota,
@@ -298,7 +316,6 @@ class PlanningProductionController extends BaseController
                 }
 
                 return redirect()->back()->with('success', 'Excel uploaded & data inserted successfully!');
-
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error reading XLSX: ' . $e->getMessage());
             }
@@ -306,6 +323,4 @@ class PlanningProductionController extends BaseController
 
         return redirect()->back()->with('error', 'Invalid file.');
     }
-
-
 }

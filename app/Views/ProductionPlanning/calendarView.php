@@ -207,7 +207,7 @@
                             <tr>
                                 <td><?= $row['VERSION'] ?></td>
                                 <td><?= $row['MACHINE_TPM_ID'] ?></td>
-                                <td><?= $row['MR_MATERIAL_CODE'] ?></td>
+                                <td><?= $row['SAP_MR_FG_CODE'] ?></td>
                                 <td><?= $row['GRADE'] ?></td>
                                 <td><?= $row['GSM'] ?></td>
                                 <td><?= $row['QTY_MT'] ?></td>

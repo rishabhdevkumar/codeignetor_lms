@@ -142,7 +142,7 @@ class AllocationAndCommitmentController extends BaseController
                     $pendingIndents[$key]['order_details'][$odKey]['plant'] = $finishStockData['SAP_PLANT'];
                     $pendingIndents[$key]['order_details'][$odKey]['stock'] = $finishStockData['STOCK_QTY'];
                     $pendingIndents[$key]['order_details'][$odKey]['booked'] = $requiredQty;
-                    $pendingIndents[$key]['order_details'][$odKey]['fullfillment_flag'] = 1;
+                    $pendingIndents[$key]['order_details'][$odKey]['fullfillment_flag'] = $pendingIndents[$key]['order_details'][$odKey]['sap_init'];
 
                     // Fetch machine related details
                     $machine = $this->machineModel
@@ -194,7 +194,7 @@ class AllocationAndCommitmentController extends BaseController
                         'PO_NO' => '',
                         'PO_LINE_ITEM' => '',
                         'SCHEDULE_LINE_ITEM' => '',
-                        'FULFILLMENT_FLAG' => $pendingIndents[$key]['order_details'][$odKey]['fullfillment_flag'],
+                        'FULFILLMENT_FLAG' => 1,
                         'SAP_ORDER_NO' => '',
                         'SAP_REMARKS' => '',
                     ]);
@@ -205,70 +205,49 @@ class AllocationAndCommitmentController extends BaseController
                     $customerTypeBalanceQtyField = $pendingIndents[$key]['CUSTOMER_TYPE'] . "_BALANCE_QTY_MT";
 
                     $baseQuery = $this->planningProductionModel
+                        ->where($customerTypeBalanceQtyField . ' >=', (int) $pendingIndents[$key]['order_details'][$odKey]['quantity'])
                         ->where('FROM_DATE_TIME >=', $currentDateTime);
 
                     $mrMaterialCode = $pendingIndents[$key]['order_details'][$odKey]['MR_MATERIAL_CODE'] ?? null;
                     $finishMaterialCode = $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'] ?? null;
 
-                    $materialCodes = array_filter([$mrMaterialCode, $finishMaterialCode]);
-
                     $planningData = [];
 
-                    if (!empty($materialCodes)) {
-                        $planningData = $baseQuery
-                            ->whereIn('SAP_MR_FG_CODE', $materialCodes)
+                    if (!empty($mrMaterialCode)) {
+                        $query = clone $baseQuery;
+                        $planningData = $query
+                            ->where('SAP_MR_FG_CODE', $mrMaterialCode)
                             ->findAll();
                     }
 
-                    
+                    if (empty($planningData) && !empty($finishMaterialCode)) {
+                        $query = clone $baseQuery;
+                        $planningData = $query
+                            ->where('SAP_MR_FG_CODE', $finishMaterialCode)
+                            ->findAll();
+                    }
+
                     // echo "<pre>"; print_r($planningData); exit;
+                    // Loop Planning data and fetch machine type
                     foreach ($planningData as &$plan) {
 
-                        // Default values
-                        $plan['MACHINE_TYPE'] = null;
-                        $plan['MACHINE_PINCODE'] = null;
-                        $plan['FINISH_LOSS_PERCENT'] = 0;
-
+                        // Make sure MACHINE ID exists
                         if (empty($plan['MACHINE'])) {
+                            $plan['MACHINE_TYPE'] = null;
                             continue;
                         }
 
+                        // Check TPM or Internal
                         $machine = $this->machineModel
-                            ->select('FINISH_LOSS_PERCENT, TYPE, PIN_CODE')
+                            ->select('TYPE, PIN_CODE')
                             ->where('PP_ID', $plan['MACHINE'])
                             ->first();
 
-                        if (!empty($machine)) {
-                            $plan['MACHINE_TYPE'] = $machine['TYPE'] ?? null;
-                            $plan['MACHINE_PINCODE'] = $machine['PIN_CODE'] ?? null;
-
-                            // Apply finish loss only for OWN machines
-                            if (($machine['TYPE'] ?? null) === 'OWN') {
-                                $plan['FINISH_LOSS_PERCENT'] = (float) $machine['FINISH_LOSS_PERCENT'];
-                            }
-                        }
+                        // Attach machine type to planning data
+                        $plan['MACHINE_TYPE'] = $machine['TYPE'] ?? null;
+                        $plan['MACHINE_PINCODE'] = $machine['PIN_CODE'] ?? null;
                     }
-                    unset($plan);
-                    // echo "<pre>"; print_r($planningData); exit;
-                    $planningData = array_values(array_filter($planningData, function ($plan) use ($customerTypeBalanceQtyField, $requiredQty) {
 
-                        if (!isset($plan[$customerTypeBalanceQtyField])) {
-                            return false;
-                        }
-
-                        $finishLossPercent = (float) ($plan['FINISH_LOSS_PERCENT'] ?? 0);
-
-                        if ($finishLossPercent > 0) {
-                            $requiredQtyWithLoss =
-                                $requiredQty + (($requiredQty * $finishLossPercent) / 100);
-                        } else {
-                            $requiredQtyWithLoss = $requiredQty;
-                        }
-
-                        return $plan[$customerTypeBalanceQtyField] >= $requiredQtyWithLoss;
-                    }));
-
-                    // echo "<pre>"; print_r($planningData); exit;
                     $finalRecords = [];
 
                     if (count($planningData) >= 1) {
@@ -289,6 +268,8 @@ class AllocationAndCommitmentController extends BaseController
                             $tpmRecords = array_filter($planningData, function ($plan) {
                                 return $plan['MACHINE_TYPE'] === 'TPM';
                             });
+
+                            //  echo "<pre>"; print_r($tpmRecords); exit;
 
                             $internalRecords = [];
 
@@ -327,9 +308,11 @@ class AllocationAndCommitmentController extends BaseController
 
                             $internalRecords = array_merge($internalRecords, $earliestOwnRecords);
 
+
                             $earliestTpmRecords = $getEarliestByMachine(array_values($tpmRecords));
                             $internalRecords = array_merge($internalRecords, $earliestTpmRecords);
 
+                            
                             $newInternalRecords = [];
 
                             foreach ($internalRecords as $record) {
@@ -344,6 +327,8 @@ class AllocationAndCommitmentController extends BaseController
                             }
 
                             $internalRecords = $newInternalRecords;
+                            
+                            //  echo "<pre>"; print_r($internalRecords); exit;
 
                             // Sort the data on TRANSIT_TIME and DEFAULT_PLANT
                             usort($internalRecords, function ($a, $b) {
@@ -361,6 +346,7 @@ class AllocationAndCommitmentController extends BaseController
                                 return $plantB <=> $plantA;
                             });
 
+                            //  echo "<pre>"; print_r($internalRecords); exit;
                             $finalRecords = $internalRecords;
 
                         } elseif ($hasOwn && !$hasTpm) {
@@ -470,7 +456,8 @@ class AllocationAndCommitmentController extends BaseController
                         }
 
                         $allocationRecord = $finalRecords[0];
-                        
+
+                            //  echo "<pre>"; print_r($allocationRecord); exit;
                         if ($allocationRecord['MACHINE_TYPE'] === "TPM") {
                             $allocationRecord['booked_qty'] = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
                             $allocationRecord['calendar_id'] = $allocationRecord['PP_ID'];
@@ -513,6 +500,8 @@ class AllocationAndCommitmentController extends BaseController
                                 ->first();
 
 
+                            // echo "<pre>"; print_r($motherRoll); exit;
+
                             if (!$motherRoll) {
                                 return redirect()->back()->with(
                                     'error',
@@ -537,11 +526,9 @@ class AllocationAndCommitmentController extends BaseController
                             $toDateTimeStr = $toDateTime->format('Y-m-d H:i:s');
 
                             // Final finishing date after adding packaging time
-                            $packagingDays = (int) $pendingIndents[$key]['order_details'][$odKey]['PACKAGING_TIME'];
+                            $packagingHours = (int) $pendingIndents[$key]['order_details'][$odKey]['PACKAGING_TIME'];
                             $finalFinishingDate = new \DateTime($toDateTimeStr);
-                            if ($packagingDays > 0) {
-                                $finalFinishingDate->add(new \DateInterval("P{$packagingDays}D"));
-                            }
+                            $finalFinishingDate->modify("+{$packagingHours} hours");
                             $finalFinishingDateFormatted = $finalFinishingDate->format('Y-m-d H:i:s');
 
                             // Final door step delivery date after adding transit time

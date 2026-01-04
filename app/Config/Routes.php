@@ -68,6 +68,7 @@ $routes->post('/FinishStock/insertData', 'Material\FinishStock::insertData');
 $routes->get('/FinishStock/edit/(:num)', 'Material\FinishStock::edit/$1');
 $routes->post('/FinishStock/updateData/(:num)', 'Material\FinishStock::updateData/$1');
 $routes->get('/FinishStock/view/(:num)', 'Material\FinishStock::view/$1');
+$routes->post('api/finish-stock-update', 'Material\FinishStockApi::UpdateFinishStock');
 
 $routes->get('/CustomerQuota', 'Customer\CustomerQuota::index');
 $routes->get('/CustomerQuota/add', 'Customer\CustomerQuota::add');
@@ -82,6 +83,7 @@ $routes->post('/MachineAvailability/insertData', 'Machine\MachineAvailability::i
 $routes->get('/MachineAvailability/edit/(:num)', 'Machine\MachineAvailability::edit/$1');
 $routes->post('/MachineAvailability/updateData/(:num)', 'Machine\MachineAvailability::updateData/$1');
 $routes->get('/MachineAvailability/view/(:num)', 'Machine\MachineAvailability::view/$1');
+$routes->post('api/machine-availability-update', 'Machine\MachineAvailabilityApi::UpdateMachineAvailability');
 
 $routes->get('/users', 'UserController::index');
 

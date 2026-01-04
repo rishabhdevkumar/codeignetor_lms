@@ -172,7 +172,7 @@
                                 <tr>
                                     <td><?= $row['VERSION'] ?></td>
                                     <td><?= $row['MACHINE_TPM_ID'] ?></td>
-                                    <td><?= $row['MR_MATERIAL_CODE'] ?></td>
+                                    <td><?= $row['SAP_MR_FG_CODE'] ?></td>
                                     <td><?= $row['QTY_MT'] ?></td>
                                     <td><?= $row['FROM_DATE_TIME'] ?></td>
                                     <td><?= $row['TO_DATE_TIME'] ?></td>
