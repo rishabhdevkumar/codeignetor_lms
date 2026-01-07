@@ -59,8 +59,10 @@ $routes->get('/Machine/view/(:num)', 'Machine\Machine::view/$1');
 
 $routes->get('/Customer', 'Customer\Customer::index');
 $routes->get('/Customer/add', 'Customer\Customer::add');
+$routes->post('/Customer/insertData', 'Customer\Customer::insertData');
 $routes->get('/Customer/edit/(:num)', 'Customer\Customer::edit/$1');
 $routes->post('/Customer/updateData/(:num)', 'Customer\Customer::updateData/$1');
+$routes->get('/Customer/view/(:num)', 'Customer\Customer::view/$1');
 
 $routes->get('/FinishStock', 'Material\FinishStock::index');
 $routes->get('/FinishStock/add', 'Material\FinishStock::add');

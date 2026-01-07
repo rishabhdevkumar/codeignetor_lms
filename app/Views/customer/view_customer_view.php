@@ -1,15 +1,10 @@
 <?php
-$machine_code       = old('MR_MACHINE_CODE', $machine['MACHINE_TPM_ID']);
-$sap_plant          = old('SAP_PLANT', $machine['SAP_PLANT']);
-$type               = old('YPE', $machine['TYPE']);
-$description        = old('DESCRIPTION', $machine['DESCRIPTION']);
-$pincode            = old('PIN_CODE', $machine['PIN_CODE']);
-$vendor_code        = old('SAP_VENDOR_CODE', $machine['SAP_VENDOR_CODE']);
-$capacity_per_day   = old('CAPACITY_PER_DAY_MT', $machine['CAPACITY_PER_DAY_MT']);
-$finish_loss        = old('FINISH_LOSS_PERCENT', $machine['FINISH_LOSS_PERCENT']);
-$grade_change_time  = old('GRADE_CHANGE_TIME_MIN', $machine['GRADE_CHANGE_TIME_MIN']);
-$gsm_change_time    = old('GSM_CHANGE_TIME_MIN', $machine['GSM_CHANGE_TIME_MIN']);
-$machine_id         = old('PP_ID', $machine['PP_ID']);
+$customer_code       = old('CUSTOMER_CODE', $customer['CUSTOMER_CODE']);
+$customer_type        = old('CUSTOMER_TYPE', $customer['CUSTOMER_TYPE']);
+$country             = old('COUNTRY', $customer['COUNTRY']);
+$state               = old('STATE', $customer['STATE']);
+$pincode             = old('PIN_CODE', $customer['PIN_CODE']);
+$customer_id         = old('PP_ID', $customer['PP_ID']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -18,7 +13,7 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 <div class="row" style="float:left;width:100%">
 	<form id="frm" autocomplete="off" method="POST" style="width:100%">
-		<input type="hidden" name="machine_id" value="<?php echo $machine_id; ?>">
+		<input type="hidden" name="machine_id" value="<?php echo $customer_id; ?>">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 
@@ -35,17 +30,19 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Machine Code</label>
-											<input type="text" class="form-control" name="machine_code" id="machine_code" maxlength="20" value="<?php echo $machine_code; ?>" readonly>
+											<label>Customer Code</label>
+											<input type="text" class="form-control" name="customer_code" id="customer_code" maxlength="20" value="<?php echo $customer_code; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Type</label>
-											<select class="form-control" name="type" id="type" readonly>
+											<select class="form-control" name="customer_type" id="customer_type" readonly>
 												<option>Select</option>
-												<option <?php if($type=="OWN") echo "selected";?> value="OWN">OWN</option>
-												<option <?php if($type=="TPM") echo "selected";?> value="TPM">TPM</option>
+												<option <?php if($customer_type=="KC1") echo "selected";?> value="KC1">KC1</option>
+												<option <?php if($customer_type=="KC2") echo "selected";?> value="KC2">KC2</option>
+												<option <?php if($customer_type=="KC3") echo "selected";?> value="KC3">KC3</option>
+												<option <?php if($customer_type=="KC4") echo "selected";?> value="KC4">KC4</option>
 											</select>
 											<div class="error"></div>
 										</div>
@@ -57,28 +54,10 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description" readonly><?php echo $description; ?></textarea>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
 
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-
-										<div class="col-sm-6 col-xs-12">
-											<label>SAP Plant</label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" readonly value="<?php echo $sap_plant; ?>">
-											<div class="error"></div>
-										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<label>Vendor Code</label>
-											<input type="text" class="form-control" name="vendor_code" id="vendor_code" readonly value="<?php echo $vendor_code; ?>">
+										<div class="col-sm-4 col-xs-12">
+											<label>Country</label>
+											<input type="text" class="form-control" name="country" id="country" maxlength="20" value="<?php echo $country; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
@@ -89,39 +68,18 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
+
+										<div class="col-sm-4 col-xs-12">
+											<label>State</label>
+											<input type="text" class="form-control" name="state" id="state" value="<?php echo $state; ?>" readonly>
+											<div class="error"></div>
+										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>PinCode</label>
-											<input type="text" class="form-control" name="pincode" id="pincode" readonly value="<?php echo $pincode; ?>">
+											<input type="text" class="form-control" name="pincode" id="pincode" value="<?php echo $pincode; ?>" readonly>
 											<div class="error"></div>
 										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<label>Capacity Per Day (MTS)</label>
-											<input type="number" class="form-control" name="capacity_per_day" id="capacity_per_day" readonly value="<?php echo $capacity_per_day; ?>">
-											<div class="error"></div>
-										</div>
-
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-
-										<div class="col-sm-6 col-xs-12">
-											<label>Grade Change Time (Min)</label>
-											<input type="number" class="form-control" name="grade_change_time" id="grade_change_time" readonly value="<?php echo $grade_change_time; ?>">
-											<div class="error"></div>
-										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<label>GSM Change Time (Min)</label>
-											<input type="number" class="form-control" name="gsm_change_time" id="gsm_change_time" readonly value="<?php echo $gsm_change_time; ?>">
-											<div class="error"></div>
-										</div>
-
 									</div>
 								</div>
 

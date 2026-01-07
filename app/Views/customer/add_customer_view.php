@@ -7,7 +7,7 @@
 			<?= $error ?>
 		</div>
 	<?php endif; ?>
-	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Customer/add') ?>" enctype="multipart/form-data" style="width:100%">
+	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Customer/insertData') ?>" enctype="multipart/form-data" style="width:100%">
 		<div class="col-sm-2" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-8" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
@@ -22,7 +22,13 @@
 								<div class="form-group">
 									<div class="row">
 
-									<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-4 col-xs-12">
+											<label>Customer Code</label>
+											<input type="text" class="form-control" name="customer_code" id="customer_code" maxlength="10" value="<?php echo set_value('customer_code'); ?>">
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
 											<label>Customer Type</label>
 											<select class="form-control" name="customer_type" id="customer_type" required >
 												<option value="">Select</option>
@@ -34,17 +40,11 @@
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-4 col-xs-12">
-											<label>Customer Code</label>
-											<input type="text" class="form-control" name="customer_code" id="customer_code" maxlength="5" value="<?php echo set_value('customer_code'); ?>">
-											<div class="error"></div>
-										</div>
-
-										<div class="col-sm-4 col-xs-12">
+										<!-- <div class="col-sm-4 col-xs-12">
 											<label>Customer Name</label>
 											<input class="form-control" Placeholder="Enter Customer Name" name="customer_name" id="customer_name" value="<?php echo set_value('customer_name'); ?>">
 											<div class="error"></div>
-										</div>
+										</div> -->
 
 									</div>
 								</div>
@@ -54,7 +54,7 @@
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-4 col-xs-12">
+										<!-- <div class="col-sm-4 col-xs-12">
 											<label>Price List No</label>
 											<input type="text" class="form-control" name="price_list_no" id="price_list_no" maxlength="5" value="<?php echo set_value('price_list_no'); ?>">
 											<div class="error"></div>
@@ -64,11 +64,11 @@
 											<label>Parent Code</label>
 											<input type="text" class="form-control" name="parent_code" id="parent_code" value="<?php echo set_value('parent_code'); ?>">
 											<div class="error"></div>
-										</div>
+										</div> -->
 
 										<div class="col-sm-4 col-xs-12">
 											<label>Country</label>
-											<input type="text" class="form-control" name="country" id="country" maxlength="5" value="<?php echo set_value('country'); ?>">
+											<input type="text" class="form-control" name="country" id="country" maxlength="20" value="<?php echo set_value('country'); ?>">
 											<div class="error"></div>
 										</div>
 
@@ -80,11 +80,11 @@
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-4 col-xs-12">
+										<!-- <div class="col-sm-4 col-xs-12">
 											<label>Currency</label>
 											<input type="text" class="form-control" name="currency" id="currency" value="<?php echo set_value('currency'); ?>">
 											<div class="error"></div>
-										</div>
+										</div> -->
 
 										<div class="col-sm-4 col-xs-12">
 											<label>State</label>
@@ -101,7 +101,7 @@
 									</div>
 								</div>
 
-								<div class="hr-line-dashed"></div>
+								<!-- <div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
@@ -119,7 +119,7 @@
 										</div>
 
 									</div>
-								</div>
+								</div> -->
 
 								<br><br>
 

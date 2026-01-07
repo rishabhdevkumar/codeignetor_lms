@@ -263,7 +263,7 @@ class PlanningProductionController extends BaseController
                     // --------------------------------------
                     // PRODUCTION TIME CALCULATION
                     // --------------------------------------
-                    $plannedQtyKg = $plannedQty * 1000;
+                    $plannedQtyKg = $plannedQty ;
                     $productionHour = ($machineOutputKgHr > 0)
                         ? ($plannedQtyKg / $machineOutputKgHr)
                         : 0;

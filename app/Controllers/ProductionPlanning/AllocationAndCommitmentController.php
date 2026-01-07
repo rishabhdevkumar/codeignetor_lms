@@ -56,6 +56,7 @@ class AllocationAndCommitmentController extends BaseController
             ]);
         }
 
+
         foreach ($pendingIndents as $key => $indent) {
 
             $orderDetails = $this->indentDetailsModel
@@ -71,12 +72,17 @@ class AllocationAndCommitmentController extends BaseController
                 ->first();
 
             $pendingIndents[$key]['CUSTOMER_TYPE'] =
-                $customerType['CUSTOMER_TYPE'] ?? null;
+                $customerType['CUSTOMER_TYPE'] ?? 'NKC';
 
             $customerPinCode = $this->ppCustomerMaster
                 ->select('PIN_CODE')
                 ->where('CUSTOMER_CODE', $indent['ship_to_code'])
                 ->first();
+
+            if (empty($customerPinCode)) {
+                $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'ShipTo Customer PinCode Not Found';
+                continue;
+            }
 
             $pendingIndents[$key]['CUSTOMER_PIN_CODE'] = $customerPinCode['PIN_CODE'] ?? null;
 
@@ -85,6 +91,12 @@ class AllocationAndCommitmentController extends BaseController
 
                 $material = null;
 
+                $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = (int) $pendingIndents[$key]['order_details'][$odKey]['quantity'];
+                $pendingIndents[$key]['order_details'][$odKey]['FROM_DATE'] = '';
+                $pendingIndents[$key]['order_details'][$odKey]['TO_DATE'] = '';
+                $pendingIndents[$key]['order_details'][$odKey]['FINISH_DATE'] = '';
+                $pendingIndents[$key]['order_details'][$odKey]['DOOR_STEP_DATE'] = '';
+
                 // material_code exists
                 if (!empty($od['material_code'])) {
 
@@ -92,7 +104,6 @@ class AllocationAndCommitmentController extends BaseController
                         ->select('ID, FINISH_MATERIAL_CODE, MR_MATERIAL_CODE, PACKAGING_TIME')
                         ->where('FINISH_MATERIAL_CODE', $od['material_code'])
                         ->first();
-
                 } else {
                     $material = $this->materialModel
                         ->select('ID, FINISH_MATERIAL_CODE, MR_MATERIAL_CODE, PACKAGING_TIME')
@@ -101,6 +112,11 @@ class AllocationAndCommitmentController extends BaseController
                         ->where('WIDTH', $od['width'])
                         ->where('LENGTH', $od['length'])
                         ->first();
+                }
+
+                if (empty($material)) {
+                    $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Finished Material Data Not Found';
+                    continue;
                 }
 
                 $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE_ID'] =
@@ -160,6 +176,11 @@ class AllocationAndCommitmentController extends BaseController
                         ->where('TO_PINCODE', $pendingIndents[$key]['CUSTOMER_PIN_CODE'])
                         ->first();
 
+                    if (empty($transit)) {
+                        $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Transit Data Not Found';
+                        continue;
+                    }
+
                     $pendingIndents[$key]['order_details'][$odKey]['transit_time'] = $transit['TRANSIT_TIME'];
 
                     // Update Allotment data
@@ -176,6 +197,12 @@ class AllocationAndCommitmentController extends BaseController
                     $doorStepDateTime = new \DateTime($finishingDate);
                     $doorStepDateTime->add(new \DateInterval('P' . $pendingIndents[$key]['order_details'][$odKey]['transit_time'] . 'D'));
                     $doorStepDelDate = $doorStepDateTime->format('Y-m-d H:i:s');
+
+                    $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = (int) $pendingIndents[$key]['order_details'][$odKey]['quantity'];
+                    $pendingIndents[$key]['order_details'][$odKey]['FROM_DATE'] = $fromDate;
+                    $pendingIndents[$key]['order_details'][$odKey]['TO_DATE'] = $toDate;
+                    $pendingIndents[$key]['order_details'][$odKey]['FINISH_DATE'] = $finishingDate;
+                    $pendingIndents[$key]['order_details'][$odKey]['DOOR_STEP_DATE'] = $doorStepDelDate;
 
                     $this->indentAllotment->insert([
                         'INDENT_NO' => $pendingIndents[$key]['order_details'][$odKey]['in_no'],
@@ -220,11 +247,7 @@ class AllocationAndCommitmentController extends BaseController
                             ->findAll();
                     }
 
-                    
-                    // echo "<pre>"; print_r($planningData); exit;
                     foreach ($planningData as &$plan) {
-
-                        // Default values
                         $plan['MACHINE_TYPE'] = null;
                         $plan['MACHINE_PINCODE'] = null;
                         $plan['FINISH_LOSS_PERCENT'] = 0;
@@ -249,7 +272,7 @@ class AllocationAndCommitmentController extends BaseController
                         }
                     }
                     unset($plan);
-                    // echo "<pre>"; print_r($planningData); exit;
+
                     $planningData = array_values(array_filter($planningData, function ($plan) use ($customerTypeBalanceQtyField, $requiredQty) {
 
                         if (!isset($plan[$customerTypeBalanceQtyField])) {
@@ -268,7 +291,11 @@ class AllocationAndCommitmentController extends BaseController
                         return $plan[$customerTypeBalanceQtyField] >= $requiredQtyWithLoss;
                     }));
 
-                    // echo "<pre>"; print_r($planningData); exit;
+                    if (empty($planningData)) {
+                        $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Planned Slot Not Found';
+                        continue;
+                    }
+
                     $finalRecords = [];
 
                     if (count($planningData) >= 1) {
@@ -362,7 +389,6 @@ class AllocationAndCommitmentController extends BaseController
                             });
 
                             $finalRecords = $internalRecords;
-
                         } elseif ($hasOwn && !$hasTpm) {
 
                             // CASE 2: ONLY OWN
@@ -418,7 +444,6 @@ class AllocationAndCommitmentController extends BaseController
                             });
 
                             $finalRecords = $earliestOwnRecords;
-
                         } elseif (!$hasOwn && $hasTpm) {
 
                             // CASE 3: ONLY TPM
@@ -460,17 +485,22 @@ class AllocationAndCommitmentController extends BaseController
                             });
 
                             $finalRecords = $earliestTpmRecords;
-
                         } else {
+
+
+                            $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'No planning data available for OWN or TPM machines.';
+                            continue;
+
                             // CASE 4: NO MACHINES AVAILABLE
-                            return redirect()->back()->with(
-                                'error',
-                                'No planning data available for OWN or TPM machines.'
-                            );
+                            // return redirect()->back()->with(
+                            //     'error',
+                            //     'No planning data available for OWN or TPM machines.'
+                            // );
+
                         }
 
                         $allocationRecord = $finalRecords[0];
-                        
+
                         if ($allocationRecord['MACHINE_TYPE'] === "TPM") {
                             $allocationRecord['booked_qty'] = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
                             $allocationRecord['calendar_id'] = $allocationRecord['PP_ID'];
@@ -490,6 +520,13 @@ class AllocationAndCommitmentController extends BaseController
                             $customer_type = $pendingIndents[$key]['CUSTOMER_TYPE'];
                             $actual_qty = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
 
+                            $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = $actual_qty;
+                            $pendingIndents[$key]['order_details'][$odKey]['FROM_DATE'] = $allocationRecord['new_from_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['TO_DATE'] = $allocationRecord['new_to_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['FINISH_DATE'] = $allocationRecord['finishing_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['DOOR_STEP_DATE'] = $allocationRecord['door_step_delivery_date'];
+
+
                             $this->planningProductionModel->update(
                                 $allocationRecord['PP_ID'],
                                 [
@@ -499,7 +536,6 @@ class AllocationAndCommitmentController extends BaseController
                                     'BALANCE_QTY' => (int) $allocationRecord['BALANCE_QTY'] - (int) $actual_qty
                                 ]
                             );
-
                         } else {
                             $ppIds = array_column($earliestOwnRecords, 'PP_ID');
                             $latestRecords = $this->indentAllotment
@@ -522,7 +558,7 @@ class AllocationAndCommitmentController extends BaseController
 
                             $machineOutputKgHr = $motherRoll['MACHINE_OUTPUT_KG_HR'];
 
-                            $plannedQtyKg = $pendingIndents[$key]['order_details'][$odKey]['quantity']; // in kg
+                            $plannedQtyKg = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
                             $productionHour = ($machineOutputKgHr > 0)
                                 ? ($plannedQtyKg / $machineOutputKgHr)
                                 : 0;
@@ -550,7 +586,10 @@ class AllocationAndCommitmentController extends BaseController
                             $finalDoorStepDate->add(new \DateInterval('P' . $transitDays . 'D'));
                             $finalDoorStepDateFormatted = $finalDoorStepDate->format('Y-m-d H:i:s');
 
-                            $allocationRecord['booked_qty'] = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
+                            $originalQty = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
+                            $qtyWithFinishLossPercentage = $originalQty + (($originalQty * $allocationRecord['FINISH_LOSS_PERCENT']) / 100);
+
+                            $allocationRecord['booked_qty'] = $qtyWithFinishLossPercentage;
                             $allocationRecord['calendar_id'] = $allocationRecord['PP_ID'];
                             $allocationRecord['version'] = $allocationRecord['VERSION'];
                             $allocationRecord['new_from_date'] = $latestRecords[0]['latest_to_date'] ?? $allocationRecord['FROM_DATE_TIME'];
@@ -561,7 +600,13 @@ class AllocationAndCommitmentController extends BaseController
 
                             // Update Production Planning Master
                             $customer_type = $pendingIndents[$key]['CUSTOMER_TYPE'];
-                            $actual_qty = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
+                            $actual_qty = $qtyWithFinishLossPercentage;
+
+                            $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = $actual_qty;
+                            $pendingIndents[$key]['order_details'][$odKey]['FROM_DATE'] = $allocationRecord['new_from_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['TO_DATE'] = $allocationRecord['new_to_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['FINISH_DATE'] = $allocationRecord['finishing_date'];
+                            $pendingIndents[$key]['order_details'][$odKey]['DOOR_STEP_DATE'] = $allocationRecord['door_step_delivery_date'];
 
                             $this->planningProductionModel->update(
                                 $allocationRecord['PP_ID'],
@@ -581,7 +626,7 @@ class AllocationAndCommitmentController extends BaseController
                             'VERSION' => $allocationRecord['VERSION'],
                             'FINISH_MATERIAL_CODE' => $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'],
                             'MR_MATERIAL_CODE' => $pendingIndents[$key]['order_details'][$odKey]['MR_MATERIAL_CODE'],
-                            'QUANTITY' => $pendingIndents[$key]['order_details'][$odKey]['quantity'],
+                            'QUANTITY' => $qtyWithFinishLossPercentage,
                             'FROM_DATE' => $allocationRecord['new_from_date'],
                             'TO_DATE' => $allocationRecord['new_to_date'],
                             'FINISHING_DATE' => $allocationRecord['finishing_date'],
@@ -623,8 +668,34 @@ class AllocationAndCommitmentController extends BaseController
                         ['sap_init' => 1]
                     );
                 }
+                unset($odkey);
             }
         }
+
+        // $orderDetailsOnly = [];
+
+        // foreach ($pendingIndents as  $indent) {
+
+        //     foreach ($indent['order_details'] as $od) {
+        //         $orderDetailsOnly['records'] = array_merge(
+        //             ['in_no' => $indent['in_no']],
+        //             $od
+        //         );
+        //     }
+        // }
+        // $orderDetailsOnly['title'] = "Indent Allotment";
+
+        // $indexdata = [
+        //     'title'   => 'Indent Allotment',
+        //     'records' => $orderDetailsOnly
+        // ];
+
+        //  echo "<pre>"; print_r($orderDetailsOnly); exit;
+
+
+        // echo view('header', $indexdata);
+        // echo view('ProductionPlanning/alloc_index', $indexdata);
+        // echo view('footer');
 
         return $this->response->setJSON([
             'status' => true,
@@ -632,5 +703,4 @@ class AllocationAndCommitmentController extends BaseController
             'data' => $pendingIndents
         ]);
     }
-
 }
