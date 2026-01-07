@@ -79,6 +79,13 @@ $routes->get('/CustomerQuota/edit/(:num)', 'Customer\CustomerQuota::edit/$1');
 $routes->post('/CustomerQuota/updateData/(:num)', 'Customer\CustomerQuota::updateData/$1');
 $routes->get('/CustomerQuota/view/(:num)', 'Customer\CustomerQuota::view/$1');
 
+$routes->get('/CustomerTransit', 'Customer\CustomerTransit::index');
+$routes->get('/CustomerTransit/add', 'Customer\CustomerTransit::add');
+$routes->post('/CustomerTransit/insertData', 'Customer\CustomerTransit::insertData');
+$routes->get('/CustomerTransit/edit/(:num)', 'Customer\CustomerTransit::edit/$1');
+$routes->post('/CustomerTransit/updateData/(:num)', 'Customer\CustomerTransit::updateData/$1');
+$routes->get('/CustomerTransit/view/(:num)', 'Customer\CustomerTransit::view/$1');
+
 $routes->get('/MachineAvailability', 'Machine\MachineAvailability::index');
 $routes->get('/MachineAvailability/add', 'Machine\MachineAvailability::add');
 $routes->post('/MachineAvailability/insertData', 'Machine\MachineAvailability::insertData');

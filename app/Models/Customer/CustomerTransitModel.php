@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CustomerTransit;
+namespace App\Models\Customer;
 
 use CodeIgniter\Model;
 
@@ -8,10 +8,10 @@ class CustomerTransitModel extends Model
 {
     protected $table            = 'pp_transit_master'; 
     protected $primaryKey       = 'PP_ID';
-    protected $useAutoIncrement = true;
+    // protected $useAutoIncrement = true;
 
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    // protected $useSoftDeletes   = false;
 
     protected $allowedFields    = [
        'FROM_COUNTRTY',
@@ -24,11 +24,11 @@ class CustomerTransitModel extends Model
 
     protected $useTimestamps = false;
 
-    protected $validationRules = [];
-    protected $validationMessages = [];
-    protected $skipValidation = false;
+    // protected $validationRules = [];
+    // protected $validationMessages = [];
+    // protected $skipValidation = false;
 
-    public function all_customer($whereCondition)
+    public function all_customertransit($whereCondition)
     {
         $builder = $this->db->table('pp_transit_master t');
 

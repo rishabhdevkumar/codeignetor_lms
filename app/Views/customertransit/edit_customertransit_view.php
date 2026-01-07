@@ -1,10 +1,11 @@
 <?php
-$customer_code       = old('CUSTOMER_CODE', $customer['CUSTOMER_CODE']);
-$customer_type        = old('CUSTOMER_TYPE', $customer['CUSTOMER_TYPE']);
-$country             = old('COUNTRY', $customer['COUNTRY']);
-$state               = old('STATE', $customer['STATE']);
-$pincode             = old('PIN_CODE', $customer['PIN_CODE']);
-$customer_id         = old('PP_ID', $customer['PP_ID']);
+$from_country             = old('FROM_COUNTRY', $customer['FROM_COUNTRY']);
+$from_pincode             = old('FROM_PINCODE', $customer['FROM_PINCODE']);
+$to_country             = old('TO_COUNTRY', $customer['TO_COUNTRY']);
+$to_pincode             = old('TO_PINCODE', $customer['TO_PINCODE']);
+$distance              = old('DISTANCE', $customer['DISTANCE']);
+$transit_time            = old('TRANSIT_TIME', $customer['TRANSIT_TIME']);
+$transit_id         = old('PP_ID', $customer['PP_ID']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -12,8 +13,8 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 
 
 <div class="row" style="float:left;width:100%">
-	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/Customer/updateData/' . $customer_id) ?>" style="width:100%">
-		<input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>">
+	<form id="frm" autocomplete="off" method="POST" action="<?= base_url('/CustomerTransit/updateData/' . $transit_id) ?>" style="width:100%">
+		<input type="hidden" name="transit_id" value="<?php echo $transit_id; ?>">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
@@ -28,41 +29,21 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-6 col-xs-12">
-											<label>Customer Code</label>
-											<input type="text" class="form-control" name="customer_code" id="customer_code" maxlength="20" value="<?php echo $customer_code; ?>" >
+										<div class="col-sm-4 col-xs-12">
+											<label>From Country</label>
+											<input type="text" class="form-control" name="from_country" id="from_country" maxlength="20" value="<?php echo $from_country; ?>">
 											<div class="error"></div>
 										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<label>Type</label>
-											<select class="form-control" name="customer_type" id="customer_type">
-												<option>Select</option>
-												<option <?php if($customer_type=="KC1") echo "selected";?> value="KC1">KC1</option>
-												<option <?php if($customer_type=="KC2") echo "selected";?> value="KC2">KC2</option>
-												<option <?php if($customer_type=="KC3") echo "selected";?> value="KC3">KC3</option>
-												<option <?php if($customer_type=="KC4") echo "selected";?> value="KC4">KC4</option>
-											</select>
-											<div class="error"></div>
-										</div>
-
-									</div>
-								</div>
-
-								
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
 
 										<div class="col-sm-4 col-xs-12">
-											<label>Country</label>
-											<input type="text" class="form-control" name="country" id="country" maxlength="20" value="<?php echo $country; ?>">
+											<label>From PinCode</label>
+											<input type="text" class="form-control" name="from_pincode" id="from_pincode" value="<?php echo $from_pincode; ?>">
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
+
 
 								<div class="hr-line-dashed"></div>
 
@@ -70,23 +51,43 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 									<div class="row">
 
 										<div class="col-sm-4 col-xs-12">
-											<label>State</label>
-											<input type="text" class="form-control" name="state" id="state" value="<?php echo $state; ?>">
+											<label>To Country</label>
+											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" value="<?php echo $to_country; ?>">
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-6 col-xs-12">
-											<label>PinCode</label>
-											<input type="text" class="form-control" name="pincode" id="pincode" value="<?php echo $pincode; ?>">
+										<div class="col-sm-4 col-xs-12">
+											<label>To PinCode</label>
+											<input type="text" class="form-control" name="to_pincode" id="to_pincode" value="<?php echo $to_pincode; ?>">
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
 
-								
+								<div class="hr-line-dashed"></div>
 
-								
+								<div class="form-group">
+									<div class="row">
+
+										<div class="col-sm-4 col-xs-12">
+											<label>Distance</label>
+											<input type="number" class="form-control" name="distance" id="distance" value="<?php echo $distance; ?>">
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
+											<label>Transit Time</label>
+											<input type="number" class="form-control" name="transit_time" id="transit_time" value="<?php echo $transit_time; ?>">
+											<div class="error"></div>
+										</div>
+
+									</div>
+								</div>
+
+
+
+
 
 								<br><br>
 
@@ -96,7 +97,7 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
 											<button class="btn btn-info" type="submit">Update</button>
-											<a class="btn btn-primary" href="<?php echo base_url() ?>Customer">Back</a>
+											<a class="btn btn-primary" href="<?php echo base_url() ?>CustomerTransit">Back</a>
 										</div>
 									</div>
 								</div>

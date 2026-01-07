@@ -3,6 +3,7 @@
 namespace App\Models\MasterModels;
 
 use CodeIgniter\Model;
+use Config\Database;
 
 class TransitMaster extends Model
 {
@@ -23,4 +24,24 @@ class TransitMaster extends Model
     ];
 
     protected $useTimestamps = false;
+
+    public function all_customerstransit($where = [])
+    {
+        $builder = $this->db->table('pp_transit_master as t');
+        $builder->select('t.*');
+
+        if (!empty($where)) {
+            $builder->where($where);
+        }
+
+        $builder->orderBy('t.PP_ID', 'DESC');
+
+        $query = $builder->get();
+
+        if ($query->getNumRows() > 0) {
+            return $query->getResultArray();
+        }
+
+        return false;
+    }
 }

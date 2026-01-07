@@ -1,10 +1,11 @@
 <?php
-$customer_code       = old('CUSTOMER_CODE', $customer['CUSTOMER_CODE']);
-$customer_type        = old('CUSTOMER_TYPE', $customer['CUSTOMER_TYPE']);
-$country             = old('COUNTRY', $customer['COUNTRY']);
-$state               = old('STATE', $customer['STATE']);
-$pincode             = old('PIN_CODE', $customer['PIN_CODE']);
-$customer_id         = old('PP_ID', $customer['PP_ID']);
+$from_country             = old('FROM_COUNTRY', $customer['FROM_COUNTRY']);
+$from_pincode             = old('FROM_PINCODE', $customer['FROM_PINCODE']);
+$to_country             = old('TO_COUNTRY', $customer['TO_COUNTRY']);
+$to_pincode             = old('TO_PINCODE', $customer['TO_PINCODE']);
+$distance              = old('DISTANCE', $customer['DISTANCE']);
+$transit_time            = old('TRANSIT_TIME', $customer['TRANSIT_TIME']);
+$transit_id         = old('PP_ID', $customer['PP_ID']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -13,7 +14,7 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 
 <div class="row" style="float:left;width:100%">
 	<form id="frm" autocomplete="off" method="POST" style="width:100%">
-		<input type="hidden" name="machine_id" value="<?php echo $customer_id; ?>">
+		<input type="hidden" name="transit_id" value="<?php echo $transit_id; ?>">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 
@@ -29,21 +30,15 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-6 col-xs-12">
-											<label>Customer Code</label>
-											<input type="text" class="form-control" name="customer_code" id="customer_code" maxlength="20" value="<?php echo $customer_code; ?>" readonly>
+										<div class="col-sm-4 col-xs-12">
+											<label>From Country</label>
+											<input type="text" class="form-control" name="from_country" id="from_country" maxlength="20" value="<?php echo $from_country; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-6 col-xs-12">
-											<label>Type</label>
-											<select class="form-control" name="customer_type" id="customer_type" readonly>
-												<option>Select</option>
-												<option <?php if($customer_type=="KC1") echo "selected";?> value="KC1">KC1</option>
-												<option <?php if($customer_type=="KC2") echo "selected";?> value="KC2">KC2</option>
-												<option <?php if($customer_type=="KC3") echo "selected";?> value="KC3">KC3</option>
-												<option <?php if($customer_type=="KC4") echo "selected";?> value="KC4">KC4</option>
-											</select>
+										<div class="col-sm-4 col-xs-12">
+											<label>From PinCode</label>
+											<input type="text" class="form-control" name="from_pincode" id="from_pincode" value="<?php echo $from_pincode; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
@@ -56,8 +51,14 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 									<div class="row">
 
 										<div class="col-sm-4 col-xs-12">
-											<label>Country</label>
-											<input type="text" class="form-control" name="country" id="country" maxlength="20" value="<?php echo $country; ?>" readonly>
+											<label>To Country</label>
+											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" value="<?php echo $to_country; ?>" readonly>
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
+											<label>To PinCode</label>
+											<input type="text" class="form-control" name="to_pincode" id="to_pincode" value="<?php echo $to_pincode; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
@@ -70,16 +71,17 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 									<div class="row">
 
 										<div class="col-sm-4 col-xs-12">
-											<label>State</label>
-											<input type="text" class="form-control" name="state" id="state" value="<?php echo $state; ?>" readonly>
+											<label>Distance</label>
+											<input type="number" class="form-control" name="distance" id="distance" value="<?php echo $distance; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-6 col-xs-12">
-											<label>PinCode</label>
-											<input type="text" class="form-control" name="pincode" id="pincode" value="<?php echo $pincode; ?>" readonly>
+										<div class="col-sm-4 col-xs-12">
+											<label>Transit Time</label>
+											<input type="number" class="form-control" name="transit_time" id="transit_time" value="<?php echo $transit_time; ?>" readonly>
 											<div class="error"></div>
 										</div>
+
 									</div>
 								</div>
 
@@ -91,7 +93,7 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<a class="btn btn-primary" href="<?php echo base_url() ?>Customer">Back</a>
+											<a class="btn btn-primary" href="<?php echo base_url() ?>CustomerTransit">Back</a>
 										</div>
 									</div>
 								</div>
