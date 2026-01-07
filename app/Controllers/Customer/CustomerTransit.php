@@ -24,19 +24,17 @@ class CustomerTransit extends BaseController
 	}
 
 	public function index()
-	{
+{
+    $result['title'] = "Customer Transit";
 
-		$result = [];
-		$result['title'] = "Customer Transit";
+    $where = [];
+    $result['customer'] = $this->customerTransitModel->all_customerstransit($where);
 
-		$where = [];   // previously $data
-		$result['customer'] = $this->customerTransitModel->all_customerstransit($where);
+    echo view('header', $result);
+    echo view('customertransit/customertransit_view', $result);
+    echo view('footer');
+}
 
-
-		echo view('header', $result);
-		echo view('customertransit/customertransit_view', $result);
-		echo view('footer');
-	}
 
 	public function add()
 	{

@@ -1,175 +1,174 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="row" style="float:left;width:100%">
+<div class="row bg-light" style="float:left;width:100%">
+
 	<?php if (isset($error)) : ?>
-		<div class="alert alert-danger">
+		<div class="alert alert-danger text-center fw-bold">
 			<?= $error ?>
 		</div>
 	<?php endif; ?>
-		<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Material/insertData') ?>" enctype="multipart/form-data" style="width:100%">
-			<div class="col-sm-3" style="float:left;margin-top:20px"></div>
-			
 
-			<div class="col-sm-6" style="float:left;margin-top:20px">
-				<div class="ibox float-e-margins card">
-					<div class="ibox-title">
-						<h5><?php echo $title; ?><small> </small></h5>
-					</div>
-					<div class="ibox-content">
-						<div class="form-horizontal">
-							<div class="row">
-								<div class="col-sm-12">
+	<form id="frm" autocomplete="off" method="post"
+		  action="<?= base_url('/Material/insertData') ?>"
+		  enctype="multipart/form-data"
+		  style="width:100%">
 
-									<div class="form-group">
-										<div class="row">
+		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 
-											<div class="col-sm-4 col-xs-12">
-												<label>Material Code</label>
-												<input type="text" class="form-control" name="material_code" id="material_code" maxlength="20" value="<?php echo set_value('material_code'); ?>">
-												<div class="error"></div>
-											</div>
+		<div class="col-sm-6" style="float:left;margin-top:20px">
+			<div class="ibox float-e-margins card bg-white shadow-sm">
 
-											<div class="col-sm-4 col-xs-12">
-												<label>SAP Plant</label>
-												<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo set_value('sap_plant'); ?>">
-												<div class="error"></div>
-											</div>
+				<div class="ibox-title bg-primary text-white">
+					<h5 class="mb-0"><?php echo $title; ?></h5>
+				</div>
 
-											<div class="col-sm-4 col-xs-12">
-												<label>Grade</label>
-												<input type="text" class="form-control" name="grade" id="grade" maxlength="20" value="<?php echo set_value('grade'); ?>">
-												<div class="error"></div>
+				<div class="ibox-content">
+					<div class="form-horizontal">
+						<div class="row">
+							<div class="col-sm-12">
+
+								<!-- Material Code -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-4 col-xs-12">
+											<label class="text-secondary">Material Code</label>
+											<input type="text" class="form-control"
+												   name="material_code" id="material_code"
+												   maxlength="20"
+												   value="<?php echo set_value('material_code'); ?>">
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
+											<label class="text-secondary">SAP Plant</label>
+											<input type="text" class="form-control"
+												   name="sap_plant" id="sap_plant"
+												   maxlength="5"
+												   value="<?php echo set_value('sap_plant'); ?>">
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
+											<label class="text-secondary">Grade</label>
+											<input type="text" class="form-control"
+												   name="grade" id="grade"
+												   maxlength="20"
+												   value="<?php echo set_value('grade'); ?>">
 										</div>
 									</div>
+								</div>
 
+								<div class="hr-line-dashed"></div>
 
-									<div class="hr-line-dashed"></div>
-
-									<div class="form-group">
-										<div class="row">
-
-											
-
-											<div class="col-sm-6 col-xs-12">
-												<label>GSM</label>
-												<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" value="<?php echo set_value('gsm'); ?>">
-												<div class="error"></div>
-											</div>
-
-											<div class="col-sm-6 col-xs-12">
-												<label>UOM</label>
-												<input type="text" class="form-control" name="uom" id="uom" maxlength="5" value="<?php echo set_value('uom'); ?>">
-												<div class="error"></div>
-											</div>
-
-											<div class="col-sm-6 col-xs-12">
-												<label>Item Type</label>
-												<input type="text" class="form-control" name="item_type" id="item_type" value="<?php echo set_value('item_type'); ?>">
-												<div class="error"></div>
-											</div>
-
-										</div>
-									</div>
-
-									<div class="hr-line-dashed"></div>
-
-									<!-- <div class="form-group">
-										<div class="row">
-
-											
-
-										</div>
-									</div> -->
-
-									<div class="form-group">
-										<div class="row">
-
-											<div class="col-sm-6 col-xs-12">
-												<label>Width</label>
-												<input type="number" class="form-control" name="width" id="width" value="<?php echo set_value('width'); ?>">
-												<div class="error"></div>
-											</div>
-
-											<div class="col-sm-6 col-xs-12">
-												<label>Length</label>
-												<input type="number" class="form-control" name="length" id="length" value="<?php echo set_value('length'); ?>">
-												<div class="error"></div>
-											</div>
-
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="row">
-
-											<div class="col-sm-6 col-xs-12">
-												<label>MR Material Code</label>
-												<input type="text" class="form-control" name="mr_material_code" id="mr_material_code" maxlength="20" value="<?php echo set_value('mr_material_code'); ?>">
-												<div class="error"></div>
-											</div>
-
-											<div class="col-sm-6 col-xs-12">
-												<label>Packaging Time</label>
-												<input type="number" class="form-control" name="packaging_time" id="packaging_time" value="<?php echo set_value('packaging_time'); ?>">
-												<div class="error"></div>
-											</div>
-
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-12 col-xs-12">
-												<label>Description</label>
-												<textarea class="form-control" Placeholder="Enter Description" name="description" id="description"><?php echo set_value('description'); ?></textarea>
-												<div class="error"></div>
-											</div>
-										</div>
-									</div>
-
-
-
-									<!-- <div class="form-group">
+								<!-- GSM / UOM / Item Type -->
+								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label>Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" id="machine_output">
-											<div class="error"></div>
+											<label class="text-secondary">GSM</label>
+											<input type="text" class="form-control"
+												   name="gsm" id="gsm"
+												   maxlength="5"
+												   value="<?php echo set_value('gsm'); ?>">
+										</div>
+
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary">UOM</label>
+											<input type="text" class="form-control"
+												   name="uom" id="uom"
+												   maxlength="5"
+												   value="<?php echo set_value('uom'); ?>">
+										</div>
+
+										<div class="col-sm-6 col-xs-12 mt-2">
+											<label class="text-secondary">Item Type</label>
+											<input type="text" class="form-control"
+												   name="item_type" id="item_type"
+												   value="<?php echo set_value('item_type'); ?>">
 										</div>
 									</div>
-								</div> -->
+								</div>
 
-									<br><br>
+								<div class="hr-line-dashed"></div>
 
+								<!-- Width / Length -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary">Width</label>
+											<input type="number" class="form-control"
+												   name="width" id="width"
+												   value="<?php echo set_value('width'); ?>">
+										</div>
 
-									<div class="hr-line-dashed"></div>
-
-									<div class="hr-line-dashed"></div>
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-12 col-xs-12">
-												<button class="btn btn-info" type="submit">Add</button>
-												<a class="btn btn-primary" href="<?php echo base_url() ?>Material">Back</a>
-											</div>
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary">Length</label>
+											<input type="number" class="form-control"
+												   name="length" id="length"
+												   value="<?php echo set_value('length'); ?>">
 										</div>
 									</div>
+								</div>
 
+								<!-- MR Code / Packaging -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary">MR Material Code</label>
+											<input type="text" class="form-control"
+												   name="mr_material_code" id="mr_material_code"
+												   maxlength="20"
+												   value="<?php echo set_value('mr_material_code'); ?>">
+										</div>
+
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary">Packaging Time</label>
+											<input type="number" class="form-control"
+												   name="packaging_time" id="packaging_time"
+												   value="<?php echo set_value('packaging_time'); ?>">
+										</div>
+									</div>
+								</div>
+
+								<!-- Description -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12 col-xs-12">
+											<label class="text-secondary">Description</label>
+											<textarea class="form-control"
+													  placeholder="Enter Description"
+													  name="description"
+													  id="description"><?php echo set_value('description'); ?></textarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="hr-line-dashed"></div>
+
+								<!-- Buttons -->
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12 col-xs-12 text-center">
+											<button class="btn btn-success px-4" type="submit">
+												<i class="fa fa-plus"></i> Add
+											</button>
+
+											<a class="btn btn-outline-secondary px-4"
+											   href="<?php echo base_url() ?>Material">
+												<i class="fa fa-arrow-left"></i> Back
+											</a>
+										</div>
+									</div>
 								</div>
 
 							</div>
-
 						</div>
 					</div>
 				</div>
+
 			</div>
-	
-
-
-
-		</form>
+		</div>
+	</form>
 </div>
+
 <script>
 	$(document).ready(function() {
 
