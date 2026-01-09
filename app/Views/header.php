@@ -69,7 +69,7 @@
 
 	
 </head>
-<body> 
+<body style="background-color: #FFF0D1"> 
 
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -80,8 +80,8 @@
 
 	<div id="wrapper">
 
-        <div class="row border-bottom">
-        <nav class="navbar navbar-expand-lg navbar-light headerBg" role="navigation" style="margin-bottom: 0">
+        <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light headerBg" role="navigation">
 		
             <a class="navbar-brand logo" href="#">
                 <img src="<?php echo base_url()?>assets/img/logoHeader.png" class="img-responsive"> 

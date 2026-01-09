@@ -1,7 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="row bg-light" style="float:left;width:100%">
+<div class="card" style="background-color: #97c2c9;">
+<div class="row">
 
 	<?php if (isset($error)) : ?>
 		<div class="alert alert-danger text-center fw-bold">
@@ -16,14 +17,14 @@
 
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 
-		<div class="col-sm-6" style="float:left;margin-top:20px">
-			<div class="ibox float-e-margins card bg-white shadow-sm">
+		<div class="col-sm-6" style="float:left;margin-top:20px;">
+			<div class="bg-white shadow-sm">
 
-				<div class="ibox-title bg-primary text-white">
-					<h5 class="mb-0"><?php echo $title; ?></h5>
+				<div class="ibox-title bg-info text-white">
+					<h5 class="text-dark"><strong><?php echo $title; ?></strong></h5>
 				</div>
 
-				<div class="ibox-content">
+				<div class="ibox-content" style="background-color: #f9f9f8;">
 					<div class="form-horizontal">
 						<div class="row">
 							<div class="col-sm-12">
@@ -32,7 +33,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">Material Code</label>
+											<label class="text-secondary"><strong>Material Code *</strong></label>
 											<input type="text" class="form-control"
 												   name="material_code" id="material_code"
 												   maxlength="20"
@@ -40,7 +41,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">SAP Plant</label>
+											<label class="text-secondary"><strong>SAP Plant *</strong></label>
 											<input type="text" class="form-control"
 												   name="sap_plant" id="sap_plant"
 												   maxlength="5"
@@ -48,7 +49,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">Grade</label>
+											<label class="text-secondary"><strong>Grade *</strong></label>
 											<input type="text" class="form-control"
 												   name="grade" id="grade"
 												   maxlength="20"
@@ -62,24 +63,24 @@
 								<!-- GSM / UOM / Item Type -->
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">GSM</label>
+										<div class="col-sm-4 col-xs-12">
+											<label class="text-secondary"><strong>GSM *</strong></label>
 											<input type="text" class="form-control"
 												   name="gsm" id="gsm"
 												   maxlength="5"
 												   value="<?php echo set_value('gsm'); ?>">
 										</div>
 
-										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">UOM</label>
+										<div class="col-sm-4 col-xs-12">
+											<label class="text-secondary"><strong>UOM *</strong></label>
 											<input type="text" class="form-control"
 												   name="uom" id="uom"
 												   maxlength="5"
 												   value="<?php echo set_value('uom'); ?>">
 										</div>
 
-										<div class="col-sm-6 col-xs-12 mt-2">
-											<label class="text-secondary">Item Type</label>
+										<div class="col-sm-4 col-xs-12 mt-2">
+											<label class="text-secondary"><strong>Item Type *</strong></label>
 											<input type="text" class="form-control"
 												   name="item_type" id="item_type"
 												   value="<?php echo set_value('item_type'); ?>">
@@ -93,14 +94,14 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Width</label>
+											<label class="text-secondary"><strong>Width *</strong></label>
 											<input type="number" class="form-control"
 												   name="width" id="width"
 												   value="<?php echo set_value('width'); ?>">
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Length</label>
+											<label class="text-secondary"><strong>Length *</strong></label>
 											<input type="number" class="form-control"
 												   name="length" id="length"
 												   value="<?php echo set_value('length'); ?>">
@@ -112,7 +113,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">MR Material Code</label>
+											<label class="text-secondary"><strong>MR Material Code *</strong></label>
 											<input type="text" class="form-control"
 												   name="mr_material_code" id="mr_material_code"
 												   maxlength="20"
@@ -120,7 +121,7 @@
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Packaging Time</label>
+											<label class="text-secondary"><strong>Packaging Time *</strong></label>
 											<input type="number" class="form-control"
 												   name="packaging_time" id="packaging_time"
 												   value="<?php echo set_value('packaging_time'); ?>">
@@ -132,8 +133,8 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<label class="text-secondary">Description</label>
-											<textarea class="form-control"
+											<label class="text-secondary"><strong>Description *</strong></label>
+											<textarea class="form-control" style="resize: none;"
 													  placeholder="Enter Description"
 													  name="description"
 													  id="description"><?php echo set_value('description'); ?></textarea>
@@ -147,11 +148,11 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12 text-center">
-											<button class="btn btn-success px-4" type="submit">
+											<button class="btn btn-info px-4" type="submit">
 												<i class="fa fa-plus"></i> Add
 											</button>
 
-											<a class="btn btn-outline-secondary px-4"
+											<a class="btn btn-outline-dark px-4"
 											   href="<?php echo base_url() ?>Material">
 												<i class="fa fa-arrow-left"></i> Back
 											</a>
@@ -168,6 +169,7 @@
 		</div>
 	</form>
 </div>
+	</div>
 
 <script>
 	$(document).ready(function() {
@@ -239,18 +241,6 @@
 	function check() {
 		var err = 1;
 		var ctr = 0;
-
-		// var plant = $("#tbody tr:first-child").find(".plant_id").val();
-		// var store = $("#tbody tr:first-child").find(".store_id").val();
-		// $('#tbody tr').each(function() {
-		// 	if (ctr > 0) {
-		// 		if ($(this).find(".plant_id").val() == plant && $(this).find(".store_id").val() == store) {
-		// 			err++;
-		// 		}
-		// 	}
-
-		// 	ctr++;
-		// });
 
 		if (err > 1) {
 			alert("Same Material Can't be put in Same Plant & Store");

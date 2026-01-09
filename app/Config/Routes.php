@@ -70,7 +70,7 @@ $routes->post('/FinishStock/insertData', 'Material\FinishStock::insertData');
 $routes->get('/FinishStock/edit/(:num)', 'Material\FinishStock::edit/$1');
 $routes->post('/FinishStock/updateData/(:num)', 'Material\FinishStock::updateData/$1');
 $routes->get('/FinishStock/view/(:num)', 'Material\FinishStock::view/$1');
-$routes->post('api/finish-stock-update', 'Material\FinishStockApi::UpdateFinishStock');
+$routes->post('/api/finish-stock-update', 'Material\FinishStockApi::UpdateFinishStock');
 
 $routes->get('/CustomerQuota', 'Customer\CustomerQuota::index');
 $routes->get('/CustomerQuota/add', 'Customer\CustomerQuota::add');
@@ -100,6 +100,7 @@ $routes->get('/production-planning', 'ProductionPlanning\PlanningProductionContr
 $routes->get('/production-planning-calendar', 'ProductionPlanning\PlanningProductionController::calendarView');
 $routes->post('/production-planning/uploadXlsx', 'ProductionPlanning\PlanningProductionController::uploadXlsx');
 $routes->get('/production-planning/allocation', 'ProductionPlanning\AllocationAndCommitmentController::createAllocation');
+$routes->post('api/production-planning-update','ProductionPlanning\AllPlanningApi::UpdatePlanning');
 
 
 $routes->get('/api/indents', 'OrderGeneration\IndentApiController::getIndentSummary');
