@@ -42,6 +42,7 @@ $routes->post('/Material/insertData', 'Material\Material::insertData');
 $routes->get('/Material/edit/(:num)', 'Material\Material::edit/$1');
 $routes->post('/Material/updateData/(:num)', 'Material\Material::updateData/$1');
 $routes->get('/Material/view/(:num)', 'Material\Material::view/$1');
+$routes->post('/api/material-update', 'Material\MaterialMasterApi::UpdateMaterialMaster');
 
 $routes->get('/MRMaterial', 'Material\MRMaterial::index');
 $routes->get('/MRMaterial/add', 'Material\MRMaterial::add');
