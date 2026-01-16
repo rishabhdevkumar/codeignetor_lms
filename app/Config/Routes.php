@@ -105,6 +105,12 @@ $routes->get('/production-planning/allocation', 'ProductionPlanning\AllocationAn
 $routes->get('/api/indents', 'OrderGeneration\IndentApiController::getIndentSummary');
 $routes->post('api/update-sap-details', 'OrderGeneration\IndentApiController::updateSapDetails');
 
+$routes->get('production-planning/dragDrop', 'ProductionPlanning\PlanningProductionController::dragDropView');
+$routes->post('/production-planning/updateProductionPlanningOrder', 'ProductionPlanning\PlanningProductionController::updateProductionPlanningOrder');
+$routes->get('production-planning/push-to-approval', 'ProductionPlanning\PlanningProductionController::pushToCalendarApproval');
+$routes->post('/production-planning/store', 'ProductionPlanning\PlanningProductionController::insertSingleProductionPlanning');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

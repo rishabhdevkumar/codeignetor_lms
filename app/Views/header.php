@@ -104,6 +104,9 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="<?php echo base_url()?>production-planning/allocation">Indent Allocation</a>
                     </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url()?>production-planning/dragDrop">Drag Drop</a>
+                    </li>
                 </ul>
             </div>
 

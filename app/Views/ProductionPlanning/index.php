@@ -156,10 +156,13 @@
                             <th>BALANCE QTY</th>
                             <th>KC1 QTY</th>
                             <th>KC2 QTY</th>
+                            <th>NKC QTY</th>
                             <th>KC1 UTIL</th>
                             <th>KC2 UTIL</th>
+                            <th>NKC UTIL</th>
                             <th>KC1 BAL</th>
                             <th>KC2 BAL</th>
+                            <th>NKC BAL</th>
                             <th>UPLOADED BY</th>
                             <th>UPLOADED DATE</th>
                             <th>ACTIONS</th>
@@ -180,10 +183,13 @@
                                     <td><?= $row['BALANCE_QTY'] ?></td>
                                     <td><?= $row['KC1_QTY_MT'] ?></td>
                                     <td><?= $row['KC2_QTY_MT'] ?></td>
+                                    <td><?= $row['NKC_QTY_MT'] ?></td>
                                     <td><?= $row['KC1_UTILISED_QTY_MT'] ?></td>
                                     <td><?= $row['KC2_UTILISED_QTY_MT'] ?></td>
+                                    <td><?= $row['NKC_UTILISED_QTY_MT'] ?></td>
                                     <td><?= $row['KC1_BALANCE_QTY_MT'] ?></td>
                                     <td><?= $row['KC2_BALANCE_QTY_MT'] ?></td>
+                                    <td><?= $row['NKC_BALANCE_QTY_MT'] ?></td>
                                     <td><?= $row['UPLOADED_BY'] ?></td>
                                     <td><?= $row['UPLOADED_DATE'] ?></td>
                                     <td class="action-btns text-center">
