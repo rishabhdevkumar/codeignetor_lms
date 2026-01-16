@@ -2419,8 +2419,8 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .input-group-addon {
-  background-color: #fff;
-  border: 1px solid #E5E6E7;
+  /* background-color: #fff; */
+  /* border: 1px solid #E5E6E7; */
   border-radius: 1px;
   color: inherit;
   font-size: 14px;
