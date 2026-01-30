@@ -1362,7 +1362,7 @@ button.dim:active:before {
 
 .label {
   background-color: #d1dade;
-  color: #5e5e5e;
+  color: #050505;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 600;
   padding: 3px 8px;
@@ -1370,6 +1370,11 @@ button.dim:active:before {
   border-radius: 0.25em;
   line-height: 1;
   white-space: nowrap;
+}
+
+.card label em {
+  color: red;
+  font-style: normal;
 }
 
 .nav .label,
@@ -8671,10 +8676,10 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
+/* .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
+} */
 
 .master-card {
   height: 120px;
@@ -8707,12 +8712,12 @@ body {
   background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 50%);
 }
 
- .sap-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        }
+.sap-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
 
 /* Responsive */
 @media (max-width: 900px) {

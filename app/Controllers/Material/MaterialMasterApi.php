@@ -4,6 +4,7 @@ namespace App\Controllers\Material;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\Material\MaterialModel;
+use App\Models\Material\MRMaterialModel;
 
 class MaterialMasterApi extends ResourceController
 {
@@ -17,6 +18,7 @@ class MaterialMasterApi extends ResourceController
         }
 
         $model = new MaterialModel();
+        $mrmaterialModel  = new MRMaterialModel();
         $responseData = [];
 
         $db = \Config\Database::connect();
@@ -24,7 +26,7 @@ class MaterialMasterApi extends ResourceController
 
         foreach ($data as $index => $item) {
 
-            if (empty($item['finish_material_code']) || empty($item['sap_plant'])) {
+            if (empty($item['finishmaterialcode']) || empty($item['sapplant'])) {
                 $responseData[] = [
                     'row' => $index,
                     'status' => 'Failed',
@@ -33,34 +35,62 @@ class MaterialMasterApi extends ResourceController
                 continue;
             }
 
-            $payload = [
-                'FINISH_MATERIAL_CODE' => $item['finish_material_code'],
-                'SAP_PLANT'           => $item['sap_plant'],
+            $mrpayload = [
+                'MR_MATERIAL_CODE'       => $item['mrmaterialcode'],
+                'SAP_PLANT'              => $item['sapplant'],
+                'GRADE'                  => $item['grade'] ?? null,
+                'GSM'                    => $item['gsm'] ?? null,
+                'DELIVERY_PLANT_YN'      => $item['deliveryplant'],
+                'MACHINE_OUTPUT_KG_HR'   => $item['machineoutput'] ?? null,
+                'DESCRIPTION'            => $item['mrmaterialdesc'] ?? null,
+            ];
+
+            $mrexists = $mrmaterialModel->where('MR_MATERIAL_CODE', $item['mrmaterialcode'])
+                            ->where('SAP_PLANT', $item['sapplant'])
+                            ->first();
+
+            if ($mrexists) {
+
+                $mrmaterialModel->where('MR_MATERIAL_CODE', $item['mrmaterialcode'])
+                      ->where('SAP_PLANT', $item['sapplant'])
+                      ->set($mrpayload)
+                      ->update();
+
+            } else {
+
+                $mrmaterialModel->insert($mrpayload);
+
+            }
+
+             $payload = [
+                'FINISH_MATERIAL_CODE' => $item['finishmaterialcode'],
+                'SAP_PLANT'           => $item['sapplant'],
                 'GRADE'               => $item['grade'] ?? null,
                 'GSM'                 => $item['gsm'] ?? null,
                 'UOM'                 => $item['uom'] ?? null,
-                'ITEM_TYPE'           => $item['item_type'] ?? null,
+                'ITEM_TYPE'           => $item['itemtype'] ?? null,
                 'WIDTH'               => $item['width'] ?? null,
                 'LENGTH'              => $item['length'] ?? null,
-                'MR_MATERIAL_CODE'    => $item['mr_material_code'] ?? null,
-                'PACKAGING_TIME'      => $item['packaging_time'] ?? null,
+                'MR_MATERIAL_CODE'    => $item['mrmaterialcode'] ?? null,
+                'PACKAGING_TIME'      => $item['packagingtime'] ?? null,
+                'DESCRIPTION'         => $item['description'] ?? null,
             ];
 
-            $exists = $model->where('FINISH_MATERIAL_CODE', $item['finish_material_code'])
-                            ->where('SAP_PLANT', $item['sap_plant'])
+            $finishexists = $model->where('FINISH_MATERIAL_CODE', $item['finishmaterialcode'])
+                            ->where('SAP_PLANT', $item['sapplant'])
                             ->first();
 
-            if ($exists) {
+            if ($finishexists) {
 
-                $model->where('FINISH_MATERIAL_CODE', $item['finish_material_code'])
-                      ->where('SAP_PLANT', $item['sap_plant'])
+                $model->where('FINISH_MATERIAL_CODE', $item['finishmaterialcode'])
+                      ->where('SAP_PLANT', $item['sapplant'])
                       ->set($payload)
                       ->update();
 
                 $responseData[] = [
-                    'finish_material_code' => $item['finish_material_code'],
-                    'sap_plant' => $item['sap_plant'],
-                    'action' => 'Updated'
+                    'row' => $index,
+                    'status' => $item['finishmaterialcode'],
+                    'message' => 'Updated'
                 ];
 
             } else {
@@ -68,9 +98,9 @@ class MaterialMasterApi extends ResourceController
                 $model->insert($payload);
 
                 $responseData[] = [
-                    'finish_material_code' => $item['finish_material_code'],
-                    'sap_plant' => $item['sap_plant'],
-                    'action' => 'Inserted'
+                    'row' => $index,
+                    'status' => $item['finishmaterialcode'],
+                    'message' => 'Inserted'
                 ];
             }
         }

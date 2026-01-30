@@ -44,6 +44,8 @@ class AllocationAndCommitmentController extends BaseController
 
     public function createAllocation()
     {
+        $notAllotted = [];
+
         $pendingIndents = $this->indentModel
             ->select('id, in_no, bill_to_code, ship_to_code')
             ->where('sap_init', 0)
@@ -79,8 +81,17 @@ class AllocationAndCommitmentController extends BaseController
                 ->where('CUSTOMER_CODE', $indent['ship_to_code'])
                 ->first();
 
+
             if (empty($customerPinCode)) {
-                $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'ShipTo Customer PinCode Not Found';
+                $notAllotted[] = [
+                    'IN_NO'        => $indent['in_no'],
+                    'LINE_ITEM'    => $od['line_item'] ?? null,
+                   'MATERIAL'     => $od['material_code'] ?? null,
+                    'QTY'          => $od['quantity'] ?? 0,
+                    'SHIPCUSTOMER' => $indent['ship_to_code'],
+                    'STATUS'       => 'ShipTo Customer PinCode Not Found'
+                ];
+                // $indentStatus['STATUS'] = 'ShipTo Customer PinCode Not Found';
                 continue;
             }
 
@@ -88,6 +99,10 @@ class AllocationAndCommitmentController extends BaseController
 
 
             foreach ($orderDetails as $odKey => $od) {
+
+                $indentStatus['in_no'] = $pendingIndents[$key]['order_details'][$odKey]['in_no'];
+                $indentStatus['line_item'] = $pendingIndents[$key]['order_details'][$odKey]['line_item'];
+
 
                 $material = null;
 
@@ -115,7 +130,15 @@ class AllocationAndCommitmentController extends BaseController
                 }
 
                 if (empty($material)) {
-                    $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Finished Material Data Not Found';
+                    $notAllotted[] = [
+                        'IN_NO'        => $indent['in_no'],
+                        'LINE_ITEM'    => $od['line_item'] ?? null,
+                       'MATERIAL'     => $od['material_code'] ?? null,
+                        'QTY'          => $od['quantity'] ?? 0,
+                        'SHIPCUSTOMER' => $indent['ship_to_code'],
+                        'STATUS'       => 'Finished Material Data Not Found'
+                    ];
+                    // $indentStatus['STATUS'] = 'Finished Material Data Not Found';
                     continue;
                 }
 
@@ -177,7 +200,15 @@ class AllocationAndCommitmentController extends BaseController
                         ->first();
 
                     if (empty($transit)) {
-                        $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Transit Data Not Found';
+                        $notAllotted[] = [
+                            'IN_NO'        => $indent['in_no'],
+                            'LINE_ITEM'    => $od['line_item'] ?? null,
+                           'MATERIAL'     => $od['material_code'] ?? null,
+                            'QTY'          => $od['quantity'] ?? 0,
+                            'SHIPCUSTOMER' => $indent['ship_to_code'],
+                            'STATUS'       => 'Transit Data Not Found'
+                        ];
+                        // $indentStatus['STATUS'] = 'Transit Data Not Found';
                         continue;
                     }
 
@@ -292,7 +323,15 @@ class AllocationAndCommitmentController extends BaseController
                     }));
 
                     if (empty($planningData)) {
-                        $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'Planned Slot Not Found';
+                        $notAllotted[] = [
+                            'IN_NO'        => $indent['in_no'],
+                            'LINE_ITEM'    => $od['line_item'] ?? null,
+                           'MATERIAL'     => $od['material_code'] ?? null,
+                            'QTY'          => $od['quantity'] ?? 0,
+                            'SHIPCUSTOMER' => $indent['ship_to_code'],
+                            'STATUS'       => 'Planned Slot Not Found'
+                        ];
+                        // $indentStatus['STATUS'] = 'Planned Slot Not Found';
                         continue;
                     }
 
@@ -487,8 +526,15 @@ class AllocationAndCommitmentController extends BaseController
                             $finalRecords = $earliestTpmRecords;
                         } else {
 
-
-                            $pendingIndents[$key]['order_details'][$odKey]['STATUS'] = 'No planning data available for OWN or TPM machines.';
+                            $notAllotted[] = [
+                                'IN_NO'        => $indent['in_no'],
+                                'LINE_ITEM'    => $od['line_item'] ?? null,
+                               'MATERIAL'     => $od['material_code'] ?? null,
+                                'QTY'          => $od['quantity'] ?? 0,
+                                'SHIPCUSTOMER' => $indent['ship_to_code'],
+                                'STATUS'       => 'No planning data available for OWN or TPM machines.'
+                            ];
+                            // $indentStatus['STATUS'] = 'No planning data available for OWN or TPM machines.';
                             continue;
 
                             // CASE 4: NO MACHINES AVAILABLE
@@ -691,16 +737,22 @@ class AllocationAndCommitmentController extends BaseController
         // ];
 
         //  echo "<pre>"; print_r($orderDetailsOnly); exit;
+        // $indentStatus['title'] = 'Indent Allocation';
+
+        $indentStatus = [
+            'title'        => 'Indent Allocation',
+            'notAllotted'  => $notAllotted
+        ];
 
 
-        // echo view('header', $indexdata);
-        // echo view('ProductionPlanning/alloc_index', $indexdata);
-        // echo view('footer');
+        echo view('header', $indentStatus);
+        echo view('ProductionPlanning/alloc_index', $indentStatus);
+        echo view('footer');
 
-        return $this->response->setJSON([
-            'status' => true,
-            'count' => count($pendingIndents),
-            'data' => $pendingIndents
-        ]);
+        // return $this->response->setJSON([
+        //     'status' => true,
+        //     'count' => count($pendingIndents),
+        //     'data' => $pendingIndents
+        // ]);
     }
 }

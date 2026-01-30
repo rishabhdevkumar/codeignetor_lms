@@ -117,27 +117,29 @@ class IndentApiController extends ResourceController
                         "ITEM_TYPE" => $item['item_type'] ?? "",
                         "GRADE" => $item['item_variety'] ?? "",
                         "GSM" => $item['gsm'] ?? "",
-                        "SCHEDULE_DATE" => $item['request_date'] ?? "",
+                        "SCHEDULE_DATE" => $indentAlloted['TO_DATE'] ?? "",
                         "MATERIAL" => $finishMaterialData['FINISH_MATERIAL_CODE'] ?? "",
                         "UOM" => $finishMaterialData['UOM'] ?? "",
-                        "DELIVERY PLANT" => $finishMaterialData['SAP_PLANT'] ?? "",
-                        "INDENT LINE ITEM" => $item['line_item'] ?? "",
-                        "QUANTITY IN KG" => $item['quantity'] ?? 0,
+                        "DELIVERY_PLANT" => $finishMaterialData['SAP_PLANT'] ?? "",
+                        "INDENT_LINE_ITEM" => $item['line_item'] ?? "",
+                        "QUANTITY_IN_KG" => $item['quantity'] ?? 0,
                         "DELIVERY_DATE" => $indentAlloted['DOOR_STEP_DEL_DATE'] ?? "",
-                        "REQUIRED DATE" => $indentAlloted['TO_DATE'] ?? ""
+                        "REQUIRED_DATE" => $item['request_date'] ?? "",
+                        "remarks" => $item['remarks'] ?? ""
                     ];
                 }, $items);
 
                 $result[] = [
-                    "INDENT DATE" => $row['in_date'] ?? "",
-                    "INDENT NO" => $row['in_no'] ?? "",
-                    "DEALER CODE" => $row['sold_to_code'] ?? "",
-                    "BILL TO CODE" => $row['bill_to_code'] ?? "",
-                    "SHIP TO CODE" => $row['ship_to_code'] ?? "",
-                    "MARKET SEGMENT" => $row['market_segment'] ?? "",
-                    "ORDER TYPE" => $row['order_type'] ?? "",
+                    "INDENT_DATE" => $row['in_date'] ?? "",
+                    "INDENT_NO" => $row['in_no'] ?? "",
+                    "DEALER_CODE" => $row['sold_to_code'] ?? "",
+                    "BILL_TO_CODE" => $row['bill_to_code'] ?? "",
+                    "SHIP_TO_CODE" => $row['ship_to_code'] ?? "",
+                    "MARKET_SEGMENT" => $row['market_segment'] ?? "",
+                    "ORDER_TYPE" => $row['order_type'] ?? "",
                     "DEALER_PO_NO" => $row['po_no'] ?? "",
-                    "ITEMDETAILS" => $formattedItems
+                    "remarks" => $row['remarks'] ?? "",
+                    "ITEMSDETAILS" => $formattedItems
                 ];
             }
 
@@ -155,4 +157,103 @@ class IndentApiController extends ResourceController
             ], 500);
         }
     }
+
+    public function getChangedIndent()
+    {
+        try {
+            $indentAllotmentModel = new IndentAllotmentModel();
+
+            $nonAllotedIndents = $indentAllotmentModel
+                ->distinct()
+                ->groupStart()
+                ->where('SAP_ORDER_NO IS NOT NULL', null, false)
+                ->where('SAP_ORDER_NO !=', '')
+                ->groupEnd()
+                ->where('MODIFICATION_FLAG', 'X')
+                ->where('SAP_ORDER_CHANGE', false)
+                ->findAll();
+
+
+            if (empty($nonAllotedIndents)) {
+                return $this->respond([
+                    "ApiMessage" => "No Changed Indents Found.",
+                    "ApiData" => [],
+                    "IsSuccessful" => false
+                ], 404);
+            }
+
+
+            $result = [];
+
+            foreach ($nonAllotedIndents as $row) {
+
+                $result[] = [
+                    "INDENT_NO" => $row['INDENT_NO'] ?? "",  
+                    "INDENT_LINE_ITEM" => $row['INDENT_LINE_ITEM'] ?? "", 
+                    "SCHEDULE_DATE" => $row['TO_DATE'] ?? "",
+                    "DELIVERY_DATE" => $row['DOOR_STEP_DEL_DATE'] ?? "",
+                    "SAP_ORDER_NO" => $row['SAP_ORDER_NO'] ?? "",
+                ];
+            }
+
+            return $this->respond([
+                "ApiMessage" => "Data Found!",
+                "ApiData" => $result,
+                "IsSuccessful" => true
+            ], 200);
+
+        } catch (\Exception $e) {
+            return $this->respond([
+                "ApiMessage" => "An Error Occurred: " . $e->getMessage(),
+                "ApiData" => [],
+                "IsSuccessful" => false
+            ], 500);
+        }
+    }
+
+    public function updateChangedSapDetails()
+    {
+
+        // Read JSON payload
+        $data = $this->request->getJSON(true);
+
+
+        if (!$data || !is_array($data)) {
+            return $this->fail('Invalid JSON payload');
+        }
+
+        $model = new IndentAllotmentModel();
+        $responseData = [];
+
+        foreach ($data as $item) {
+
+            if (!isset($item['indentno']) || !isset($item['saporderno']) || !isset($item['sapremarks'])) {
+                return $this->fail('Missing required fields');
+            }
+
+            // Update database
+            $update = [
+                'SAP_ORDER_CHANGE' => true,
+                'SAP_REMARKS' => $item['sapremarks'],
+            ];
+
+            $model->where('INDENT_NO', $item['indentno'])
+                  ->where('INDENT_NO', $item['indentlineitem'])
+                  ->set($update)
+                  ->update();
+
+            $responseData[] = [
+                'indentno' => $item['indentno'],
+                'status' => 'Updated Successfully'
+            ];
+        }
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'SAP details updated successfully',
+            'data' => $responseData
+        ], 200);
+
+    }
+
 }

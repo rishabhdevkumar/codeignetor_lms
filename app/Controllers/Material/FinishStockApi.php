@@ -29,7 +29,7 @@ class FinishStockApi extends ResourceController
 
         foreach ($data as $index => $item) {
 
-            if (empty($item['finish_material_code']) || empty($item['sap_plant'])) {
+            if (empty($item['finishmaterialcode']) || empty($item['sapplant'])) {
                 $responseData[] = [
                     'row' => $index,
                     'status' => 'Failed',
@@ -41,20 +41,20 @@ class FinishStockApi extends ResourceController
 
             // Update database
             $payload = [
-                'FINISH_MATERIAL_CODE' => $item['finish_material_code'],
-                'SAP_PLANT' => $item['sap_plant'],
-                'STOCK_QTY'    => $item['stock_qty'] ?? 0,
-                'BALANCE_QTY'    => $item['balance_qty'] ?? 0,
+                'FINISH_MATERIAL_CODE' => $item['finishmaterialcode'],
+                'SAP_PLANT' => $item['sapplant'],
+                'STOCK_QTY'    => $item['stockqty'] ?? 0,
+                'BALANCE_QTY'    => $item['balanceqty'] ?? 0,
             ];
 
-            $exists = $model->where('FINISH_MATERIAL_CODE', $item['finish_material_code'])
-                ->where('SAP_PLANT', $item['sap_plant'])
+            $exists = $model->where('FINISH_MATERIAL_CODE', $item['finishmaterialcode'])
+                ->where('SAP_PLANT', $item['sapplant'])
                 ->first();
 
             if ($exists) {
 
-                $model->where('FINISH_MATERIAL_CODE', $item['finish_material_code'])
-                      ->where('SAP_PLANT', $item['sap_plant'])
+                $model->where('FINISH_MATERIAL_CODE', $item['finishmaterialcode'])
+                      ->where('SAP_PLANT', $item['sapplant'])
                       ->set([
                         'STOCK_QTY'   => $payload['STOCK_QTY'],
                         'BALANCE_QTY' => $payload['BALANCE_QTY']
@@ -62,9 +62,9 @@ class FinishStockApi extends ResourceController
                         ->update();
 
                 $responseData[] = [
-                    'finish_material_code' => $item['finish_material_code'],
-                    'sap_plant' => $item['sap_plant'],
-                    'action' => 'Updated'
+                    'row' => $index,
+                    'status' => $item['finishmaterialcode'],
+                    'message' => 'Updated'
                 ];
             } else {
 
@@ -72,9 +72,9 @@ class FinishStockApi extends ResourceController
                 $model->insert($payload);
 
                 $responseData[] = [
-                    'finish_material_code' => $item['finish_material_code'],
-                    'sap_plant' => $item['sap_plant'],
-                    'action' => 'Inserted'
+                    'row' => $index,
+                    'status' => $item['finishmaterialcode'],
+                    'message' => 'Inserted'
                 ];
             }
         }

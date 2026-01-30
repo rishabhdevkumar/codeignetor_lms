@@ -64,7 +64,7 @@ class CustomerTransit extends BaseController
 		// $result["customer"] = $this->customerTransitModel->all_customerstransit($arr2);
 
 		// if (!$result['customer']) {
-			$insert = $this->crudModel->saveData('pp_customer_master', $arr);
+			$insert = $this->crudModel->saveData('pp_transit_master', $arr);
 		// } else {
 		// 	$result['error'] = "Customer Already Exist";
 		// 	return view('header', $result)
@@ -110,7 +110,7 @@ class CustomerTransit extends BaseController
 		];
 
 		$condition = array("PP_ID" => $this->request->getPost('transit_id'));
-		$update = $this->crudModel->updateData('pp_customer_master', $arr, $condition);
+		$update = $this->crudModel->updateData('pp_transit_master', $arr, $condition);
 
 		if ($update) {
 			// $this->session->set_flashdata("message","<div class='alert alert-success'>Customer Updated</div>");
@@ -149,7 +149,7 @@ class CustomerTransit extends BaseController
 
 
 		$condition = array("PP_ID" => $id);
-		$delete = $this->crudModel->del("pp_customer_master", $condition);
+		$delete = $this->crudModel->del("pp_transit_master", $condition);
 
 		if ($delete) {
 

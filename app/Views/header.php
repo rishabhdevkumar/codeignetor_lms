@@ -107,6 +107,9 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="<?php echo base_url()?>production-planning/dragDrop">Drag Drop</a>
                     </li>
+                     <li class="nav-item ">
+                        <a class="nav-link" href="<?php echo base_url()?>production-planning/planning-approval">Planning Approval</a>
+                    </li>
                 </ul>
             </div>
 

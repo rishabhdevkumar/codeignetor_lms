@@ -182,6 +182,7 @@
                     class="table table-bordered table-hover table-striped text-center align-middle">
                     <thead>
                         <tr>
+                            <th>Calendar Id</th>
                             <th>Version</th>
                             <th>Machine</th>
                             <th>Mother Roll</th>
@@ -205,6 +206,7 @@
                     <tbody>
                         <?php foreach ($records as $row): ?>
                             <tr>
+                                <td><?= $row['PP_ID'] ?></td>
                                 <td><?= $row['VERSION'] ?></td>
                                 <td><?= $row['MACHINE_TPM_ID'] ?></td>
                                 <td><?= $row['SAP_MR_FG_CODE'] ?></td>

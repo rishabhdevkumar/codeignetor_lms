@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Indent Allotment Records</title>
+    <title>Indent Allotment notAllotted</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -115,7 +115,7 @@
 
         <div class="sap-card">
 
-            <h3 class="text-center">Indent Allotment Records</h3>
+            <h3 class="text-center">Indent Allotment notAllotted</h3>
 
             <!-- Flash Messages -->
             <?php if (session()->getFlashdata('success')): ?>
@@ -137,33 +137,38 @@
                         <tr>
                             <th>Indent No.</th>
                             <th>Indent Line Item</th>
-                            <th>Quantity</th>
-                            <th>From DATE/TIME</th>
+                             <th>Material</th> 
+                             <th>Quantity</th>
+                            <!-- <th>From DATE/TIME</th>
                             <th>To DATE/TIME</th>
                             <th>Finishing DATE/TIME</th>
-                            <th>Doorstep Del. DATE/TIME</th>
+                            <th>Doorstep Del. DATE/TIME</th> -->
+                             <th>Ship To Customer</th>
                             <th>Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <?php if (!empty($records) && is_array($records)): ?>
-                            <?php foreach ($records as $row): ?>
+                        <?php if (!empty($notAllotted) && is_array($notAllotted)): ?>
+                            <?php foreach ($notAllotted as $row): ?>
                                 <tr>
-                                    <td><?= $row['in_no'] ?></td>
-                                    <td><?= $row['line_item'] ?></td>
-                                    <td><?= $row['alloted_qty'] ?></td>
-                                    <td><?= $row['FROM_DATE'] ?></td>
-                                    <td><?= $row['TO_DATE'] ?></td>
-                                    <td><?= $row['FINISH_DATE'] ?></td>
-                                    <td><?= $row['DOOR_STEP_DATE'] ?></td>
-                                    <td><?= $row['STATUS'] ?></td>
+                                    <td><?= esc($row['IN_NO']) ?></td>
+                                    <td><?= esc($row['LINE_ITEM']) ?></td>
+                                    <td><?= esc($row['MATERIAL']) ?></td>
+                                    <td><?= esc($row['QTY']) ?></td>
+                                    <td><?= esc($row['SHIPCUSTOMER']) ?></td>
+                                    <td class="text-danger">
+                                        <?= esc($row['STATUS']) ?>
+                                    </td>
                                    
+                                  
+
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="18" class="text-center">No Records Found</td>
+                                <td colspan="18" class="text-center">No notAllotted Found</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -172,7 +177,7 @@
 
         </div>
     </div>
- 
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

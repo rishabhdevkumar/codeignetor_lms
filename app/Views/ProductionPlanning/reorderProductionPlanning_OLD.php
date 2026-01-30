@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Production Planning – Reorder</title>
+    <title>Production Planning–Reorder</title>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -215,13 +215,13 @@
         </div>
 
 
-
         <!-- TABLE CARD -->
         <div class="sap-card table-scroll-x">
             <table style="horizontal-scroll:y">
                 <thead>
                     <tr>
                         <th>☰</th>
+                        <th>PP ID</th>
                         <th>Planning Cal ID</th>
                         <th>Version</th>
                         <th>Machine</th>
@@ -248,10 +248,10 @@
                     <?php foreach ($items as $item): ?>
                         <tr data-id="<?= $item['PP_ID']; ?>" data-machine="<?= $item['MACHINE']; ?>"
                             data-mrfgcode="<?= $item['SAP_MR_FG_CODE']; ?> " data-qtymt="<?= $item['QTY_MT']; ?> "
-                            data-kc1qtymt="<?= $item['KC1_QTY_MT']; ?> " data-kc2qtymt="<?= $item['KC2_QTY_MT']; ?> "
                             data-version="<?= $item['VERSION']; ?> " class="machine-row">
                             <td>☰</td>
                             <td><?= $item['PP_ID'] ?></td>
+                            <td><?= $item['PLANNING_CAL_ID'] ?></td>
                             <td><?= $item['VERSION'] ?></td>
                             <td><?= $item['MACHINE'] ?></td>
                             <td><?= $item['SAP_MR_FG_CODE'] ?></td>
@@ -289,6 +289,7 @@
         </div>
 
     </div>
+
     <!-- ADD MODAL -->
     <div id="addModal" title="Add Production Planning" style="display:none;">
         <form id="addForm">
@@ -430,10 +431,9 @@
                         const d = res.data;
 
                         const $row = $(`
-                            <tr data-id="${d.PP_ID}" data-machine="${d.MACHINE}" data-mrfgcode="${d.SAP_MR_FG_CODE}" 
-                            data-kc1qtymt="${d.KC1_QTY_MT}" data-kc2qtymt="${d.KC2_QTY_MT}"
-                            data-qtymt="${d.QTY_MT}" data-version="${d.VERSION}" class="machine-row">
+                            <tr data-id="${d.PP_ID}" data-machine="${d.MACHINE}" data-mrfgcode="${d.SAP_MR_FG_CODE}" data-qtymt="${d.QTY_MT}" data-version="${d.VERSION}" class="machine-row">
                                 <td>☰</td>
+                                <td>NA</td>
                                 <td>NA</td>
                                 <td>${d.VERSION}</td>
                                 <td>${d.MACHINE}</td>
@@ -523,8 +523,6 @@
                     return;
                 }
 
-                // alert(JSON.stringify(pendingOrder, null, 10));
-
                 $.ajax({
                     url: "<?= base_url('production-planning/updateProductionPlanningOrder'); ?>",
                     type: "POST",
@@ -561,9 +559,7 @@
                     machine: $(this).data("machine"),
                     SAP_MR_FG_CODE: $(this).data("mrfgcode"),
                     QTY_MT: $(this).data("qtymt"),
-                    VERSION: $(this).data("version"),
-                    KC1_QTY_MT: $(this).data("kc1qtymt"),
-                    KC2_QTY_MT: $(this).data("kc2qtymt")
+                    VERSION: $(this).data("version")
                 });
             });
 
@@ -666,9 +662,9 @@
                     }
 
                     if (toDate) {
-                        let rowTo = new Date(rowToText.replace(' ', 'T'));
+                        let rowFrom = new Date(rowFromText.replace(' ', 'T'));
                         let to = new Date(toDate);
-                        if (rowTo > to) showRow = false;
+                        if (rowFrom > to) showRow = false;
                     }
 
                     $(this).toggle(showRow);

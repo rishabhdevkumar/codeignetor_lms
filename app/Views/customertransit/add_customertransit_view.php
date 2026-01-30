@@ -7,7 +7,7 @@
 			<?= $error ?>
 		</div>
 	<?php endif; ?>
-	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/Customer/insertData') ?>" enctype="multipart/form-data" style="width:100%">
+	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/CustomerTransit/insertData') ?>" enctype="multipart/form-data" style="width:100%">
 		<div class="col-sm-2" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-8" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">

@@ -51,7 +51,7 @@
 										<td><?php echo $customer[$k]["FROM_COUNTRY"]; ?></td>
 										<td><?php echo $customer[$k]["FROM_PINCODE"]; ?></td>
 										<td><?php echo $customer[$k]["TO_COUNTRY"]; ?></td>
-										<td><?php echo $customer[$k]["FROM_PINCODE"]; ?></td>
+										<td><?php echo $customer[$k]["TO_PINCODE"]; ?></td>
 										<td><?php echo $customer[$k]["DISTANCE"]; ?></td>
 										<td><?php echo $customer[$k]["TRANSIT_TIME"]; ?></td>
 										<td><a href="<?php echo base_url(); ?>CustomerTransit/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>

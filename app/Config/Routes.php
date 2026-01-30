@@ -42,6 +42,7 @@ $routes->post('/Material/insertData', 'Material\Material::insertData');
 $routes->get('/Material/edit/(:num)', 'Material\Material::edit/$1');
 $routes->post('/Material/updateData/(:num)', 'Material\Material::updateData/$1');
 $routes->get('/Material/view/(:num)', 'Material\Material::view/$1');
+
 $routes->post('/api/material-update', 'Material\MaterialMasterApi::UpdateMaterialMaster');
 
 $routes->get('/MRMaterial', 'Material\MRMaterial::index');
@@ -71,7 +72,7 @@ $routes->post('/FinishStock/insertData', 'Material\FinishStock::insertData');
 $routes->get('/FinishStock/edit/(:num)', 'Material\FinishStock::edit/$1');
 $routes->post('/FinishStock/updateData/(:num)', 'Material\FinishStock::updateData/$1');
 $routes->get('/FinishStock/view/(:num)', 'Material\FinishStock::view/$1');
-$routes->post('/api/finish-stock-update', 'Material\FinishStockApi::UpdateFinishStock');
+$routes->post('api/finish-stock-update', 'Material\FinishStockApi::UpdateFinishStock');
 
 $routes->get('/CustomerQuota', 'Customer\CustomerQuota::index');
 $routes->get('/CustomerQuota/add', 'Customer\CustomerQuota::add');
@@ -101,16 +102,22 @@ $routes->get('/production-planning', 'ProductionPlanning\PlanningProductionContr
 $routes->get('/production-planning-calendar', 'ProductionPlanning\PlanningProductionController::calendarView');
 $routes->post('/production-planning/uploadXlsx', 'ProductionPlanning\PlanningProductionController::uploadXlsx');
 $routes->get('/production-planning/allocation', 'ProductionPlanning\AllocationAndCommitmentController::createAllocation');
-$routes->post('api/production-planning-update','ProductionPlanning\AllPlanningApi::UpdatePlanning');
 
+$routes->post('api/schedule-planning-update','ProductionPlanning\SchedulePlanningApi::UpdatePlanning');
 
 $routes->get('/api/indents', 'OrderGeneration\IndentApiController::getIndentSummary');
 $routes->post('api/update-sap-details', 'OrderGeneration\IndentApiController::updateSapDetails');
+$routes->get('/api/get-changed-indents', 'OrderGeneration\IndentApiController::getChangedIndent');
+$routes->post('api/post-changed-sap-details', 'OrderGeneration\IndentApiController::updateChangedSapDetails');
 
 $routes->get('production-planning/dragDrop', 'ProductionPlanning\PlanningProductionController::dragDropView');
 $routes->post('/production-planning/updateProductionPlanningOrder', 'ProductionPlanning\PlanningProductionController::updateProductionPlanningOrder');
 $routes->get('production-planning/push-to-approval', 'ProductionPlanning\PlanningProductionController::pushToCalendarApproval');
 $routes->post('/production-planning/store', 'ProductionPlanning\PlanningProductionController::insertSingleProductionPlanning');
+
+$routes->get('production-planning/planning-approval', 'ProductionPlanning\PlanningProductionController::planningApprovalView');
+$routes->post('/production-planning/rejectPendingApproval', 'ProductionPlanning\PlanningProductionController::rejectPendingApproval');
+$routes->post('/production-planning/approvePendingApproval', 'ProductionPlanning\PlanningProductionController::approvePendingApproval');
 
 
 /*
