@@ -1,5 +1,6 @@
+<div class="card mt-4">
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-12">
 		<?php if (session()->getFlashdata('error')): ?>
 			<div class="alert alert-danger">
 				<?= session()->getFlashdata('error'); ?>
@@ -11,32 +12,25 @@
 				<?= session()->getFlashdata('success'); ?>
 			</div>
 		<?php endif; ?>
-		<div class="ibox float-e-margins">
-			<div class="ibox-title">
-				<h5><?php echo $title; ?> <small> </small></h5>
+			<div class="card-header d-flex justify-content-between align-items-center" style="background-color:#FFE0B5;">
+				<h5><?php echo $title; ?> Details</h5>
+				<a href="<?php echo base_url(); ?>Customer/add" class="btn btn-info btn-sm">Add Customer</a>
 			</div>
 
-			<div class="ibox-content">
-
-				<div class="row">
-					<div class="col-sm-3">
-						<a href="<?php echo base_url(); ?>Customer/add" class="btn btn-info">Add</a>
-					</div>
-				</div>
+			<div class="card-body">
 				<div class="table-responsive">
 					<table id="tbl" class="table table-striped table-bordered table-hover dataTables-example">
-						<thead>
+						<thead class="text-center">
 							<tr>
-								<th>Sl.</th>
-								<th>Customer Code</th>
-								<th>Customer Name</th>
-								<th>Customer Type</th>
-								<th>Partner Code</th>
-								<th>State</th>
-								<th>PIN Code</th>
-								<th>View</th>
-								<th>Edit</th>
-								<!--<th>Delete</th>-->
+								<th style="background-color:#efd6bb; color:#000">Sl.No</th>
+								<th style="background-color:#efd6bb; color:#000">Customer Code</th>
+								<th style="background-color:#efd6bb; color:#000">Customer Name</th>
+								<th style="background-color:#efd6bb; color:#000">Customer Type</th>
+								<th style="background-color:#efd6bb; color:#000">Partner Code</th>
+								<th style="background-color:#efd6bb; color:#000">State</th>
+								<th style="background-color:#efd6bb; color:#000">PIN Code</th>
+								<th style="background-color:#efd6bb; color:#000">View</th>
+								<th style="background-color:#efd6bb; color:#000">Edit</th>
 							</tr>
 						</thead>
 						<tbody id="tbody">
@@ -54,8 +48,8 @@
 										<td><?php echo $customer[$k]["parent_cust_no"]; ?></td>
 										<td><?php echo $customer[$k]["STATE"]; ?></td>
 										<td><?php echo $customer[$k]["PIN_CODE"]; ?></td>
-										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
-										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 									</tr>
 							<?php
 									$ctr++;
@@ -69,11 +63,10 @@
 
 				</div>
 
-
-			</div>
 		</div>
 	</div>
 </div>
+		</div>
 
 <script>
 	$(document).ready(function() {

@@ -23,8 +23,8 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5><?php echo $title; ?><small> </small></h5>
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title"">
+					<h5><?php echo $title; ?></h5>
 				</div>
 				<div class="ibox-content">
 					<div class="form-horizontal">
@@ -36,7 +36,8 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Machine Code</label>
-											<input type="text" class="form-control" name="machine_code" id="machine_code" maxlength="20" value="<?php echo $machine_code; ?>" readonly>
+											<input type="text" class="form-control" name="machine_code" id="machine_code"
+											 maxlength="20" value="<?php echo $machine_code; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
@@ -57,28 +58,18 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description" readonly><?php echo $description; ?></textarea>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
 											<label>SAP Plant</label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" readonly value="<?php echo $sap_plant; ?>">
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" 
+											readonly value="<?php echo $sap_plant; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Vendor Code</label>
-											<input type="text" class="form-control" name="vendor_code" id="vendor_code" readonly value="<?php echo $vendor_code; ?>">
+											<input type="text" class="form-control" name="vendor_code" id="vendor_code"
+											 readonly value="<?php echo $vendor_code; ?>">
 											<div class="error"></div>
 										</div>
 
@@ -92,13 +83,15 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 										<div class="col-sm-6 col-xs-12">
 											<label>PinCode</label>
-											<input type="text" class="form-control" name="pincode" id="pincode" readonly value="<?php echo $pincode; ?>">
+											<input type="text" class="form-control" name="pincode" id="pincode" 
+											readonly value="<?php echo $pincode; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Capacity Per Day (MTS)</label>
-											<input type="number" class="form-control" name="capacity_per_day" id="capacity_per_day" readonly value="<?php echo $capacity_per_day; ?>">
+											<input type="number" class="form-control" name="capacity_per_day" 
+											id="capacity_per_day" readonly value="<?php echo $capacity_per_day; ?>">
 											<div class="error"></div>
 										</div>
 
@@ -112,28 +105,38 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Grade Change Time (Min)</label>
-											<input type="number" class="form-control" name="grade_change_time" id="grade_change_time" readonly value="<?php echo $grade_change_time; ?>">
+											<input type="number" class="form-control" name="grade_change_time" 
+											id="grade_change_time" readonly value="<?php echo $grade_change_time; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>GSM Change Time (Min)</label>
-											<input type="number" class="form-control" name="gsm_change_time" id="gsm_change_time" readonly value="<?php echo $gsm_change_time; ?>">
+											<input type="number" class="form-control" name="gsm_change_time" 
+											id="gsm_change_time" readonly value="<?php echo $gsm_change_time; ?>">
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
 
-
-								<br><br>
-
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<a class="btn btn-primary" href="<?php echo base_url() ?>Machine">Back</a>
+											<label>Description</label>
+											<textarea class="form-control" Placeholder="Enter Description" name="description" 
+											id="description" readonly style="resize:none;"><?php echo $description; ?></textarea>
+											<div class="error"></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12 col-xs-12">
+											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>Machine">Back</a>
 										</div>
 									</div>
 								</div>

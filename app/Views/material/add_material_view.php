@@ -1,7 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- <div class="card" style=""> -->
 <div class="row">
 
 	<?php if (isset($error)) : ?>
@@ -29,7 +28,6 @@
 						<div class="row">
 							<div class="col-sm-12">
 
-								<!-- Material Code -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
@@ -49,7 +47,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary"><strong>Grade *</strong></label>
+											<label class="text-secondary">Grade<em>*</em></label>
 											<input type="text" class="form-control"
 												name="grade" id="grade"
 												maxlength="20" required
@@ -60,11 +58,10 @@
 
 								<div class="hr-line-dashed"></div>
 
-								<!-- GSM / UOM / Item Type -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary"><strong>GSM *</strong></label>
+											<label class="text-secondary">GSM<em>*</em></label>
 											<input type="text" class="form-control"
 												name="gsm" id="gsm"
 												maxlength="5" required
@@ -72,7 +69,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary"><strong>UOM *</strong></label>
+											<label class="text-secondary">UOM<em>*</em></label>
 											<input type="text" class="form-control"
 												name="uom" id="uom"
 												maxlength="5" required
@@ -80,7 +77,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12 mt-2">
-											<label class="text-secondary"><strong>Item Type *</strong></label>
+											<label class="text-secondary">Item Type<em>*</em></label>
 											<input type="text" class="form-control"
 												name="item_type" id="item_type" required
 												value="<?php echo set_value('item_type'); ?>">
@@ -90,38 +87,36 @@
 
 								<div class="hr-line-dashed"></div>
 
-								<!-- Width / Length -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary"><strong>Width *</strong></label>
+											<label class="text-secondary">Width<em>*</em></label>
 											<input type="number" class="form-control"
-												name="width" id="width"
+												name="width" id="width" required
 												value="<?php echo set_value('width'); ?>">
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary"><strong>Length *</strong></label>
+											<label class="text-secondary">Length<em>*</em></label>
 											<input type="number" class="form-control"
-												name="length" id="length"
+												name="length" id="length" required
 												value="<?php echo set_value('length'); ?>">
 										</div>
 									</div>
 								</div>
 
-								<!-- MR Code / Packaging -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary"><strong>MR Material Code *</strong></label>
+											<label class="text-secondary">MR Material Code<em>*</em></label>
 											<input type="text" class="form-control"
 												name="mr_material_code" id="mr_material_code"
-												maxlength="20"
+												maxlength="20" required
 												value="<?php echo set_value('mr_material_code'); ?>">
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary"><strong>Packaging Time *</strong></label>
+											<label class="text-secondary">Packaging Time<em>*</em></label>
 											<input type="number" class="form-control"
 												name="packaging_time" id="packaging_time" required
 												value="<?php echo set_value('packaging_time'); ?>">
@@ -129,13 +124,11 @@
 									</div>
 								</div>
 
-								<!-- Description -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<label class="text-secondary"><strong>Description *</strong></label>
+											<label class="text-secondary">Description<em>*</em></label>
 											<textarea class="form-control" style="resize: none;"
-												placeholder="Enter Description"
 												name="description" required
 												id="description"><?php echo set_value('description'); ?></textarea>
 										</div>
@@ -144,17 +137,16 @@
 
 								<div class="hr-line-dashed"></div>
 
-								<!-- Buttons -->
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12 text-center">
-											<button class="btn btn-info px-4" type="submit">
-												<i class="fa fa-plus"></i> Add
+											<button class="btn btn-info btn-sm px-4" type="submit">
+												Add
 											</button>
 
-											<a class="btn btn-outline-dark px-4"
+											<a class="btn btn-outline-dark btn-sm px-4"
 												href="<?php echo base_url() ?>Material">
-												<i class="fa fa-arrow-left"></i> Back
+												 Back
 											</a>
 										</div>
 									</div>

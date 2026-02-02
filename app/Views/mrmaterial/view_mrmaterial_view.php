@@ -20,7 +20,7 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title">
 					<h5><?php echo $title; ?><small> </small></h5>
 				</div>
 				<div class="ibox-content">
@@ -30,20 +30,15 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>Material Code</label>
-											<input type="text" id="material_code" name="material_code" class="form-control" value="<?php echo $material_code; ?>" readonly>
+											<input type="text" id="material_code" name="material_code" class="form-control" 
+											value="<?php echo $material_code; ?>" readonly>
 										</div>
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>SAP Plant</label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" autocomplete="off" value="<?php echo $sap_plant; ?>" readonly>
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5"
+											 autocomplete="off" value="<?php echo $sap_plant; ?>" readonly>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -53,37 +48,22 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Grade</label>
-											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" autocomplete="off" value="<?php echo $grade; ?>" readonly>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>GSM</label>
-											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" autocomplete="off" value="<?php echo $gsm; ?>" readonly>
+											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" 
+											autocomplete="off" value="<?php echo $gsm; ?>" readonly>
+											<div class="error"></div>
+										</div>
+										<div class="col-sm-6 col-xs-12">
+											<label>Grade</label>
+											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" 
+											autocomplete="off" value="<?php echo $grade; ?>" readonly>
 											<div class="error"></div>
 										</div>
 									</div>
 								</div>
 
 								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description" readonly><?php echo $description; ?></textarea>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
 
 								<div class="form-group">
 									<div class="row">
@@ -100,20 +80,33 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" id="machine_output" value="<?php echo $machine_output; ?>" readonly>
+											<input type="number" class="form-control" name="machine_output" id="machine_output"
+											 value="<?php echo $machine_output; ?>" readonly>
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
 
+								<div class="hr-line-dashed"></div>
+
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12 col-xs-12">
+											<label>Description</label>
+											<textarea class="form-control" style="resize:none;"
+											name="description" id="description" readonly><?php echo $description; ?></textarea>
+											<div class="error"></div>
+										</div>
+									</div>
+								</div>
 
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<a class="btn btn-primary" href="<?php echo base_url() ?>MRMaterial">Back</a>
+											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>MRMaterial">Back</a>
 										</div>
 									</div>
 								</div>

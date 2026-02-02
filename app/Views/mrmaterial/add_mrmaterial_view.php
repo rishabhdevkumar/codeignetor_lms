@@ -10,9 +10,9 @@
 	<?php endif; ?>
 	<form id="frm" autocomplete="off" method="post" action="<?= base_url('/MRMaterial/insertData') ?>" enctype="multipart/form-data" style="width:100%">
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
-		<div class="col-sm-6 card" style="float:left;margin-top:20px">
+		<div class="col-sm-6" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title">
 					<h5><?php echo $title; ?><small> </small></h5>
 				</div>
 				<div class="ibox-content">
@@ -24,12 +24,14 @@
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">MR Material Code<em>*</em></label>
-											<input type="text" class="form-control" required name="material_code" id="material_code" maxlength="20" value="<?php echo set_value('material_code'); ?>">
+											<input type="text" class="form-control" name="material_code" id="material_code"
+											 maxlength="20" value="<?php echo set_value('material_code'); ?>" required>
 											<div class="error"></div>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">SAP Plant<em>*</em></label>
-											<input type="text" class="form-control" required name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo set_value('sap_plant'); ?>">
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant" 
+											maxlength="5" value="<?php echo set_value('sap_plant'); ?>" required>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -43,12 +45,14 @@
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">Grade</label>
-											<input type="text" class="form-control" required name="grade" id="grade" maxlength="5" value="<?php echo set_value('grade'); ?>">
+											<input type="text" class="form-control" name="grade" id="grade"
+											 maxlength="5" value="<?php echo set_value('grade'); ?>" required>
 											<div class="error"></div>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">GSM</label>
-											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" value="<?php echo set_value('gsm'); ?>">
+											<input type="text" class="form-control" name="gsm" id="gsm"
+											 maxlength="5" value="<?php echo set_value('gsm'); ?>" required>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -61,7 +65,7 @@
 
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">Delivery Plant</label>
-											<select class="form-control" name="delivery_plant" required id="delivery_plant" required>
+											<select class="form-control" name="delivery_plant" id="delivery_plant" required>
 												<option value="">Select</option>
 												<option value="Y">YES</option>
 												<option value="N">NO</option>
@@ -71,7 +75,8 @@
 
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" id="machine_output" value="<?php echo set_value('machine_output'); ?>">
+											<input type="number" class="form-control" name="machine_output" required
+											id="machine_output" value="<?php echo set_value('machine_output'); ?>">
 											<div class="error"></div>
 										</div>
 
@@ -82,7 +87,8 @@
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
 											<label style="color: black;">Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description" style="resize: none"><?php echo set_value('description'); ?></textarea>
+											<textarea class="form-control" name="description" id="description" required
+											style="resize: none"><?php echo set_value('description'); ?></textarea>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -93,8 +99,8 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12 text-center">
-											<button class="btn btn-info" type="submit"><i class="fa fa-plus"></i>Add</button>
-											<a class="btn btn-primary" href="<?php echo base_url() ?>MRMaterial"><i class="fa fa-arrow-left"></i>Back</a>
+											<button class="btn btn-info btn-sm" type="submit">Add Material</button>
+											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>MRMaterial">Back</a>
 										</div>
 									</div>
 								</div>
