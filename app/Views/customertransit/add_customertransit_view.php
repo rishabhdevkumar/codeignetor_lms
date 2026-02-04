@@ -11,7 +11,7 @@
 		<div class="col-sm-2" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-8" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title">
 					<h5><?php echo $title; ?><small> </small></h5>
 				</div>
 				<div class="ibox-content">
@@ -22,18 +22,18 @@
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>From Country</label>
-											<input type="text" class="form-control" name="from_country" id="from_country" maxlength="20" value="<?php echo set_value('from_country'); ?>">
+											<input type="text" class="form-control" name="from_country" id="from_country"
+											 maxlength="20" value="<?php echo set_value('from_country'); ?>" required>
 											<div class="error"></div>
 										</div>
-
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>From PinCode</label>
-											<input type="text" class="form-control" name="from_pincode" id="from_pincode" value="<?php echo set_value('from_pincode'); ?>">
+											<input type="text" class="form-control" name="from_pincode" id="from_pincode"
+											 value="<?php echo set_value('from_pincode'); ?>" required>
 											<div class="error"></div>
 										</div>
-
 
 									</div>
 								</div>
@@ -43,15 +43,16 @@
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>To Country</label>
-											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" value="<?php echo set_value('to_country'); ?>">
+											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" 
+											value="<?php echo set_value('to_country'); ?>" required>
 											<div class="error"></div>
 										</div>
-
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>To PinCode</label>
-											<input type="text" class="form-control" name="to_pincode" id="to_pincode" value="<?php echo set_value('to_pincode'); ?>">
+											<input type="text" class="form-control" name="to_pincode" id="to_pincode"
+											 value="<?php echo set_value('to_pincode'); ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -63,34 +64,30 @@
 								<div class="form-group">
 									<div class="row">
 
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>Distance</label>
-											<input type="number" class="form-control" name="distance" id="distance" value="<?php echo set_value('distance'); ?>">
+											<input type="number" class="form-control" name="distance" id="distance"
+											 value="<?php echo set_value('distance'); ?>" required>
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-4 col-xs-12">
+										<div class="col-sm-6 col-xs-12">
 											<label>Transit Time</label>
-											<input type="number" class="form-control" name="transit_time" id="transit_time" value="<?php echo set_value('transit_time'); ?>">
+											<input type="number" class="form-control" name="transit_time" id="transit_time" 
+											value="<?php echo set_value('transit_time'); ?>" required>
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
-
-
-								<br><br>
-
-
-								<div class="hr-line-dashed"></div>
 
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<button class="btn btn-info" type="submit">Add</button>
-											<a class="btn btn-primary" href="<?php echo base_url() ?>CustomerTransit">Back</a>
+											<button class="btn btn-info btn-sm" type="submit">Add</button>
+											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>CustomerTransit">Back</a>
 										</div>
 									</div>
 								</div>

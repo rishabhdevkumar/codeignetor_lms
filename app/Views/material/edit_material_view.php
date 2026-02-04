@@ -23,8 +23,8 @@ $material_id        = old('ID', $material['ID']);
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5><?php echo $title; ?><small> </small></h5>
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title">
+					<h5><?php echo $title; ?></h5>
 				</div>
 				<div class="ibox-content">
 					<div class="form-horizontal">
@@ -35,34 +35,16 @@ $material_id        = old('ID', $material['ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Material Code</label>
-											<input type="text" class="form-control" name="material_code" id="material_code" maxlength="20" value="<?php echo $material_code; ?>">
+											<label class="text-secondary"><strong>Material Code</strong></label>
+											<input type="text" class="form-control" name="material_code" id="material_code"
+											 maxlength="20" required value="<?php echo $material_code; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label>SAP Plant</label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo $sap_plant; ?>">
-											<div class="error"></div>
-										</div>
-
-									</div>
-								</div>
-
-								<div class="hr-line-dashed"></div>
-
-								<div class="form-group">
-									<div class="row">
-
-										<div class="col-sm-6 col-xs-12">
-											<label>Grade</label>
-											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" value="<?php echo $grade; ?>">
-											<div class="error"></div>
-										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<label>GSM</label>
-											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" value="<?php echo $gsm; ?>">
+											<label class="text-secondary"><strong>SAP Plant</strong></label>
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant" 
+											maxlength="5" required value="<?php echo $sap_plant; ?>">
 											<div class="error"></div>
 										</div>
 
@@ -75,14 +57,38 @@ $material_id        = old('ID', $material['ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>UOM</label>
-											<input type="text" class="form-control" name="uom" id="uom" maxlength="5" value="<?php echo $uom; ?>">
+											<label class="text-secondary"><strong>Grade</strong></label>
+											<input type="text" class="form-control" name="grade" id="grade" 
+											maxlength="5" required value="<?php echo $grade; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Item Type</label>
-											<input type="text" class="form-control" name="item_type" id="item_type" value="<?php echo $item_type; ?>">
+											<label class="text-secondary"><strong>GSM</strong></label>
+											<input type="text" class="form-control" name="gsm" id="gsm"
+											 maxlength="5" required value="<?php echo $gsm; ?>">
+											<div class="error"></div>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="hr-line-dashed"></div>
+
+								<div class="form-group">
+									<div class="row">
+
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary"><strong>UOM</strong></label>
+											<input type="text" class="form-control" name="uom" id="uom"
+											 maxlength="5" required value="<?php echo $uom; ?>">
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-6 col-xs-12">
+											<label class="text-secondary"><strong>Item Type</strong></label>
+											<input type="text" class="form-control" name="item_type" id="item_type"
+											 value="<?php echo $item_type; ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -93,14 +99,16 @@ $material_id        = old('ID', $material['ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Width</label>
-											<input type="number" class="form-control" name="width" id="width" value="<?php echo $width; ?>">
+											<label class="text-secondary"><strong>Width</strong></label>
+											<input type="number" class="form-control" name="width" id="width"
+											 value="<?php echo $width; ?>" required>
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Length</label>
-											<input type="number" class="form-control" name="length" id="length" value="<?php echo $length; ?>">
+											<label class="text-secondary"><strong>Length</strong></label>
+											<input type="number" class="form-control" name="length" id="length"
+											 value="<?php echo $length; ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -111,14 +119,16 @@ $material_id        = old('ID', $material['ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>MR Material Code</label>
-											<input type="text" class="form-control" name="mr_material_code" id="mr_material_code" maxlength="20" value="<?php echo $mr_material_code; ?>">
+											<label class="text-secondary"><strong>MR Material Code</strong></label>
+											<input type="text" class="form-control" name="mr_material_code" id="mr_material_code"
+											 maxlength="20" required value="<?php echo $mr_material_code; ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Packaging Time</label>
-											<input type="number" class="form-control" name="packaging_time" id="packaging_time" value="<?php echo $packaging_time; ?>">
+											<label class="text-secondary"><strong>Packaging Time</strong></label>
+											<input type="number" class="form-control" name="packaging_time" id="packaging_time"
+											 value="<?php echo $packaging_time; ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -128,22 +138,21 @@ $material_id        = old('ID', $material['ID']);
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description"><?php echo $description; ?></textarea>
+											<label class="text-secondary"><strong>Description</strong></label>
+											<textarea class="form-control" style="resize: none;" required
+											 name="description" id="description"><?php echo $description; ?></textarea>
 											<div class="error"></div>
 										</div>
 									</div>
 								</div>
-
-								<br><br>
 
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<button class="btn btn-info" type="submit">Update</button>
-											<a class="btn btn-primary" href="<?php echo base_url() ?>Material">Back</a>
+											<button class="btn btn-info btn-sm px-2" type="submit">Update</button>
+											<a class="btn btn-dark btn-sm px-2" href="<?php echo base_url() ?>Material">Back</a>
 										</div>
 									</div>
 								</div>

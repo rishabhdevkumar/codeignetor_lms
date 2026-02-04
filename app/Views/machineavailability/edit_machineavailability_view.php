@@ -10,53 +10,65 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="row">
-    <form method="post" action="<?php echo base_url('MachineAvailability/updateData/' . $machine_id); ?>">
+<div class="row" style="float:left;width:100%">
+    <form method="post" action="<?php echo base_url('MachineAvailability/updateData/' . $machine_id); ?>"
+        style="float:left;width:100%">
         <input type="hidden" name="machineavailability_id" value="<?php echo $machine_id; ?>">
-        <div class="col-sm-6 col-sm-offset-3">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Edit Machine Availability</h5>
-                </div>
-
-                <div class="ibox-content">
-
-                    <div class="form-group">
-                        <label>Machine Code</label>
-                        <input type="text" name="machine_tpm_id" class="form-control"
-                               value="<?php echo $machine_tpm_id; ?>">
+        <div class="col-sm-3" style="float:left;margin-top:20px"></div>
+        <div class="col-sm-6" style="float:left;margin-top:20px">
+            <div class="ibox float-e-margins">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div style="background-color:#efd6bb; color:#000" class="ibox-title">
+                        <h5>Edit Machine Availability</h5>
                     </div>
 
-                    <div class="form-group">
-                        <label>SAP Notification No</label>
-                        <input type="text" name="sap_notification_no" class="form-control"
-                               value="<?php echo $sap_notification_no; ?>">
-                    </div>
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-12">
 
-                    <div class="form-group">
-                        <label>Type</label>
-                        <input type="text" name="type" class="form-control"
-                               value="<?php echo $type; ?>">
-                    </div>
+                                    <div class="form-group">
+                                        <label>Machine Code</label>
+                                        <input type="text" name="machine_tpm_id" class="form-control"
+                                            value="<?php echo $machine_tpm_id; ?>">
+                                    </div>
 
-                    <div class="form-group">
-                        <label>From Date</label>
-                        <input type="date" name="from_date" class="form-control"
-                               value="<?php echo $from_date; ?>">
-                    </div>
+                                    <div class="form-group">
+                                        <label>SAP Notification No</label>
+                                        <input type="text" name="sap_notification_no" class="form-control"
+                                            value="<?php echo $sap_notification_no; ?>">
+                                    </div>
 
-                    <div class="form-group">
-                        <label>To Date</label>
-                        <input type="date" name="to_date" class="form-control"
-                               value="<?php echo $to_date; ?>">
-                    </div>
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <input type="text" name="type" class="form-control"
+                                            value="<?php echo $type; ?>">
+                                    </div>
 
-                    <div class="text-center">
-                        <a href="<?= base_url('MachineAvailability'); ?>" class="btn btn-outline-dark btn-sm">Back</a>
-                        <button class="btn btn-outline-info btn-sm" type="submit">Update</button>
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                        <input type="date" name="from_date" class="form-control"
+                                            value="<?php echo $from_date; ?>">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                        <input type="date" name="to_date" class="form-control"
+                                            value="<?php echo $to_date; ?>">
+                                    </div>
+
+                                    <div class="text-center">
+                                        <a href="<?= base_url('MachineAvailability'); ?>"
+                                            class="btn btn-dark btn-sm">Back</a>
+                                        <button class="btn btn-info btn-sm" type="submit">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+</div>
+</form>
 </div>

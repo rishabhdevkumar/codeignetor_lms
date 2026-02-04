@@ -11,8 +11,8 @@
 		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
 		<div class="col-sm-6" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5><?php echo $title; ?><small> </small></h5>
+				<div style="background-color:#efd6bb; color:#000" class="ibox-title">
+					<h5><?php echo $title; ?></h5>
 				</div>
 				<div class="ibox-content">
 					<div class="form-horizontal">
@@ -24,7 +24,8 @@
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Machine Code</label>
-											<input type="text" class="form-control" name="machine_code" id="machine_code" maxlength="5" value="<?php echo set_value('machine_code'); ?>">
+											<input type="text" class="form-control" name="machine_code" id="machine_code"
+											 maxlength="5" value="<?php echo set_value('machine_code'); ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -43,30 +44,20 @@
 
 								<div class="hr-line-dashed"></div>
 
-
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label>Description</label>
-											<textarea class="form-control" Placeholder="Enter Description" name="description" id="description"><?php echo set_value('description'); ?></textarea>
-											<div class="error"></div>
-										</div>
-									</div>
-								</div>
-
-
 								<div class="form-group">
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
 											<label>SAP Plant</label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5" value="<?php echo set_value('sap_plant'); ?>">
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant"
+											 maxlength="5" value="<?php echo set_value('sap_plant'); ?>" required>
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Vendor Code</label>
-											<input type="text" class="form-control" name="vendor_code" id="vendor_code" value="<?php echo set_value('vendor_code'); ?>">
+											<input type="text" class="form-control" name="vendor_code" id="vendor_code" 
+											value="<?php echo set_value('vendor_code'); ?>" required>
 											<div class="error"></div>
 										</div>
 
@@ -80,13 +71,15 @@
 
 										<div class="col-sm-6 col-xs-12">
 											<label>PinCode</label>
-											<input type="text" class="form-control" name="pincode" id="pincode" value="<?php echo set_value('pincode'); ?>">
+											<input type="text" class="form-control" name="pincode" id="pincode"
+											 value="<?php echo set_value('pincode'); ?>" required>
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Capacity Per Day (MTS)</label>
-											<input type="number" class="form-control" name="capacity_per_day" id="capacity_per_day" value="<?php echo set_value('capacity_per_day'); ?>">
+											<input type="number" class="form-control" name="capacity_per_day" required
+											id="capacity_per_day" value="<?php echo set_value('capacity_per_day'); ?>">
 											<div class="error"></div>
 										</div>
 
@@ -100,31 +93,41 @@
 
 										<div class="col-sm-6 col-xs-12">
 											<label>Grade Change Time (Min)</label>
-											<input type="number" class="form-control" name="grade_change_time" id="grade_change_time" value="<?php echo set_value('grade_change_time'); ?>">
+											<input type="number" class="form-control" name="grade_change_time" required
+											 id="grade_change_time" value="<?php echo set_value('grade_change_time'); ?>">
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
 											<label>GSM Change Time (Min)</label>
-											<input type="number" class="form-control" name="gsm_change_time" id="gsm_change_time" value="<?php echo set_value('gsm_change_time'); ?>">
+											<input type="number" class="form-control" name="gsm_change_time" id="gsm_change_time" 
+											value="<?php echo set_value('gsm_change_time'); ?>" required>
 											<div class="error"></div>
 										</div>
 
 									</div>
 								</div>
 
-								<br><br>
-
-
 								<div class="hr-line-dashed"></div>
+
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-12 col-xs-12">
+											<label>Description</label>
+											<textarea style="resize:none" class="form-control" name="description" id="description" required>
+												<?php echo set_value('description'); ?></textarea>
+											<div class="error"></div>
+										</div>
+									</div>
+								</div>
 
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<button class="btn btn-info" type="submit">Add</button>
-											<a class="btn btn-primary" href="<?php echo base_url() ?>Machine">Back</a>
+											<button class="btn btn-info btn-sm" type="submit">Add</button>
+											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>Machine">Back</a>
 										</div>
 									</div>
 								</div>
@@ -137,7 +140,6 @@
 				</div>
 			</div>
 		</div>
-
 
 	</form>
 </div>

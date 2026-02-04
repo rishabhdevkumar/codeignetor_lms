@@ -9,55 +9,67 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="container">
+<div class="row" style="float:left;width:100%">
 
-    <div class="row">
-        <div class="col-md-12">
-            <h4><?php echo $title; ?></h4>
-        </div>
-    </div>
-
-    <form method="post" action="<?= base_url('FinishStock/updateData/'.$finishstock_id); ?>">
+    <form method="post" action="<?= base_url('FinishStock/updateData/'.$finishstock_id); ?>" style="width:100%">
         <input type="hidden" name="finishstock_id" value="<?php echo $finishstock_id; ?>">
-        <div class="row">
+        <div class="col-sm-3" style="float:left;margin-top:20px"></div>
+        <div class="col-sm-6" style="float:left;margin-top:20px;">
+            <div class="bg-white shadow-sm">
+                <div style="background-color:#efd6bb; color:#000" class="ibox-title">
+                    <h5>
+                        <?php echo $title; ?>
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="row">
 
-            <div class="col-md-6">
-                <label>Finish Material Code</label>
-                <input type="text" class="form-control" name="finish_material_code" id="finish_material_code" value="<?php echo $finishstock_code; ?>" required>
-            </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <label>Finish Material Code</label>
+                                    <input type="text" class="form-control" name="finish_material_code"
+                                        id="finish_material_code" value="<?php echo $finishstock_code; ?>" required>
+                                </div>
 
-            <div class="col-md-6">
-                <label>SAP Plant</label>
-                <input type="text" class="form-control" name="sap_plant" id="sap_plant" value="<?php echo $sap_plant; ?>" required>
-            </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <label>SAP Plant</label>
+                                    <input type="text" class="form-control" name="sap_plant" id="sap_plant"
+                                        value="<?php echo $sap_plant; ?>" required>
+                                </div>
 
-        </div>
-        <br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
 
-        <div class="row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <label>Stock Quantity</label>
+                                    <input type="number" class="form-control" name="stock_qty" id="stock_qty"
+                                        value="<?php echo $stock_qty; ?>" required>
+                                </div>
 
-            <div class="col-md-6">
-                <label>Stock Quantity</label>
-                <input type="number" class="form-control" name="stock_qty" id="stock_qty" value="<?php echo $stock_qty; ?>" required>
-            </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <label>Balance Quantity</label>
+                                    <input type="number" class="form-control" name="balance_qty" id="balance_qty"
+                                        value="<?php echo $balance_qty; ?>" required>
+                                </div>
 
-            <div class="col-md-6">
-                <label>Balance Quantity</label>
-                <input type="number" class="form-control" name="balance_qty" id="balance_qty" value="<?php echo $balance_qty; ?>" required>
-            </div>
+                            </div>
+                        </div>
 
-        </div>
-
-        <br>
-
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-success">
-                    Save
-                </button>
-                <a href="<?= base_url('FinishStock'); ?>" class="btn btn-secondary">
-                    Back
-                </a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Save
+                                </button>
+                                <a href="<?= base_url('FinishStock'); ?>" class="btn btn-secondary btn-sm">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
