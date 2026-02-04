@@ -15,6 +15,15 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
+
+
+/**************DEFAULT**********/
+// $route['default_controller'] = 'Auth';
+/***********DEFAULT*************/
+/************COMMON*********/
+// $route['404_override'] = 'Home/error';
+// $route['translate_uri_dashes'] = FALSE;
+/************COMMON*********/
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
@@ -31,10 +40,19 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
 
+// $routes->get('/', 'Auth::index');
 
 $routes->get('/', 'Dashboard::index');
 
 $routes->get('/MasterManagement', 'MasterManagement::index');
+
+$routes->get('/Auth/login', 'Auth::login');
+$routes->get('/User', 'User\User::index');
+$routes->get('/User/add', 'User\User::add');
+$routes->post('/User/insertData', 'User\User::insertData');
+$routes->get('/User/edit/(:num)', 'User\User::edit/$1');
+$routes->post('/User/updateData/(:num)', 'User\User::updateData/$1');
+$routes->get('/User/view/(:num)', 'User\User::view/$1');
 
 $routes->get('/Material', 'Material\Material::index');
 $routes->get('/Material/add', 'Material\Material::add');
@@ -118,6 +136,8 @@ $routes->post('/production-planning/store', 'ProductionPlanning\PlanningProducti
 $routes->get('production-planning/planning-approval', 'ProductionPlanning\PlanningProductionController::planningApprovalView');
 $routes->post('/production-planning/rejectPendingApproval', 'ProductionPlanning\PlanningProductionController::rejectPendingApproval');
 $routes->post('/production-planning/approvePendingApproval', 'ProductionPlanning\PlanningProductionController::approvePendingApproval');
+
+$routes->get('production-planning/auto-allocation', 'ProductionPlanning\AutoAllocationController::run');
 
 
 /*

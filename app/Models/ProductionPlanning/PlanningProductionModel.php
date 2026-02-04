@@ -14,6 +14,7 @@ class PlanningProductionModel extends Model
     protected $useSoftDeletes   = false;
 
     protected $allowedFields    = [
+        'PLANNING_CAL_ID',
         'VERSION',
         'MACHINE',
         'SAP_MR_FG_CODE',
@@ -32,6 +33,10 @@ class PlanningProductionModel extends Model
         'KC2_BALANCE_QTY_MT',
         'NKC_BALANCE_QTY_MT',
         'CALENDAR_TYPE',
+        'PO_NO',
+        'PO_LINE_ITEM',
+        'SCHEDULE_LINE_ITEM',
+        'REALLOCATION_STATUS',
         'UPLOADED_BY',
         'UPLOADED_DATE'
     ];

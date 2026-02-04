@@ -86,7 +86,7 @@ class AllocationAndCommitmentController extends BaseController
                 $notAllotted[] = [
                     'IN_NO'        => $indent['in_no'],
                     'LINE_ITEM'    => $od['line_item'] ?? null,
-                   'MATERIAL'     => $od['material_code'] ?? null,
+                    'MATERIAL'     => $od['material_code'] ?? null,
                     'QTY'          => $od['quantity'] ?? 0,
                     'SHIPCUSTOMER' => $indent['ship_to_code'],
                     'STATUS'       => 'ShipTo Customer PinCode Not Found'
@@ -113,7 +113,7 @@ class AllocationAndCommitmentController extends BaseController
                 $pendingIndents[$key]['order_details'][$odKey]['DOOR_STEP_DATE'] = '';
 
                 // material_code exists
-                if (!empty($od['material_code'])) {
+                if (!empty($od['material_code'] && $od['material_code'] !== null)) {
 
                     $material = $this->materialModel
                         ->select('ID, FINISH_MATERIAL_CODE, MR_MATERIAL_CODE, PACKAGING_TIME')
@@ -133,12 +133,11 @@ class AllocationAndCommitmentController extends BaseController
                     $notAllotted[] = [
                         'IN_NO'        => $indent['in_no'],
                         'LINE_ITEM'    => $od['line_item'] ?? null,
-                       'MATERIAL'     => $od['material_code'] ?? null,
+                        'MATERIAL'     => $od['material_code'] ?? null,
                         'QTY'          => $od['quantity'] ?? 0,
                         'SHIPCUSTOMER' => $indent['ship_to_code'],
                         'STATUS'       => 'Finished Material Data Not Found'
                     ];
-                    // $indentStatus['STATUS'] = 'Finished Material Data Not Found';
                     continue;
                 }
 
@@ -203,7 +202,7 @@ class AllocationAndCommitmentController extends BaseController
                         $notAllotted[] = [
                             'IN_NO'        => $indent['in_no'],
                             'LINE_ITEM'    => $od['line_item'] ?? null,
-                           'MATERIAL'     => $od['material_code'] ?? null,
+                            'MATERIAL'     => $od['material_code'] ?? null,
                             'QTY'          => $od['quantity'] ?? 0,
                             'SHIPCUSTOMER' => $indent['ship_to_code'],
                             'STATUS'       => 'Transit Data Not Found'
@@ -219,10 +218,14 @@ class AllocationAndCommitmentController extends BaseController
                     $fromDate = date('Y-m-d H:i:s');
                     $toDate = date('Y-m-d H:i:s');
 
+                    $packagingDays = $pendingIndents[$key]['order_details'][$odKey]['PACKAGING_TIME'];
+
                     // FINISHING_DATE = TO_DATE + Packaging Time
                     $finishingDateTime = new \DateTime($toDate);
                     $finishingDateTime->add(new \DateInterval('P' . $pendingIndents[$key]['order_details'][$odKey]['PACKAGING_TIME'] . 'D'));
                     $finishingDate = $finishingDateTime->format('Y-m-d H:i:s');
+
+                    $transitDays = $pendingIndents[$key]['order_details'][$odKey]['transit_time'];
 
                     // DOOR_STEP_DEL_DATE = FINISHING_DATE + Transit Time
                     $doorStepDateTime = new \DateTime($finishingDate);
@@ -247,14 +250,15 @@ class AllocationAndCommitmentController extends BaseController
                         'TO_DATE' => $toDate,
                         'FINISHING_DATE' => $finishingDate,
                         'DOOR_STEP_DEL_DATE' => $doorStepDelDate,
+                        'PACKAGING_TIME' => $packagingDays,
+                        'TRANSIT_TIME' => $transitDays,
                         'CUSTOMER_TYPE' => $pendingIndents[$key]['CUSTOMER_TYPE'],
                         'CALENDAR_TYPE' => 'S',
                         'PO_NO' => '',
                         'PO_LINE_ITEM' => '',
                         'SCHEDULE_LINE_ITEM' => '',
                         'FULFILLMENT_FLAG' => $pendingIndents[$key]['order_details'][$odKey]['fullfillment_flag'],
-                        'SAP_ORDER_NO' => '',
-                        'SAP_REMARKS' => '',
+
                     ]);
                 } else {
                     // Query Production Planning
@@ -326,7 +330,7 @@ class AllocationAndCommitmentController extends BaseController
                         $notAllotted[] = [
                             'IN_NO'        => $indent['in_no'],
                             'LINE_ITEM'    => $od['line_item'] ?? null,
-                           'MATERIAL'     => $od['material_code'] ?? null,
+                            'MATERIAL'     => $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'] ?? null,
                             'QTY'          => $od['quantity'] ?? 0,
                             'SHIPCUSTOMER' => $indent['ship_to_code'],
                             'STATUS'       => 'Planned Slot Not Found'
@@ -529,7 +533,7 @@ class AllocationAndCommitmentController extends BaseController
                             $notAllotted[] = [
                                 'IN_NO'        => $indent['in_no'],
                                 'LINE_ITEM'    => $od['line_item'] ?? null,
-                               'MATERIAL'     => $od['material_code'] ?? null,
+                                'MATERIAL'     => $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'] ?? null,
                                 'QTY'          => $od['quantity'] ?? 0,
                                 'SHIPCUSTOMER' => $indent['ship_to_code'],
                                 'STATUS'       => 'No planning data available for OWN or TPM machines.'
@@ -583,6 +587,7 @@ class AllocationAndCommitmentController extends BaseController
                                 ]
                             );
                         } else {
+
                             $ppIds = array_column($earliestOwnRecords, 'PP_ID');
                             $latestRecords = $this->indentAllotment
                                 ->select('MAX(TO_DATE) as latest_to_date')
@@ -664,6 +669,7 @@ class AllocationAndCommitmentController extends BaseController
                                 ]
                             );
                         }
+
                         // Update Indent Allotment 
                         $data = [
                             'INDENT_NO' => $pendingIndents[$key]['order_details'][$odKey]['in_no'],
@@ -677,6 +683,8 @@ class AllocationAndCommitmentController extends BaseController
                             'TO_DATE' => $allocationRecord['new_to_date'],
                             'FINISHING_DATE' => $allocationRecord['finishing_date'],
                             'DOOR_STEP_DEL_DATE' => $allocationRecord['door_step_delivery_date'],
+                            'PACKAGING_TIME' => $packagingDays,
+                            'TRANSIT_TIME' => $transitDays,
                             'CUSTOMER_TYPE' => $pendingIndents[$key]['CUSTOMER_TYPE'],
                             'CALENDAR_TYPE' => $allocationRecord['CALENDAR_TYPE'],
                             'PO_NO' => $allocationRecord['PO_NO'],
@@ -714,30 +722,9 @@ class AllocationAndCommitmentController extends BaseController
                         ['sap_init' => 1]
                     );
                 }
-                unset($odkey);
             }
         }
 
-        // $orderDetailsOnly = [];
-
-        // foreach ($pendingIndents as  $indent) {
-
-        //     foreach ($indent['order_details'] as $od) {
-        //         $orderDetailsOnly['records'] = array_merge(
-        //             ['in_no' => $indent['in_no']],
-        //             $od
-        //         );
-        //     }
-        // }
-        // $orderDetailsOnly['title'] = "Indent Allotment";
-
-        // $indexdata = [
-        //     'title'   => 'Indent Allotment',
-        //     'records' => $orderDetailsOnly
-        // ];
-
-        //  echo "<pre>"; print_r($orderDetailsOnly); exit;
-        // $indentStatus['title'] = 'Indent Allocation';
 
         $indentStatus = [
             'title'        => 'Indent Allocation',

@@ -48,15 +48,15 @@ class MachineAvailability extends Controller
     public function insertData()
     {
         $arr = [
-            'MACHINE_TPM_ID'     => $this->request->getPost('machine_tpm_id'),
-            'SAP_NOTIFICATION_NO'=> $this->request->getPost('sap_notification_no'),
+            'MACHINE_TPM_ID'     => trim($this->request->getPost('machine_tpm_id')),
+            'SAP_NOTIFICATION_NO' => trim($this->request->getPost('sap_notification_no')),
             'TYPE'               => $this->request->getPost('type'),
             'FROM_DATE'          => $this->request->getPost('from_date'),
             'TO_DATE'            => $this->request->getPost('to_date')
         ];
 
         $arr2 = [
-            'MACHINE_TPM_ID' => $this->request->getPost('machine_tpm_id'),
+            'MACHINE_TPM_ID' => trim($this->request->getPost('machine_tpm_id')),
             'FROM_DATE'     => $this->request->getPost('from_date')
         ];
 
@@ -77,31 +77,31 @@ class MachineAvailability extends Controller
     }
 
     public function edit($id)
-{
-    $arr = array('PP_ID' => $id);
-    $dataList = $this->machineAvailabilityModel->all_machine_availability($arr);
+    {
+        $arr = array('PP_ID' => $id);
+        $dataList = $this->machineAvailabilityModel->all_machine_availability($arr);
 
-    if (!$dataList) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Machine Availability not found");
+        if (!$dataList) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Machine Availability not found");
+        }
+
+        $result["machine"] = $dataList[0];
+        $result["title"]   = "Edit Machine Availability";
+
+        echo view('header', $result);
+        echo view('machineavailability/edit_machineavailability_view', $result);
+        echo view('footer');
     }
-
-    $result["machine"] = $dataList[0];
-    $result["title"]   = "Edit Machine Availability";
-
-    echo view('header', $result);
-    echo view('machineavailability/edit_machineavailability_view', $result);
-    echo view('footer');
-}
 
 
     public function updateData()
     {
         $arr = [
-            'MACHINE_TPM_ID'     => $this->request->getPost('machine_tpm_id'),
-            'SAP_NOTIFICATION_NO'=> $this->request->getPost('sap_notification_no'),
-            'TYPE'               => $this->request->getPost('type'),
-            'FROM_DATE'          => $this->request->getPost('from_date'),
-            'TO_DATE'            => $this->request->getPost('to_date')
+            'MACHINE_TPM_ID'      => trim($this->request->getPost('machine_tpm_id')),
+            'SAP_NOTIFICATION_NO' => trim($this->request->getPost('sap_notification_no')),
+            'TYPE'                => $this->request->getPost('type'),
+            'FROM_DATE'           => $this->request->getPost('from_date'),
+            'TO_DATE'             => $this->request->getPost('to_date')
         ];
 
         $condition = ['PP_ID' => $this->request->getPost('machineavailability_id')];
@@ -113,22 +113,22 @@ class MachineAvailability extends Controller
         }
     }
 
-   public function view($id)
-{
-    $arr = ['PP_ID' => $id];
-    $dataList = $this->machineAvailabilityModel->all_machine_availability($arr);
+    public function view($id)
+    {
+        $arr = ['PP_ID' => $id];
+        $dataList = $this->machineAvailabilityModel->all_machine_availability($arr);
 
-    if (!$dataList) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Machine Availability not found");
+        if (!$dataList) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Machine Availability not found");
+        }
+
+        $result['machine'] = $dataList[0];  // pass a single record to view
+        $result['title'] = "View Machine Availability";
+
+        echo view('header', $result);
+        echo view('machineavailability/view_machineavailability_view', $result);
+        echo view('footer');
     }
-
-    $result['machine'] = $dataList[0];  // pass a single record to view
-    $result['title'] = "View Machine Availability";
-
-    echo view('header', $result);
-    echo view('machineavailability/view_machineavailability_view', $result);
-    echo view('footer');
-}
 
 
     public function delete($id)

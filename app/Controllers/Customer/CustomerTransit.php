@@ -24,16 +24,16 @@ class CustomerTransit extends BaseController
 	}
 
 	public function index()
-{
-    $result['title'] = "Customer Transit";
+	{
+		$result['title'] = "Customer Transit";
 
-    $where = [];
-    $result['customer'] = $this->customerTransitModel->all_customerstransit($where);
+		$where = [];
+		$result['customer'] = $this->customerTransitModel->all_customerstransit($where);
 
-    echo view('header', $result);
-    echo view('customertransit/customertransit_view', $result);
-    echo view('footer');
-}
+		echo view('header', $result);
+		echo view('customertransit/customertransit_view', $result);
+		echo view('footer');
+	}
 
 
 	public function add()
@@ -52,19 +52,19 @@ class CustomerTransit extends BaseController
 	{
 
 		$arr = [
-			'FROM_COUNTRY'         => $this->request->getPost('from_country'),
-			'FROM_PINCODE'          => $this->request->getPost('from_pincode'),
-			'TO_COUNTRY'               => $this->request->getPost('to_country'),
-			'TO_PINCODE'          => $this->request->getPost('to_pincode'),
-			'DISTANCE'                 => $this->request->getPost('distance'),
-			'TRANSIT_TIME'                 => $this->request->getPost('transit_time'),
+			'FROM_COUNTRY'         => trim($this->request->getPost('from_country')),
+			'FROM_PINCODE'         => trim($this->request->getPost('from_pincode')),
+			'TO_COUNTRY'           => trim($this->request->getPost('to_country')),
+			'TO_PINCODE'           => trim($this->request->getPost('to_pincode')),
+			'DISTANCE'             => $this->request->getPost('distance'),
+			'TRANSIT_TIME'         => $this->request->getPost('transit_time'),
 		];
 
 		// $arr2 = array('CUSTOMER_CODE' => $this->request->getPost('customer_code'));
 		// $result["customer"] = $this->customerTransitModel->all_customerstransit($arr2);
 
 		// if (!$result['customer']) {
-			$insert = $this->crudModel->saveData('pp_transit_master', $arr);
+		$insert = $this->crudModel->saveData('pp_transit_master', $arr);
 		// } else {
 		// 	$result['error'] = "Customer Already Exist";
 		// 	return view('header', $result)
@@ -101,12 +101,12 @@ class CustomerTransit extends BaseController
 	{
 
 		$arr = [
-			'FROM_COUNTRY'         => $this->request->getPost('from_country'),
-			'FROM_PINCODE'          => $this->request->getPost('from_pincode'),
-			'TO_COUNTRY'               => $this->request->getPost('to_country'),
-			'TO_PINCODE'          => $this->request->getPost('to_pincode'),
-			'DISTANCE'                 => $this->request->getPost('distance'),
-			'TRANSIT_TIME'                 => $this->request->getPost('transit_time'),
+			'FROM_COUNTRY'         => trim($this->request->getPost('from_country')),
+			'FROM_PINCODE'         => trim($this->request->getPost('from_pincode')),
+			'TO_COUNTRY'           => trim($this->request->getPost('to_country')),
+			'TO_PINCODE'           => trim($this->request->getPost('to_pincode')),
+			'DISTANCE'             => $this->request->getPost('distance'),
+			'TRANSIT_TIME'         => $this->request->getPost('transit_time'),
 		];
 
 		$condition = array("PP_ID" => $this->request->getPost('transit_id'));

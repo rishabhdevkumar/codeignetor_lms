@@ -62,14 +62,14 @@ class Customer extends BaseController
 	{
 
 		$arr = [
-			'CUSTOMER_CODE'         => $this->request->getPost('customer_code'),
-			'CUSTOMER_TYPE'          => $this->request->getPost('customer_type'),
+			'CUSTOMER_CODE'         =>  trim($this->request->getPost('customer_code')),
+			'CUSTOMER_TYPE'         => $this->request->getPost('customer_type'),
 			'COUNTRY'               => $this->request->getPost('country'),
-			'PIN_CODE'              => $this->request->getPost('pincode'),
+			'PIN_CODE'              =>  trim($this->request->getPost('pincode')),
 			'STATE'                 => $this->request->getPost('state'),
 		];
 
-		$arr2 = array('CUSTOMER_CODE' => $this->request->getPost('customer_code'));
+		$arr2 = array('CUSTOMER_CODE' => trim($this->request->getPost('customer_code')));
 		$result["customer"] = $this->customerModel->all_customer($arr2);
 
 		if (!$result['customer']) {
@@ -110,10 +110,10 @@ class Customer extends BaseController
 	{
 
 		$arr = [
-			'CUSTOMER_CODE'         => $this->request->getPost('customer_code'),
-			'CUSTOMER_TYPE'          => $this->request->getPost('customer_type'),
+			'CUSTOMER_CODE'         => trim($this->request->getPost('customer_code')),
+			'CUSTOMER_TYPE'         => $this->request->getPost('customer_type'),
 			'COUNTRY'               => $this->request->getPost('country'),
-			'PIN_CODE'              => $this->request->getPost('pincode'),
+			'PIN_CODE'              => trim($this->request->getPost('pincode')),
 			'STATE'                 => $this->request->getPost('state'),
 		];
 

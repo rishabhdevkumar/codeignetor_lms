@@ -449,4 +449,8 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+
+public string $enc_dec_key = "@@#97))erp87yu&^";
+public string $company_id = "3";
 }

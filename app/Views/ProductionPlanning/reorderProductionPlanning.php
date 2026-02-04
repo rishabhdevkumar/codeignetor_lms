@@ -423,7 +423,8 @@
                     data: $(this).serialize() + '&<?= csrf_token() ?>=<?= csrf_hash() ?>',
                     success: function(res) {
                         if (!res.data) {
-                            alert("Invalid response");
+                            // alert("Invalid response"); 
+                            alert(res.message);
                             return;
                         }
 

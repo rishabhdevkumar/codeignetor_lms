@@ -136,9 +136,9 @@
                     Upload XLSX
                 </button>
 
-                <a href="<?= base_url('planning-production/create') ?>" class="btn btn-sap btn-sm">
+                <!-- <a href="<?= base_url('planning-production/create') ?>" class="btn btn-sap btn-sm">
                     + Add New Record
-                </a>
+                </a> -->
             </div>
 
             <!-- Table -->
@@ -165,7 +165,7 @@
                             <th>NKC BAL</th>
                             <th>UPLOADED BY</th>
                             <th>UPLOADED DATE</th>
-                            <th>ACTIONS</th>
+                            <!-- <th>ACTIONS</th> -->
                         </tr>
                     </thead>
 
@@ -192,7 +192,7 @@
                                     <td><?= $row['NKC_BALANCE_QTY_MT'] ?></td>
                                     <td><?= $row['UPLOADED_BY'] ?></td>
                                     <td><?= $row['UPLOADED_DATE'] ?></td>
-                                    <td class="action-btns text-center">
+                                    <!-- <td class="action-btns text-center">
                                         <a href="<?= base_url('planning-production/edit/' . $row['PP_ID']) ?>"
                                             class="btn btn-outline-sap btn-sm" title="Edit">
                                             <i class="bi bi-pencil-fill"></i>
@@ -203,7 +203,7 @@
                                             class="btn btn-outline-danger btn-sm" title="Delete">
                                             <i class="bi bi-trash-fill"></i>
                                         </a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>

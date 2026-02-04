@@ -22,6 +22,8 @@ class IndentAllotmentModel extends Model
         'TO_DATE',
         'FINISHING_DATE',
         'DOOR_STEP_DEL_DATE',
+        'PACKAGING_TIME',
+        'TRANSIT_TIME',
         'CUSTOMER_TYPE',
         'CALENDAR_TYPE',
         'PO_NO',
@@ -29,7 +31,13 @@ class IndentAllotmentModel extends Model
         'SCHEDULE_LINE_ITEM',
         'FULFILLMENT_FLAG',
         'SAP_ORDER_NO',
-        'SAP_REMARKS'
+        'SAP_REMARKS',
+        'MODIFICATION_FLAG',
+        'SAP_ORDER_CHANGE',
+        'OLD_FROM_DATE',
+        'OLD_TO_DATE',
+        'OLD_FINISHING_DATE',
+        'OLD_DOOR_STEP_DEL_DATE'
     ];
 
     protected $useTimestamps = false;

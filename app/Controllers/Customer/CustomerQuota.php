@@ -47,13 +47,13 @@ class CustomerQuota extends BaseController
     public function insertData()
     {
         $arr = [
-            'GRADE'            => $this->request->getPost('grade'),
+            'GRADE'            => trim($this->request->getPost('grade')),
             'CUSTOMER_TYPE'    => $this->request->getPost('customer_type'),
             'QUOTA_PERCENTAGE' => $this->request->getPost('quota_percentage'),
         ];
 
         $checkArr = [
-            'GRADE' => $this->request->getPost('grade'),
+            'GRADE' => trim($this->request->getPost('grade')),
             'CUSTOMER_TYPE' => $this->request->getPost('customer_type'),
         ];
 
@@ -94,7 +94,7 @@ class CustomerQuota extends BaseController
     public function updateData()
     {
         $data = [
-            'GRADE'            => $this->request->getPost('grade'),
+            'GRADE'            => trim($this->request->getPost('grade')),
             'CUSTOMER_TYPE'    => $this->request->getPost('customer_type'),
             'QUOTA_PERCENTAGE' => $this->request->getPost('quota_percentage'),
         ];
