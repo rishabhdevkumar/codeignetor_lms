@@ -31,7 +31,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">Material Code<em>*</em></label>
+											<label style="color: #000">Material Code</label><em>*</em>
 											<input type="text" class="form-control"
 												name="material_code" id="material_code"
 												maxlength="20" required

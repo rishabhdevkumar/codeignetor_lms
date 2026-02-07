@@ -35,12 +35,12 @@
                                         <td><?php echo $machineavailability[$M]['FROM_DATE']; ?></td>
                                         <td><?php echo $machineavailability[$M]['TO_DATE']; ?></td>
                                         <td>
-                                            <a href="<?php echo base_url('MachineAvailability/view/' . $machineavailability[$M]['PP_ID']); ?>" class="btn btn-outline-primary btn-sm">
+                                            <a href="<?php echo base_url('MachineAvailability/view/' . $machineavailability[$M]['PP_ID']); ?>" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url('MachineAvailability/edit/' . $machineavailability[$M]['PP_ID']); ?>" class="btn btn-outline-warning btn-sm">
+                                            <a href="<?php echo base_url('MachineAvailability/edit/' . $machineavailability[$M]['PP_ID']); ?>" class="btn btn-warning btn-sm">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                         </td>

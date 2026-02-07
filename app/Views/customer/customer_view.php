@@ -14,7 +14,7 @@
 		<?php endif; ?>
 			<div class="card-header d-flex justify-content-between align-items-center" style="background-color:#FFE0B5;">
 				<h5><?php echo $title; ?> Details</h5>
-				<a href="<?php echo base_url(); ?>Customer/add" class="btn btn-info btn-sm">Add Customer</a>
+				<a href="<?php echo base_url(); ?>Customer/add" class="btn-success btn-outline-warning text-dark btn-sm">Add Customer</a>
 			</div>
 
 			<div class="card-body">
@@ -48,8 +48,8 @@
 										<td><?php echo $customer[$k]["parent_cust_no"]; ?></td>
 										<td><?php echo $customer[$k]["STATE"]; ?></td>
 										<td><?php echo $customer[$k]["PIN_CODE"]; ?></td>
-										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i></a></td>
-										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 									</tr>
 							<?php
 									$ctr++;

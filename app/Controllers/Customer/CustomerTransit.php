@@ -15,7 +15,6 @@ class CustomerTransit extends BaseController
 
 	public function __construct()
 	{
-		// Load services
 		$this->session        = session();
 		$this->crudModel      = new Crud_Model();
 		$this->customerTransitModel   = new TransitMaster();
@@ -39,9 +38,10 @@ class CustomerTransit extends BaseController
 	public function add()
 	{
 
-		// $validation = \Config\Services::validation();
-
 		$result["title"] = "Add Customer Transit";
+
+		   $countryModel = new \App\Models\Customer\CountryModel();
+    $result['countries'] = $countryModel->getActiveCountries();
 
 		echo view('header', $result);
 		echo view('customertransit/add_customertransit_view', $result);
@@ -157,4 +157,5 @@ class CustomerTransit extends BaseController
 			return redirect()->to('/CustomerTransit');
 		}
 	}
+	
 }

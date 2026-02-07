@@ -4,7 +4,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center" style="background-color:#FFE0B5;"> 
                         <h5>MR <?php echo $title; ?> Details</h5> 					
 						<a href="<?php echo base_url(); ?>MRMaterial/add" 
-						class="btn-warning text-dark btn-sm"><i class="fa fa-plus p-1"></i>Add New</a>
+						class="btn-success btn-outline-warning text-dark btn-sm"><i class="fa fa-plus p-1"></i>Add New</a>
                     </div>
 					
                     <div class="card-body">

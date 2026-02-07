@@ -3,7 +3,8 @@
     <div class="col-12">
             <div class="card-header d-flex justify-content-between align-items-center" style="background-color:#FFE0B5;"> 
                 <h5><?php echo $title; ?> Details</h5> 
-                 <a href="<?php echo base_url(); ?>CustomerQuota/add" class="btn btn-outline-info btn-sm"><i class="fa fa-plus p-1"></i><strong>Add customer quota</strong></a>	 
+                 <a href="<?php echo base_url(); ?>CustomerQuota/add" class="btn-success btn-outline-warning text-dark btn-sm">
+                    <i class="fa fa-plus p-1"></i><strong>Add customer quota</strong></a>	 
             </div>
 
              <div class="card-body">
@@ -19,7 +20,6 @@
                                 <th>Quota Percentage</th>
                                 <th>View</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
                             </tr>
                         </thead>
 
@@ -35,20 +35,15 @@
                                 <td><?php echo $customerquota[$k]["CUSTOMER_TYPE"]; ?></td>
                                 <td><?php echo $customerquota[$k]["QUOTA_PERCENTAGE"]; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>CustomerQuota/view/<?php echo $customerquota[$k]["PP_ID"]; ?>" class="btn btn-outline-primary btn-sm">
+                                    <a href="<?php echo base_url(); ?>CustomerQuota/view/<?php echo $customerquota[$k]["PP_ID"]; ?>" class="btn btn-primary btn-sm">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>CustomerQuota/edit/<?php echo $customerquota[$k]["PP_ID"]; ?>" class="btn btn-outline-warning btn-sm">
+                                    <a href="<?php echo base_url(); ?>CustomerQuota/edit/<?php echo $customerquota[$k]["PP_ID"]; ?>" class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="<?php echo base_url(); ?>CustomerQuota/delete/<?php echo $customerquota[$k]["PP_ID"]; ?>" 
-                                        class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
-                                        <i class="fa fa-trash"></i>
-                                    </a></td>
                             </tr>
                         <?php
                                 $ctr++;

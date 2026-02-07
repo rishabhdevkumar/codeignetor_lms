@@ -3,7 +3,7 @@
     <div class="col-12">
             <div class="card-header d-flex justify-content-between align-items-center" style="background-color:#FFE0B5;">
                 <h5><?php echo $title; ?> Details</h5>
-                <a href="<?php echo base_url(); ?>FinishStock/add" class="btn btn-outline-success btn-sm">
+                <a href="<?php echo base_url(); ?>FinishStock/add" class="btn-success btn-outline-warning text-dark btn-sm">
                     <strong>Add Finish Stock</strong>
                 </a>
             </div>
@@ -35,10 +35,10 @@
                                 <td><?php echo($finishstock[$k]['SAP_PLANT']); ?></td>
                                 <td><?php echo($finishstock[$k]['STOCK_QTY']); ?></td>
                                 <td><?php echo($finishstock[$k]['BALANCE_QTY']); ?></td>
-                                <td><a href="<?php echo base_url();?>FinishStock/view/<?php echo $finishstock[$k]["PP_ID"];?>" class="btn btn-outline-primary btn-sm">
+                                <td><a href="<?php echo base_url();?>FinishStock/view/<?php echo $finishstock[$k]["PP_ID"];?>" class="btn btn-primary btn-sm">
                                         <i class="fa fa-eye"></i></a></td>
 
-                                <td><a href="<?php echo base_url();?>FinishStock/edit/<?php echo $finishstock[$k]["PP_ID"];?>" class="btn btn-outline-success btn-sm">
+                                <td><a href="<?php echo base_url();?>FinishStock/edit/<?php echo $finishstock[$k]["PP_ID"];?>" class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i></a></td>
                             </tr>
                         <?php
