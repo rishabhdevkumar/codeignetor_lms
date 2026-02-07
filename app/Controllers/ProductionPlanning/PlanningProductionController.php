@@ -39,7 +39,7 @@ class PlanningProductionController extends BaseController
 
         $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT')
             ->findAll();
 
         $data['title'] = 'Planning Calendar';
@@ -54,7 +54,7 @@ class PlanningProductionController extends BaseController
 
         $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE, pp_mr_material_master.GRADE, pp_mr_material_master.GSM')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT' )
             ->findAll();
 
         $data['title'] = 'Planning Calendar';
@@ -162,218 +162,223 @@ class PlanningProductionController extends BaseController
 
         if ($file->isValid() && !$file->hasMoved()) {
 
-            try {
+            // try {
 
-                $spreadsheet = IOFactory::load($file->getTempName());
-                $sheet = $spreadsheet->getActiveSheet();
-                $rows = $sheet->toArray();
+            $spreadsheet = IOFactory::load($file->getTempName());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
 
-                $rows = array_filter($rows, function ($row2) {
-                    return array_filter($row2) !== [];
-                });
+            $rows = array_filter($rows, function ($row2) {
+                return array_filter($row2) !== [];
+            });
 
-                $rows = array_values($rows);
+            $rows = array_values($rows);
 
-                // Sort by first column (machine TPM ID)
-                usort($rows, function ($a, $b) {
-                    return $a[0] <=> $b[0];
-                });
+            // Sort by first column (machine TPM ID)
+            usort($rows, function ($a, $b) {
+                return $a[0] <=> $b[0];
+            });
 
-                $db = \Config\Database::connect();
+            $db = \Config\Database::connect();
 
-                // First production of each day starts here
-                $initialStartDateTime = new \DateTime('tomorrow 00:00:00');
+            // First production of each day starts here
+            $initialStartDateTime = new \DateTime('tomorrow 00:00:00');
 
-                // Variables to store previous machine grade/gsm
-                $prevGrade = null;
-                $prevGsm = null;
-                $prevMachineId = null;
+            // Variables to store previous machine grade/gsm
+            $prevGrade = null;
+            $prevGsm = null;
+            $prevMachineId = null;
 
-                // This will change as production progresses
-                $startDateTime = clone $initialStartDateTime;
+            // This will change as production progresses
+            $startDateTime = clone $initialStartDateTime;
 
-                for ($i = 0; $i < count($rows); $i++) {
+            for ($i = 0; $i < count($rows); $i++) {
 
-                    $row = $rows[$i];
+                $row = $rows[$i];
 
-                    // Skip header or empty rows
-                    if ($i == 0 || empty($row[0]))
-                        continue;
+                // Skip header or empty rows
+                if ($i == 0 || empty($row[0]))
+                    continue;
 
-                    $machineTpmId = $row[0];
-                    $machineMaterialCode = $row[1];
-                    $plannedQty = $row[2];
+                $machineTpmId = $row[0];
+                $machineMaterialCode = $row[1];
+                $plannedQty = $row[2];
 
-                    // Fetch machine master
-                    $machine = $db->table('pp_machine_master')
-                        ->where('MACHINE_TPM_ID', $machineTpmId)
-                        ->get()
-                        ->getRowArray();
+                // Fetch machine master
+                $machine = $db->table('pp_machine_master')
+                    ->where('MACHINE_TPM_ID', $machineTpmId)
+                    ->get()
+                    ->getRowArray();
 
-                    if (!$machine) {
-                        return redirect()->back()->with('error', 'Machine not found for ' . $machineTpmId);
-                    }
+                if (!$machine) {
+                    return redirect()->back()->with('error', 'Machine not found for ' . $machineTpmId);
+                }
 
-                    $machinePPId = $machine['PP_ID'];
-                    $gsmChangeTime = $machine['GSM_CHANGE_TIME_MIN'];
-                    $gradeChangeTime = $machine['GRADE_CHANGE_TIME_MIN'];
-                    $sapplant = $machine['SAP_PLANT'];
+                $machinePPId = $machine['PP_ID'];
+                $gsmChangeTime = $machine['GSM_CHANGE_TIME_MIN'];
+                $gradeChangeTime = $machine['GRADE_CHANGE_TIME_MIN'];
+                $sapplant = $machine['SAP_PLANT'];
 
-                    // previous planning latest date time
-                    $latestPlan = $db->table('pp_production_planning_master')
-                        ->select('*')
-                        ->where('MACHINE', $machinePPId)
-                        ->orderBy('TO_DATE_TIME', 'DESC')
-                        ->limit(1)
-                        ->get()
-                        ->getRowArray();
+                // previous planning latest date time
+                $latestPlan = $db->table('pp_production_planning_master')
+                    ->select('*')
+                    ->where('MACHINE', $machinePPId)
+                    ->where('CALENDAR_TYPE', 'M')
+                    ->orderBy('TO_DATE_TIME', 'DESC')
+                    ->limit(1)
+                    ->get()
+                    ->getRowArray();
 
-                    if ($latestPlan && !empty($latestPlan['TO_DATE_TIME'])) {
-                        $startDateTime = new \DateTime($latestPlan['TO_DATE_TIME']);
+                if ($latestPlan && !empty($latestPlan['TO_DATE_TIME'])) {
+                    $startDateTime = new \DateTime($latestPlan['TO_DATE_TIME']);
+                    $initialStartDateTime = new \DateTime($latestPlan['TO_DATE_TIME']);
 
-                        // Fetch latest mother roll
-                        $latestmotherRoll = $db->table('pp_mr_material_master')
-                            ->where('MR_MATERIAL_CODE', $latestPlan['SAP_MR_FG_CODE'])
-                            ->where('SAP_PLANT', $sapplant)
-                            ->get()
-                            ->getRowArray();
-
-                        $prevGrade = $latestmotherRoll['GRADE'];
-                        $prevGsm = $latestmotherRoll['GSM'];
-                        
-                    } else {
-                        // No previous planning → use initial start time
-                        $startDateTime = clone $initialStartDateTime;
-                    }
-
-
-                    // Fetch mother roll
-                    $motherRoll = $db->table('pp_mr_material_master')
-                        ->where('MR_MATERIAL_CODE', $machineMaterialCode)
+                    // Fetch latest mother roll
+                    $latestmotherRoll = $db->table('pp_mr_material_master')
+                        ->where('MR_MATERIAL_CODE', $latestPlan['SAP_MR_FG_CODE'])
                         ->where('SAP_PLANT', $sapplant)
                         ->get()
                         ->getRowArray();
 
-                    if (!$motherRoll) {
-                        return redirect()->back()->with(
-                            'error',
-                            "Material not found: $machineMaterialCode (Plant: $sapplant)"
-                        );
-                    }
+                    $prevGrade = $latestmotherRoll['GRADE'];
+                    $prevGsm = $latestmotherRoll['GSM'];
+                } else {
+                    // No previous planning → use initial start time
+                    $startDateTime = clone $initialStartDateTime;
 
-                    $motherRollPPId = $motherRoll['PP_ID'];
-                    $machineOutputKgHr = $motherRoll['MACHINE_OUTPUT_KG_HR'];
-                    $grade = $motherRoll['GRADE'];
-                    $gsm = $motherRoll['GSM'];
-
-                    $gradeChanged = false;
-                    $gsmChanged = false;
-
-                    if ($prevMachineId === null) {
-                        // First row → no comparison
-                    } elseif ($prevMachineId !== $machinePPId) {
-
-                        // Machine changed → reset clock
-                        $startDateTime = clone $initialStartDateTime;
-                    } else {
-                        // Same machine → compare grade/gsm
-                        $gradeChanged = ($grade !== $prevGrade);
-                        $gsmChanged = ($gsm !== $prevGsm);
-                    }
-
-                    // Additional time for machine changeover
-                    $additionalMinutes = 0;
-                    if ($gradeChanged) {
-                        $additionalMinutes += $gradeChangeTime;
-                    } elseif ($gsmChanged) {
-                        $additionalMinutes += $gsmChangeTime;
-                    }
-
-                    $fromDateTime = clone $startDateTime;
-                    if ($additionalMinutes > 0) {
-                        $fromDateTime->modify("+{$additionalMinutes} minutes");
-                    }
-
-                    $plannedQtyKg = $plannedQty;
-                    $productionHour = ($machineOutputKgHr > 0)
-                        ? ($plannedQtyKg / $machineOutputKgHr)
-                        : 0;
-
-                    $hours = floor($productionHour);
-                    $minutes = round(($productionHour - $hours) * 60);
-
-                    // END TIME = FROM_TIME + PRODUCTION TIME
-                    $toDateTime = clone $fromDateTime;
-                    $toDateTime->modify("+{$hours} hours +{$minutes} minutes");
-
-                    // Final string values
-                    $fromDateTimeStr = $fromDateTime->format('Y-m-d H:i:s');
-                    $toDateTimeStr = $toDateTime->format('Y-m-d H:i:s');
-
-                    // Fetch quota
-                    $quota = $db->table('pp_customer_quota_master')
-                        ->where('GRADE', $grade)
-                        ->orderBy('CUSTOMER_TYPE', 'ASC')
-                        ->get()
-                        ->getResultArray();
-
-                    // if ($quota) {
-                    //     $kc1Quota = $plannedQty * $quota[0]['QUOTA_PERCENTAGE'] / 100;
-                    //     $kc2Quota = $plannedQty * $quota[1]['QUOTA_PERCENTAGE'] / 100;
-                    // } else {
-                    //     $kc1Quota = 0;
-                    //     $kc2Quota = 0;
-                    // }
-
-                    $kc1Quota = 0;
-                    $kc2Quota = 0;
-
-                    if (is_array($quota)) {
-                        if (!empty($quota[0]['QUOTA_PERCENTAGE'])) {
-                            $kc1Quota = $plannedQty * $quota[0]['QUOTA_PERCENTAGE'] / 100;
-                        }
-
-                        if (!empty($quota[1]['QUOTA_PERCENTAGE'])) {
-                            $kc2Quota = $plannedQty * $quota[1]['QUOTA_PERCENTAGE'] / 100;
-                        }
-                    }
-
-
-                    $nkcQuota = $plannedQty - ($kc1Quota + $kc2Quota);
-
-                    // Insert Final Row
-                    $data = [
-                        'VERSION' => 1,
-                        'MACHINE' => $machinePPId,
-                        'SAP_MR_FG_CODE' => $machineMaterialCode,
-                        'QTY_MT' => $plannedQty,
-                        'BALANCE_QTY' => $plannedQty,
-                        'KC1_QTY_MT' => $kc1Quota,
-                        'KC2_QTY_MT' => $kc2Quota,
-                        'NKC_QTY_MT' => $nkcQuota,
-                        'KC1_BALANCE_QTY_MT' => $kc1Quota,
-                        'KC2_BALANCE_QTY_MT' => $kc2Quota,
-                        'NKC_BALANCE_QTY_MT' => $nkcQuota,
-                        'FROM_DATE_TIME' => $fromDateTimeStr,
-                        'TO_DATE_TIME' => $toDateTimeStr,
-                        'CALENDAR_TYPE' => 'M',
-                        'UPLOADED_BY' => '',
-                        'UPLOADED_DATE' => date('Y-m-d H:i:s'),
-                    ];
-
-                    $db->table('pp_production_planning_master')->insert($data);
-
-                    // NEXT ROW STARTS FROM CURRENT END TIME
-                    $startDateTime = clone $toDateTime;
-                    $prevGrade = $grade;
-                    $prevGsm = $gsm;
-                    $prevMachineId = $machinePPId;
+                    $initialStartDateTime = new \DateTime('tomorrow 00:00:00');
                 }
 
-                return redirect()->back()->with('success', 'Excel uploaded & data inserted successfully!');
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Error reading XLSX: ' . $e->getMessage());
+
+                // Fetch mother roll
+                $motherRoll = $db->table('pp_mr_material_master')
+                    ->where('MR_MATERIAL_CODE', $machineMaterialCode)
+                    ->where('SAP_PLANT', $sapplant)
+                    ->get()
+                    ->getRowArray();
+
+                if (!$motherRoll) {
+                    return redirect()->back()->with(
+                        'error',
+                        "Material not found: $machineMaterialCode (Plant: $sapplant)"
+                    );
+                }
+
+                $motherRollPPId = $motherRoll['PP_ID'];
+                $machineOutputKgHr = $motherRoll['MACHINE_OUTPUT_KG_HR'];
+                $grade = $motherRoll['GRADE'];
+                $gsm = $motherRoll['GSM'];
+
+                $gradeChanged = false;
+                $gsmChanged = false;
+
+                if ($prevMachineId === null) {
+                    // First row → compare grade/gsm
+                    $gradeChanged = ($grade !== $prevGrade);
+                    $gsmChanged = ($gsm !== $prevGsm);
+                } elseif ($prevMachineId !== $machinePPId) {
+
+                    // Machine changed → reset clock
+                    $startDateTime = clone $initialStartDateTime;
+                } else {
+                    // Same machine → compare grade/gsm
+                    $gradeChanged = ($grade !== $prevGrade);
+                    $gsmChanged = ($gsm !== $prevGsm);
+                }
+
+                // Additional time for machine changeover
+                $additionalMinutes = 0;
+                if ($gradeChanged) {
+                    $additionalMinutes += $gradeChangeTime;
+                } elseif ($gsmChanged) {
+                    $additionalMinutes += $gsmChangeTime;
+                }
+
+                $fromDateTime = clone $startDateTime;
+                if ($additionalMinutes > 0) {
+                    $fromDateTime->modify("+{$additionalMinutes} minutes");
+                }
+
+                $plannedQtyKg = $plannedQty;
+                $productionHour = ($machineOutputKgHr > 0)
+                    ? ($plannedQtyKg / $machineOutputKgHr)
+                    : 0;
+
+                $hours = floor($productionHour);
+                $minutes = round(($productionHour - $hours) * 60);
+
+                // END TIME = FROM_TIME + PRODUCTION TIME
+                $toDateTime = clone $fromDateTime;
+                $toDateTime->modify("+{$hours} hours +{$minutes} minutes");
+
+                // Final string values
+                $fromDateTimeStr = $fromDateTime->format('Y-m-d H:i:s');
+                $toDateTimeStr = $toDateTime->format('Y-m-d H:i:s');
+
+                // Fetch quota
+                $quota = $db->table('pp_customer_quota_master')
+                    ->where('GRADE', $grade)
+                    ->orderBy('CUSTOMER_TYPE', 'ASC')
+                    ->get()
+                    ->getResultArray();
+
+                // if ($quota) {
+                //     $kc1Quota = $plannedQty * $quota[0]['QUOTA_PERCENTAGE'] / 100;
+                //     $kc2Quota = $plannedQty * $quota[1]['QUOTA_PERCENTAGE'] / 100;
+                // } else {
+                //     $kc1Quota = 0;
+                //     $kc2Quota = 0;
+                // }
+
+                $kc1Quota = 0;
+                $kc2Quota = 0;
+
+                if (is_array($quota)) {
+                    if (!empty($quota[0]['QUOTA_PERCENTAGE'])) {
+                        $kc1Quota = $plannedQty * $quota[0]['QUOTA_PERCENTAGE'] / 100;
+                    }
+
+                    if (!empty($quota[1]['QUOTA_PERCENTAGE'])) {
+                        $kc2Quota = $plannedQty * $quota[1]['QUOTA_PERCENTAGE'] / 100;
+                    }
+                }
+
+
+                $nkcQuota = $plannedQty - ($kc1Quota + $kc2Quota);
+
+                // Insert Final Row
+                $data = [
+                    'VERSION' => 1,
+                    'MACHINE' => $machinePPId,
+                    'SAP_MR_FG_CODE' => $machineMaterialCode,
+                    'QTY_MT' => $plannedQty,
+                    'BALANCE_QTY' => $plannedQty,
+                    'KC1_QTY_MT' => $kc1Quota,
+                    'KC2_QTY_MT' => $kc2Quota,
+                    'NKC_QTY_MT' => $nkcQuota,
+                    'KC1_BALANCE_QTY_MT' => $kc1Quota,
+                    'KC2_BALANCE_QTY_MT' => $kc2Quota,
+                    'NKC_BALANCE_QTY_MT' => $nkcQuota,
+                    'FROM_DATE_TIME' => $fromDateTimeStr,
+                    'TO_DATE_TIME' => $toDateTimeStr,
+                    'CALENDAR_TYPE' => 'M',
+                    'UPLOADED_BY' => '',
+                    'UPLOADED_DATE' => date('Y-m-d H:i:s'),
+                ];
+
+                $db->table('pp_production_planning_master')->insert($data);
+
+                // NEXT ROW STARTS FROM CURRENT END TIME
+                $startDateTime = clone $toDateTime;
+                $prevGrade = $grade;
+                $prevGsm = $gsm;
+                $prevMachineId = $machinePPId;
             }
+
+            return redirect()->back()->with('success', 'Excel uploaded & data inserted successfully!');
+            // } catch (\Exception $e) {
+            //     return redirect()->back()->with('error', 'Error reading XLSX: ' . $e->getMessage());
+            // }
         }
 
         return redirect()->back()->with('error', 'Invalid file.');
@@ -395,7 +400,8 @@ class PlanningProductionController extends BaseController
         }
 
         $data['items'] = $this->model
-            // ->where('FROM_DATE_TIME >=', date('Y-m-d 00:00:00'))
+            ->where('FROM_DATE_TIME >=', date('Y-m-d 00:00:00'))
+            ->where('UTILISED_QTY =', 0.00)
             ->orderBy('FROM_DATE_TIME', 'ASC')
             ->findAll();
 
@@ -1007,58 +1013,76 @@ class PlanningProductionController extends BaseController
 
     private function recalculateIndentAllotments(int $planningCalId, array $newPlanning)
     {
-        // 1 Fetch all allotments linked to this calendar
         $allotments = $this->indentAllotment
             ->where('PLANNING_CAL_ID', $planningCalId)
+            ->orderBy('PP_ID', 'ASC')
             ->findAll();
 
         if (empty($allotments)) {
             return;
         }
 
+        $planningFrom = new \DateTime($newPlanning['FROM_DATE_TIME']);
+        $planningTo = new \DateTime($newPlanning['TO_DATE_TIME']);
+
+        $totalSeconds = $planningTo->getTimestamp() - $planningFrom->getTimestamp();
+        $indentCount = count($allotments);
+
+        $fallbackSeconds = (int) ($totalSeconds / $indentCount);
+
+        $currentStart = clone $planningFrom;
+
+
         foreach ($allotments as $allotment) {
 
-            // 2 Base dates from approved planning
-            $fromDate = $newPlanning['FROM_DATE_TIME'];
-            $toDate = $newPlanning['TO_DATE_TIME'];
+            $oldFrom = new \DateTime($allotment['OLD_FROM_DATE'] ?? $allotment['FROM_DATE']);
+            $oldTo = new \DateTime($allotment['OLD_TO_DATE'] ?? $allotment['TO_DATE']);
 
-            // 3 Fetch material packaging time
+            $durationSeconds = $oldTo->getTimestamp() - $oldFrom->getTimestamp();
+
+            if ($durationSeconds <= 0) {
+                $durationSeconds = $fallbackSeconds;
+            }
+
+            $fromDate = clone $currentStart;
+
+            $toDate = clone $fromDate;
+            $toDate->modify("+{$durationSeconds} seconds");
+
             $material = $this->materialModel
                 ->select('PACKAGING_TIME')
                 ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
                 ->first();
 
-            $packagingDays = (int) ($material['PACKAGING_TIME'] ?? 0);
+            $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
-            // 4 Calculate FINISHING_DATE
-            $finishingDate = new \DateTime($toDate);
+            $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
                 $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
 
-            // 5 Fetch transit time
             $transit = $this->transitMaster
                 ->select('TRANSIT_TIME')
                 ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
                 ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
                 ->first();
 
-            $transitDays = (int) ($transit['TRANSIT_TIME'] ?? 0);
+            $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
-            // 6 Calculate DOOR_STEP_DEL_DATE
             $doorStepDate = clone $finishingDate;
             if ($transitDays > 0) {
                 $doorStepDate->add(new \DateInterval("P{$transitDays}D"));
             }
 
-            // 7 Update indent allotment (NO quantity touch)
             $this->indentAllotment->update($allotment['PP_ID'], [
-                'FROM_DATE' => $fromDate,
-                'TO_DATE' => $toDate,
+                'FROM_DATE' => $fromDate->format('Y-m-d H:i:s'),
+                'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
-                'MODIFICATION_FLAG' => 'X'
+                'MODIFICATION_FLAG' => 1
             ]);
+
+            $currentStart = clone $toDate;
         }
     }
 }

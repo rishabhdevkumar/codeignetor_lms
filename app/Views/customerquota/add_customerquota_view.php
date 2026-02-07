@@ -37,9 +37,14 @@
         										<option value="">-- Select Customer Type --</option>
         										<option value="KC1">KC1</option>
         										<option value="KC2">KC2</option>
-        										<option value="KC3">KC3</option>
-        										<option value="KC4">KC4</option>
+        										<!-- <option value="KC3">KC3</option>
+        										<option value="KC4">KC4</option> -->
     										</select>
+										</div>
+
+										<div class="col-sm-4 col-xs-12">
+											<label>Alloted Quota Percentage</label>
+											<input type="number" class="form-control" readonly name="alloted_quota_percentage" id="alloted_quota_percentage">
 										</div>
 
 										<div class="col-sm-4 col-xs-12">

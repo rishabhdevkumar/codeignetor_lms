@@ -58,38 +58,38 @@ class MRMaterial extends Controller
 
 	public function insertData()
 	{
-			$arr = [
-				'MR_MATERIAL_CODE'     => $this->request->getPost('material_code'),
-				'SAP_PLANT'            => $this->request->getPost('sap_plant'),
-				'GRADE'                => $this->request->getPost('grade'),
-				'GSM'                  => $this->request->getPost('gsm'),
-				'DESCRIPTION'          => $this->request->getPost('description'),
-				'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
-				'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')
-			];
 
-			$arr2 = array(
-				'MR_MATERIAL_CODE' => $this->request->getPost('material_code'),
-				'SAP_PLANT'        => $this->request->getPost('sap_plant')
-			);
-			$result["material"] = $this->materialModel->all_material($arr2);
+		$arr = [
+			'MR_MATERIAL_CODE'     => trim($this->request->getPost('material_code')),
+			'SAP_PLANT'            => trim($this->request->getPost('sap_plant')),
+			'GRADE'                => trim($this->request->getPost('grade')),
+			'GSM'                  => $this->request->getPost('gsm'),
+			'DESCRIPTION'          => $this->request->getPost('description'),
+			'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
+			'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')
+		];
 
-			if (!$result['material']) {
+		$arr2 = array(
+			'MR_MATERIAL_CODE' =>  trim($this->request->getPost('material_code')),
+			'SAP_PLANT'        =>  trim($this->request->getPost('sap_plant'))
+		);
+		$result["material"] = $this->materialModel->all_material($arr2);
 
-				$insert = $this->crudModel->saveData('pp_mr_material_master', $arr);
+		if (!$result['material']) {
 
-			} else {
+			$insert = $this->crudModel->saveData('pp_mr_material_master', $arr);
+		} else {
 
-				$result['error'] = "Material Already Exist!";
-				return view('header', $result)
-					 . view('mrmaterial/add_mrmaterial_view', $result)
-					 . view('footer');
-			}
-
-			if ($insert) {
-				return redirect()->to('/MRMaterial')->with('success', 'MR Material Created');
-			}
+			$result['error'] = "Material Already Exist!";
+			return view('header', $result)
+				. view('mrmaterial/add_mrmaterial_view', $result)
+				. view('footer');
 		}
+
+		if ($insert) {
+			return redirect()->to('/MRMaterial')->with('success', 'MR Material Created');
+		}
+	}
 
 	public function edit($id)
 	{
@@ -113,24 +113,24 @@ class MRMaterial extends Controller
 	public function updateData()
 	{
 
-			$arr = [
-				'MR_MATERIAL_CODE'     => $this->request->getPost('material_code'),
-				'SAP_PLANT'            => $this->request->getPost('sap_plant'),
-				'GRADE'                => $this->request->getPost('grade'),
-				'GSM'                  => $this->request->getPost('gsm'),
-				'DESCRIPTION'          => $this->request->getPost('description'),
-				'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
-				'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')
-			];
+		$arr = [
+			'MR_MATERIAL_CODE'     => trim($this->request->getPost('material_code')),
+			'SAP_PLANT'            => trim($this->request->getPost('sap_plant')),
+			'GRADE'                => trim($this->request->getPost('grade')),
+			'GSM'                  => $this->request->getPost('gsm'),
+			'DESCRIPTION'          => $this->request->getPost('description'),
+			'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
+			'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')
+		];
 
-			$condition = array("PP_ID" => $this->request->getPost('material_id'));
-			$update = $this->crudModel->updateData('pp_mr_material_master', $arr, $condition);
+		$condition = array("PP_ID" =>  $this->request->getPost('material_id'));
+		$update = $this->crudModel->updateData('pp_mr_material_master', $arr, $condition);
 
-			if ($update) {
-				return redirect()->to('/MRMaterial')->with('success', 'Material Updated');
-				// redirect('Material');
-			}
+		if ($update) {
+			return redirect()->to('/MRMaterial')->with('success', 'Material Updated');
+			// redirect('Material');
 		}
+	}
 
 	public function view($id)
 	{

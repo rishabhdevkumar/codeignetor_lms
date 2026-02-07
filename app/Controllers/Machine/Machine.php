@@ -56,12 +56,12 @@ class Machine extends Controller
 	{
 
 		$arr = [
-			'MACHINE_TPM_ID'        => $this->request->getPost('machine_code'),
+			'MACHINE_TPM_ID'        => trim($this->request->getPost('machine_code')),
 			'DESCRIPTION'           => $this->request->getPost('description'),
 			'TYPE'                  => $this->request->getPost('type'),
-			'PIN_CODE'              => $this->request->getPost('pincode'),
-			'SAP_PLANT'             => $this->request->getPost('sap_plant'),
-			'SAP_VENDOR_CODE'       => $this->request->getPost('vendor_code'),
+			'PIN_CODE'              => trim($this->request->getPost('pincode')),
+			'SAP_PLANT'             => trim($this->request->getPost('sap_plant')),
+			'SAP_VENDOR_CODE'       => trim($this->request->getPost('vendor_code')),
 			'CAPACITY_PER_DAY_MT'   => $this->request->getPost('capacity_per_day'),
 			'FINISH_LOSS_PERCENT'   => $this->request->getPost('finish_loss'),
 			'GRADE_CHANGE_TIME_MIN' => $this->request->getPost('grade_change_time'),
@@ -109,12 +109,12 @@ class Machine extends Controller
 	{
 
 		$arr = [
-			'MACHINE_TPM_ID'        => $this->request->getPost('machine_code'),
+			'MACHINE_TPM_ID'        => trim($this->request->getPost('machine_code')),
 			'DESCRIPTION'           => $this->request->getPost('description'),
 			'TYPE'                  => $this->request->getPost('type'),
-			'PIN_CODE'              => $this->request->getPost('pin_code'),
-			'SAP_PLANT'             => $this->request->getPost('sap_plant'),
-			'SAP_VENDOR_CODE'       => $this->request->getPost('vendor_code'),
+			'PIN_CODE'              => trim($this->request->getPost('pincode')),
+			'SAP_PLANT'             => trim($this->request->getPost('sap_plant')),
+			'SAP_VENDOR_CODE'       => trim($this->request->getPost('vendor_code')),
 			'CAPACITY_PER_DAY_MT'   => $this->request->getPost('capacity_per_day'),
 			'FINISH_LOSS_PERCENT'   => $this->request->getPost('finish_loss'),
 			'GRADE_CHANGE_TIME_MIN' => $this->request->getPost('grade_change_time'),
