@@ -29,7 +29,6 @@ class MRMaterial extends Controller
 		// return redirect()->to('/auth/logout');
 		// // }
 
-		// echo "<pre>";print_R("HI");die();
 		$result = [];
 
 		// Page title

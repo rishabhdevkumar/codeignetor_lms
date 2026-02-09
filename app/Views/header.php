@@ -97,6 +97,7 @@
                             <ul class="dropdown-content">
                                 <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning">Upload</a></li>
                                 <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">View</a></li>
+                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Re-Calculate</a></li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item ">

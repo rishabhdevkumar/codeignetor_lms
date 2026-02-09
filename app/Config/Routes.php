@@ -99,6 +99,8 @@ $routes->get('/CustomerQuota/edit/(:num)', 'Customer\CustomerQuota::edit/$1');
 $routes->post('/CustomerQuota/updateData/(:num)', 'Customer\CustomerQuota::updateData/$1');
 $routes->get('/CustomerQuota/view/(:num)', 'Customer\CustomerQuota::view/$1');
 
+$routes->post('material/getAllotmentQuota', 'Customer\CustomerQuota::getAllotmentQuota');
+
 $routes->get('/CustomerTransit', 'Customer\CustomerTransit::index');
 $routes->get('/CustomerTransit/add', 'Customer\CustomerTransit::add');
 $routes->post('/CustomerTransit/insertData', 'Customer\CustomerTransit::insertData');
@@ -139,6 +141,7 @@ $routes->post('/production-planning/approvePendingApproval', 'ProductionPlanning
 
 $routes->get('production-planning/auto-allocation', 'ProductionPlanning\AutoAllocationController::run');
 
+$routes->get('production-planning/process-machine-breakdown', 'ProductionPlanning\MachineBreakdownController::process');
 
 /*
  * --------------------------------------------------------------------

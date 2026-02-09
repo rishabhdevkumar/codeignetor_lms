@@ -114,8 +114,10 @@ class User extends BaseController
 			'status'           => 'required'
 		];
 
+
 		if (! $this->validate($rules)) {
 			$result['validation'] = $this->validator;
+			// return view('user/add_user_view', $result);
 		} else {
 
 			$password = encrypt($this->request->getPost('password'), config('App')->enc_dec_key);
@@ -126,15 +128,15 @@ class User extends BaseController
 			$subMenuAuth = $subMenuAuth ? json_encode($subMenuAuth) : '';
 
 			$data = [
-				'name'          => $this->request->getPost('name'),
-				'user_name'     => $this->request->getPost('user_name'),
-				'contact_no'    => $this->request->getPost('contact_no'),
-				'email'         => $this->request->getPost('email'),
-				'password'      => $password,
-				'authorities'   => $authorities,
-				'sub_menu_auth' => $subMenuAuth,
-				'status'        => $this->request->getPost('status'),
-				'role'          => $this->request->getPost('role')
+				'NAME'          => $this->request->getPost('name'),
+				'USER_NAME'     => $this->request->getPost('user_name'),
+				'CONTACT_NO'    => $this->request->getPost('contact_no'),
+				'EMAIL'         => $this->request->getPost('email'),
+				'PASSWORD'      => $password,
+				'AUTHORITIES'   => $authorities,
+				'SUB_MENU_AUTH' => $subMenuAuth,
+				'STATUS'        => $this->request->getPost('status'),
+				'ROLE'          => $this->request->getPost('role')
 			];
 
 			$data = esc($data);

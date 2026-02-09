@@ -38,4 +38,25 @@ class CustomerQuotaModel extends Model
 
         return false;
     }
+
+    public function customerquotaid($where = [])
+    {
+        $builder = $this->db->table('pp_customer_quota_master as c');
+        $builder->select('c.*, SUM(c2.QUOTA_PERCENTAGE) as TOTAL_QUOTA_PERCENTAGE');
+        $builder->join('pp_customer_quota_master c2', 'c2.GRADE = c.GRADE', 'left');
+
+        if (!empty($where)) {
+            $builder->where($where);
+        }
+        $builder->groupBy('c.GRADE');
+        $builder->orderBy('c.PP_ID', 'DESC');
+
+        $query = $builder->get();
+
+        if ($query->getNumRows() > 0) {
+            return $query->getResultArray();
+        }
+
+        return false;
+    }
 }

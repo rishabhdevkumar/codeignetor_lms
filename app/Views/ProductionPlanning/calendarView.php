@@ -320,19 +320,19 @@
                 });
             }
 
-            populateFilter(1, '#filterMachine');
-            populateFilter(3, '#filterGrade');
+            populateFilter(2, '#filterMachine');
+            populateFilter(4, '#filterGrade');
 
             $('#filterVersion').on('keyup change', function () {
-                table.column(0).search(this.value).draw();
+                table.column(1).search(this.value).draw();
             });
 
             $('#filterMotherRoll').on('keyup change', function () {
-                table.column(2).search(this.value).draw();
+                table.column(1).search(this.value).draw();
             });
 
             $('#filterGsm').on('keyup change', function () {
-                table.column(4).search(this.value).draw();
+                table.column(5).search(this.value).draw();
             });
 
             $('#fromDate, #toDate').on('change', function () {

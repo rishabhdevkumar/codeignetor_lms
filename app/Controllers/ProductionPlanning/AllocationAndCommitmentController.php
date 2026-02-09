@@ -73,6 +73,10 @@ class AllocationAndCommitmentController extends BaseController
                 ->where('CUSTOMER_CODE', $indent['bill_to_code'])
                 ->first();
 
+            if (empty($customerType) || ($customerType['CUSTOMER_TYPE'] !== 'KC1' && $customerType['CUSTOMER_TYPE'] !== 'KC2')) {
+                $customerType['CUSTOMER_TYPE'] = 'NKC';
+            }
+
             $pendingIndents[$key]['CUSTOMER_TYPE'] =
                 $customerType['CUSTOMER_TYPE'] ?? 'NKC';
 
@@ -80,7 +84,6 @@ class AllocationAndCommitmentController extends BaseController
                 ->select('PIN_CODE')
                 ->where('CUSTOMER_CODE', $indent['ship_to_code'])
                 ->first();
-
 
             if (empty($customerPinCode)) {
                 $notAllotted[] = [
@@ -538,15 +541,7 @@ class AllocationAndCommitmentController extends BaseController
                                 'SHIPCUSTOMER' => $indent['ship_to_code'],
                                 'STATUS'       => 'No planning data available for OWN or TPM machines.'
                             ];
-                            // $indentStatus['STATUS'] = 'No planning data available for OWN or TPM machines.';
                             continue;
-
-                            // CASE 4: NO MACHINES AVAILABLE
-                            // return redirect()->back()->with(
-                            //     'error',
-                            //     'No planning data available for OWN or TPM machines.'
-                            // );
-
                         }
 
                         $allocationRecord = $finalRecords[0];

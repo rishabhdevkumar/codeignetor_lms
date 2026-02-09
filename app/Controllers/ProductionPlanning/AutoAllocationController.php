@@ -85,6 +85,13 @@ class AutoAllocationController extends BaseController
                         $reverse = [
                             'UTILISED_QTY' => $oldPlanning['UTILISED_QTY'] - $indent['QUANTITY'],
                             'BALANCE_QTY' => $oldPlanning['BALANCE_QTY'] + $indent['QUANTITY'],
+
+                            'NKC_UTILISED_QTY_MT' => $oldPlanning['NKC_UTILISED_QTY_MT'],
+                            'NKC_BALANCE_QTY_MT' => $oldPlanning['NKC_BALANCE_QTY_MT'],
+                            'KC1_UTILISED_QTY_MT' => $oldPlanning['KC1_UTILISED_QTY_MT'],
+                            'KC1_BALANCE_QTY_MT' => $oldPlanning['KC1_BALANCE_QTY_MT'],
+                            'KC2_UTILISED_QTY_MT' => $oldPlanning['KC2_UTILISED_QTY_MT'],
+                            'KC2_BALANCE_QTY_MT' => $oldPlanning['KC2_BALANCE_QTY_MT'],
                         ];
 
                         if ($indent['CUSTOMER_TYPE'] === 'NKC') {
@@ -109,22 +116,8 @@ class AutoAllocationController extends BaseController
                     $apply = [
                         'UTILISED_QTY' => $planning['UTILISED_QTY'] + $indent['QUANTITY'],
                         'BALANCE_QTY' => $planning['BALANCE_QTY'] - $indent['QUANTITY'],
+
                     ];
-
-                    if ($indent['CUSTOMER_TYPE'] === 'NKC') {
-                        $apply['NKC_UTILISED_QTY_MT'] += $indent['QUANTITY'];
-                        $apply['NKC_BALANCE_QTY_MT'] -= $indent['QUANTITY'];
-                    }
-
-                    if ($indent['CUSTOMER_TYPE'] === 'KC1') {
-                        $apply['KC1_UTILISED_QTY_MT'] += $indent['QUANTITY'];
-                        $apply['KC1_BALANCE_QTY_MT'] -= $indent['QUANTITY'];
-                    }
-
-                    if ($indent['CUSTOMER_TYPE'] === 'KC2') {
-                        $apply['KC2_UTILISED_QTY_MT'] += $indent['QUANTITY'];
-                        $apply['KC2_BALANCE_QTY_MT'] -= $indent['QUANTITY'];
-                    }
 
                     $this->planningModel->update($planning['PP_ID'], $apply);
 
@@ -150,7 +143,6 @@ class AutoAllocationController extends BaseController
                 'status' => true,
                 'message' => 'Reallocation completed successfully'
             ]);
-
         } catch (\Throwable $e) {
 
             $this->db->transRollback();
@@ -167,57 +159,68 @@ class AutoAllocationController extends BaseController
     {
         $allotments = $this->indentModel
             ->where('PLANNING_CAL_ID', $planningCalId)
-            ->orderBy('INDENT_LINE_ITEM', 'ASC')
+            ->orderBy('PP_ID', 'ASC') // deterministic order
             ->findAll();
 
         if (empty($allotments)) {
             return;
         }
 
-        $planningFrom = new \DateTime($planning['FROM_DATE_TIME']);
-        $planningTo = new \DateTime($planning['TO_DATE_TIME']);
+        // 1️ First row = EXISTING anchor (DO NOT TOUCH)
+        $first = array_shift($allotments);
 
-        $totalSeconds = $planningTo->getTimestamp() - $planningFrom->getTimestamp();
-        $fallbackSeconds = (int) ($totalSeconds / count($allotments));
+        // Anchor from existing TO_DATE
+        $currentStart = new \DateTime($first['TO_DATE']);
 
-        $currentStart = clone $planningFrom;
-
+        // 2️ Process remaining rows
         foreach ($allotments as $allotment) {
 
-            $oldFrom = new \DateTime($allotment['OLD_FROM_DATE'] ?? $allotment['FROM_DATE']);
-            $oldTo = new \DateTime($allotment['OLD_TO_DATE'] ?? $allotment['TO_DATE']);
+            // Skip existing indents (extra safety)
+            if (empty($allotment['OLD_FROM_DATE'])) {
+                continue;
+            }
+
+            // original duration
+            $oldFrom = new \DateTime($allotment['OLD_FROM_DATE']);
+            $oldTo = new \DateTime($allotment['OLD_TO_DATE']);
 
             $durationSeconds = max(
                 $oldTo->getTimestamp() - $oldFrom->getTimestamp(),
-                $fallbackSeconds
+                60
             );
 
+            // new FROM / TO
             $fromDate = clone $currentStart;
             $toDate = (clone $fromDate)->modify("+{$durationSeconds} seconds");
 
-            // Packaging time
+            // packaging time
             $material = $this->materialModel
                 ->select('PACKAGING_TIME')
                 ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
                 ->first();
 
+            $packagingDays = (int) ($material['PACKAGING_TIME'] ?? 0);
+
             $finishingDate = clone $toDate;
-            if (!empty($material['PACKAGING_TIME'])) {
-                $finishingDate->add(new \DateInterval("P{$material['PACKAGING_TIME']}D"));
+            if ($packagingDays > 0) {
+                $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
 
-            // Transit time
+            // transit time
             $transit = $this->transitMaster
                 ->select('TRANSIT_TIME')
                 ->where('FROM_PINCODE', $planning['MACHINE_PINCODE'] ?? null)
                 ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
                 ->first();
 
+            $transitDays = (int) ($transit['TRANSIT_TIME'] ?? 0);
+
             $doorStepDate = clone $finishingDate;
-            if (!empty($transit['TRANSIT_TIME'])) {
-                $doorStepDate->add(new \DateInterval("P{$transit['TRANSIT_TIME']}D"));
+            if ($transitDays > 0) {
+                $doorStepDate->add(new \DateInterval("P{$transitDays}D"));
             }
 
+            // update ONLY newly moved indent
             $this->indentModel->update($allotment['PP_ID'], [
                 'FROM_DATE' => $fromDate->format('Y-m-d H:i:s'),
                 'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
@@ -226,7 +229,11 @@ class AutoAllocationController extends BaseController
                 'MODIFICATION_FLAG' => 1
             ]);
 
+            // move anchor forward
             $currentStart = clone $toDate;
         }
     }
+
+
+
 }

@@ -5,12 +5,14 @@ namespace App\Controllers\Customer;
 use App\Controllers\BaseController;
 use App\Models\Crud_Model;
 use App\Models\Customer\CustomerQuotaModel;
+use App\Models\Material\MRMaterialModel;
 
 class CustomerQuota extends BaseController
 {
     protected $session;
     protected $crudModel;
     protected $customerQuotaModel;
+    protected $materialModel;
     protected $helpers = ['url', 'form', 'security'];
 
     public function __construct()
@@ -18,6 +20,7 @@ class CustomerQuota extends BaseController
         $this->session = session();
         $this->crudModel = new Crud_Model();
         $this->customerQuotaModel = new CustomerQuotaModel();
+        $this->materialModel  = new MRMaterialModel();
 
         date_default_timezone_set('Asia/Calcutta');
     }
@@ -39,6 +42,13 @@ class CustomerQuota extends BaseController
     {
         $data['title'] = "Add Customer Quota";
 
+        $data['grade'] = $this->materialModel
+            ->select('GRADE')
+            ->distinct()
+            ->where('GRADE IS NOT NULL')
+            ->orderBy('GRADE', 'ASC')
+            ->findAll();
+
         echo view('header', $data);
         echo view('customerquota/add_customerquota_view', $data);
         echo view('footer');
@@ -59,6 +69,15 @@ class CustomerQuota extends BaseController
 
         $result = $this->customerQuotaModel->all_customerquota($checkArr);
 
+        $data['title'] = "Add Customer Quota";
+
+        $data['grade'] = $this->materialModel
+            ->select('GRADE')
+            ->distinct()
+            ->where('GRADE IS NOT NULL')
+            ->orderBy('GRADE', 'ASC')
+            ->findAll();
+
         if (!$result) {
             $insert = $this->crudModel->saveData('pp_customer_quota_master', $arr);
         } else {
@@ -75,10 +94,17 @@ class CustomerQuota extends BaseController
 
     public function edit($id)
     {
-        $arr = ['PP_ID' => $id];
-        $dataList = $this->customerQuotaModel->all_customerquota($arr);
+        $arr = ['c.PP_ID' => $id];
+        $dataList = $this->customerQuotaModel->customerquotaid($arr);
 
         $result['customerquota'] = $dataList[0];
+
+        $result['grade'] = $this->materialModel
+            ->select('GRADE')
+            ->distinct()
+            ->where('GRADE IS NOT NULL')
+            ->orderBy('GRADE', 'ASC')
+            ->findAll();
 
         if (!$result['customerquota']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Customer Quota not found");
@@ -108,8 +134,8 @@ class CustomerQuota extends BaseController
 
     public function view($id)
     {
-        $arr = ['PP_ID' => $id];
-        $dataList = $this->customerQuotaModel->all_customerquota($arr);
+        $arr = ['c.PP_ID' => $id];
+        $dataList = $this->customerQuotaModel->customerquotaid($arr);
 
         $result['customerquota'] = $dataList[0];
 
@@ -128,5 +154,18 @@ class CustomerQuota extends BaseController
     {
         $this->crudModel->del('pp_customer_quota_master', ['PP_ID' => $id]);
         return redirect()->to('/CustomerQuota')->with('success', 'Customer Quota Deleted');
+    }
+
+    public function getAllotmentQuota()
+    {
+        $grade = $this->request->getPost('grade');
+
+        $builder = $this->customerQuotaModel->select('CUSTOMER_TYPE,QUOTA_PERCENTAGE')->groupBy('GRADE');
+
+        if (!empty($grade)) {
+            $builder->where('GRADE', $grade);
+        }
+
+        return $this->response->setJSON($builder->findAll());
     }
 }
