@@ -12,12 +12,11 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
 
 <div class="row" style="float:left;width:100%">
     <form method="post" action="<?php echo base_url('MachineAvailability/updateData/' . $machine_id); ?>"
-        style="float:left;width:100%">
+        style="width:100%">
         <input type="hidden" name="machineavailability_id" value="<?php echo $machine_id; ?>">
         <div class="col-sm-3" style="float:left;margin-top:20px"></div>
         <div class="col-sm-6" style="float:left;margin-top:20px">
             <div class="ibox float-e-margins">
-                <div class="col-sm-6 col-sm-offset-3">
                     <div style="background-color:#efd6bb; color:#000" class="ibox-title">
                         <h5>Edit Machine Availability</h5>
                     </div>
@@ -66,7 +65,6 @@ $machine_id         = old('PP_ID', $machine['PP_ID']);
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 </div>

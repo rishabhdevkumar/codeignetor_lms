@@ -23,11 +23,22 @@
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>From Country</label>
-											<input type="text" class="form-control" name="from_country" id="from_country"
-											 maxlength="20" value="<?php echo set_value('from_country'); ?>" required>
-											<div class="error"></div>
-										</div>
+    <label>From Country</label>
+    <select class="form-control" name="from_country" id="from_country" required>
+        <option value="">Select Country</option>
+        <?php if(!empty($countries)): ?>
+            <?php foreach($countries as $country): ?>
+                <option value="<?= esc($country['PP_ID']); ?>" 
+                    <?= set_select('from_country', $country['PP_ID']); ?>>
+                    <?= esc($country['COUNTRY_NAME']); ?>
+                </option>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </select>
+    <div class="error"></div>
+</div>
+
+
 										<div class="col-sm-6 col-xs-12">
 											<label>From PinCode</label>
 											<input type="text" class="form-control" name="from_pincode" id="from_pincode"
@@ -44,11 +55,21 @@
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>To Country</label>
-											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" 
-											value="<?php echo set_value('to_country'); ?>" required>
-											<div class="error"></div>
-										</div>
+    <label>To Country</label>
+    <select class="form-control" name="to_country" id="to_country" required>
+        <option value="">Select Country</option>
+        <?php if(!empty($countries)): ?>
+            <?php foreach($countries as $country): ?>
+                <option value="<?= esc($country['PP_ID']); ?>"
+                    <?= set_select('to_country', $country['PP_ID']); ?>>
+                    <?= esc($country['COUNTRY_NAME']); ?>
+                </option>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </select>
+    <div class="error"></div>
+</div>
+
 										<div class="col-sm-6 col-xs-12">
 											<label>To PinCode</label>
 											<input type="text" class="form-control" name="to_pincode" id="to_pincode"
@@ -86,8 +107,8 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<button class="btn btn-info btn-sm" type="submit">Add</button>
 											<a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>CustomerTransit">Back</a>
+											<button class="btn btn-info btn-sm" type="submit">Add</button>
 										</div>
 									</div>
 								</div>

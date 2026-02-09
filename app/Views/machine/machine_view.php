@@ -46,8 +46,8 @@
 										<td><?php echo $machine[$k]["TYPE"]; ?></td>
 										<td><?php echo $machine[$k]["SAP_PLANT"]; ?></td>
 										<td><?php echo $machine[$k]["CAPACITY_PER_DAY_MT"]; ?></td>
-										<td><a href="<?php echo base_url(); ?>Machine/view/<?php echo $machine[$k]["PP_ID"]; ?>" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i></a></td>
-										<td><a href="<?php echo base_url(); ?>Machine/edit/<?php echo $machine[$k]["PP_ID"]; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Machine/view/<?php echo $machine[$k]["PP_ID"]; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Machine/edit/<?php echo $machine[$k]["PP_ID"]; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 									</tr>
 							<?php
 									$ctr++;

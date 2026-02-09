@@ -17,7 +17,7 @@ $machine_id          = old('PP_ID', $machine['PP_ID']);
         <div class="col-sm-6" style="float:left;margin-top:20px">
 
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
+                <div style="background-color:#efd6bb; color:#000" class="ibox-title">
                     <h5><?php echo $title; ?><small> </small></h5>
                 </div>
                 <div class="ibox-content">
@@ -71,7 +71,7 @@ $machine_id          = old('PP_ID', $machine['PP_ID']);
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12 col-xs-12">
-                                            <a class="btn btn-outline-primary btn-sm" href="<?php echo base_url() ?>MachineAvailability">Back</a>
+                                            <a class="btn btn-dark btn-sm" href="<?php echo base_url() ?>MachineAvailability">Back</a>
                                         </div>
                                     </div>
                                 </div>

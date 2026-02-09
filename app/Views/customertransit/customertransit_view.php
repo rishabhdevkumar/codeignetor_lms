@@ -44,14 +44,14 @@
 							?>
 									<tr class="gradeX">
 										<td><?php echo $ctr; ?></td>
-										<td><?php echo $customer[$k]["FROM_COUNTRY"]; ?></td>
+										<td><?= isset($customer[$k]['FROM_COUNTRY_NAME']) ? $customer[$k]['FROM_COUNTRY_NAME'] : '-'; ?></td>
 										<td><?php echo $customer[$k]["FROM_PINCODE"]; ?></td>
-										<td><?php echo $customer[$k]["TO_COUNTRY"]; ?></td>
+										<td><?php echo isset($customer[$k]["TO_COUNTRY_NAME"]) ? $customer[$k]["TO_COUNTRY_NAME"] : '-'; ?></td>
 										<td><?php echo $customer[$k]["TO_PINCODE"]; ?></td>
 										<td><?php echo $customer[$k]["DISTANCE"]; ?></td>
 										<td><?php echo $customer[$k]["TRANSIT_TIME"]; ?></td>
-										<td><a href="<?php echo base_url(); ?>CustomerTransit/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
-										<td><a href="<?php echo base_url(); ?>CustomerTransit/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>CustomerTransit/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>CustomerTransit/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 									</tr>
 							<?php
 									$ctr++;
