@@ -31,7 +31,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
-											<label style="color: #000">Material Code</label><em>*</em>
+											<label >Material Code</label><em>*</em>
 											<input type="text" class="form-control"
 												name="material_code" id="material_code"
 												maxlength="20" required
@@ -39,7 +39,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">SAP Plant<em>*</em></label>
+											<label >SAP Plant<em>*</em></label>
 											<input type="text" class="form-control"
 												name="sap_plant" id="sap_plant"
 												maxlength="5" required
@@ -47,7 +47,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">Grade<em>*</em></label>
+											<label >Grade<em>*</em></label>
 											<input type="text" class="form-control"
 												name="grade" id="grade"
 												maxlength="20" required
@@ -61,7 +61,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">GSM<em>*</em></label>
+											<label>GSM<em>*</em></label>
 											<input type="text" class="form-control"
 												name="gsm" id="gsm"
 												maxlength="5" required
@@ -69,7 +69,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12">
-											<label class="text-secondary">UOM<em>*</em></label>
+											<label>UOM<em>*</em></label>
 											<input type="text" class="form-control"
 												name="uom" id="uom"
 												maxlength="5" required
@@ -77,7 +77,7 @@
 										</div>
 
 										<div class="col-sm-4 col-xs-12 mt-2">
-											<label class="text-secondary">Item Type<em>*</em></label>
+											<label>Item Type<em>*</em></label>
 											<input type="text" class="form-control"
 												name="item_type" id="item_type" required
 												value="<?php echo set_value('item_type'); ?>">
@@ -90,14 +90,14 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Width<em>*</em></label>
+											<label>Width<em>*</em></label>
 											<input type="number" class="form-control"
 												name="width" id="width" required
 												value="<?php echo set_value('width'); ?>">
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Length<em>*</em></label>
+											<label>Length<em>*</em></label>
 											<input type="number" class="form-control"
 												name="length" id="length" required
 												value="<?php echo set_value('length'); ?>">
@@ -108,7 +108,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">MR Material Code<em>*</em></label>
+											<label>MR Material Code<em>*</em></label>
 											<input type="text" class="form-control"
 												name="mr_material_code" id="mr_material_code"
 												maxlength="20" required
@@ -116,7 +116,7 @@
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label class="text-secondary">Packaging Time<em>*</em></label>
+											<label>Packaging Time<em>*</em></label>
 											<input type="number" class="form-control"
 												name="packaging_time" id="packaging_time" required
 												value="<?php echo set_value('packaging_time'); ?>">
@@ -127,7 +127,7 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<label class="text-secondary">Description<em>*</em></label>
+											<label>Description<em>*</em></label>
 											<textarea class="form-control" style="resize: none;"
 												name="description" required
 												id="description"><?php echo set_value('description'); ?></textarea>

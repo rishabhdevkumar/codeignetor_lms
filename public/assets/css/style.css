@@ -1372,7 +1372,7 @@ button.dim:active:before {
   white-space: nowrap;
 }
 
-.card label em {
+ .ibox-content em {
   color: red;
   font-style: normal;
 }
@@ -8776,4 +8776,5 @@ body {
   display: block;
   color: black;
 }
+
 

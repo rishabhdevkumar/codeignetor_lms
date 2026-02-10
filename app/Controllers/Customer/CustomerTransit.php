@@ -5,19 +5,22 @@ namespace App\Controllers\Customer;
 use App\Controllers\BaseController;
 use App\Models\Crud_Model;
 use App\Models\MasterModels\TransitMaster;
+use \App\Models\Customer\CountryModel;
 
 class CustomerTransit extends BaseController
 {
 	protected $session;
 	protected $crudModel;
 	protected $customerTransitModel;
+	protected $countryModel;
 	protected $helpers = ['url', 'form', 'security'];
 
 	public function __construct()
 	{
-		$this->session        = session();
-		$this->crudModel      = new Crud_Model();
+		$this->session                = session();
+		$this->crudModel              = new Crud_Model();
 		$this->customerTransitModel   = new TransitMaster();
+		$this->countryModel           = new CountryModel();
 
 		date_default_timezone_set('Asia/Calcutta');
 	}
@@ -40,8 +43,7 @@ class CustomerTransit extends BaseController
 
 		$result["title"] = "Add Customer Transit";
 
-		   $countryModel = new \App\Models\Customer\CountryModel();
-    $result['countries'] = $countryModel->getActiveCountries();
+		$result['countries'] = $this->countryModel->getActiveCountries();
 
 		echo view('header', $result);
 		echo view('customertransit/add_customertransit_view', $result);
@@ -157,5 +159,4 @@ class CustomerTransit extends BaseController
 			return redirect()->to('/CustomerTransit');
 		}
 	}
-	
 }

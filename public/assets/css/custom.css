@@ -122,8 +122,7 @@ form input,textarea:focus
 .form-group label {
     float: left;
     text-align: left;
-    
-    color: #c72e2e;
+    color: black;
 }
 td label {
     float: left;

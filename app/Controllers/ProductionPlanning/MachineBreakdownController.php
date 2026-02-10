@@ -80,7 +80,7 @@ class MachineBreakdownController extends Controller
                 // LIVE PLANNING CALENDARS
                 $plannings = $this->planningModel
                     ->where('MACHINE', $machineId)
-                    ->where('FROM_DATE_TIME <', $bdTo->format('Y-m-d H:i:s'))
+                    // ->where('FROM_DATE_TIME <', $bdTo->format('Y-m-d H:i:s'))
                     ->where('TO_DATE_TIME >', $bdFrom->format('Y-m-d H:i:s'))
                     ->findAll();
 
