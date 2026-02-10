@@ -14,8 +14,8 @@ class CountryModel extends Model
 
     public function getActiveCountries()
     {
-        // return $this->where()
-        return $this->orderBy('COUNTRY_NAME', 'ASC')
+        return $this->where('STATUS', '1')
+         ->orderBy('COUNTRY_NAME', 'ASC')
         ->findAll();
     }
 }
