@@ -4,7 +4,7 @@ namespace App\Controllers\Customer;
 
 use App\Controllers\BaseController;
 use App\Models\Crud_Model;
-use App\Models\MasterModels\TransitMaster;
+use App\Models\Customer\CustomerTransitModel;
 use \App\Models\Customer\CountryModel;
 
 class CustomerTransit extends BaseController
@@ -19,7 +19,7 @@ class CustomerTransit extends BaseController
 	{
 		$this->session                = session();
 		$this->crudModel              = new Crud_Model();
-		$this->customerTransitModel   = new TransitMaster();
+		$this->customerTransitModel   = new CustomerTransitModel();
 		$this->countryModel           = new CountryModel();
 
 		date_default_timezone_set('Asia/Calcutta');
@@ -44,6 +44,10 @@ class CustomerTransit extends BaseController
 		$result["title"] = "Add Customer Transit";
 
 		$result['countries'] = $this->countryModel->getActiveCountries();
+		// echo '<pre>';
+		// print_r($result['countries']);
+		// echo '</pre>';
+		// exit;
 
 		echo view('header', $result);
 		echo view('customertransit/add_customertransit_view', $result);

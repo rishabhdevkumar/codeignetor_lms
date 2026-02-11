@@ -28,8 +28,7 @@
 												<option value="">Select Country</option>
 												<?php if (!empty($countries)): ?>
 													<?php foreach ($countries as $country): ?>
-														<option value="<?= esc($country['PP_ID']); ?>"
-															<?= set_select('from_country', $country['PP_ID']); ?>>
+														<option value="<?= esc($country['COUNTRY_ID']); ?>">
 															<?= esc($country['COUNTRY_NAME']); ?>
 														</option>
 													<?php endforeach; ?>
@@ -60,8 +59,7 @@
 												<option value="">Select Country</option>
 												<?php if (!empty($countries)): ?>
 													<?php foreach ($countries as $country): ?>
-														<option value="<?= esc($country['PP_ID']); ?>"
-															<?= set_select('to_country', $country['PP_ID']); ?>>
+														<option value="<?= esc($country['COUNTRY_ID']); ?>">
 															<?= esc($country['COUNTRY_NAME']); ?>
 														</option>
 													<?php endforeach; ?>

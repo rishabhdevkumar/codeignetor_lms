@@ -44,7 +44,7 @@
 							?>
 									<tr class="gradeX">
 										<td><?php echo $ctr; ?></td>
-										<td><?= isset($customer[$k]['FROM_COUNTRY_NAME']) ? $customer[$k]['FROM_COUNTRY_NAME'] : '-'; ?></td>
+										<td><?php echo $customer[$k]['FROM_COUNTRY_NAME'] ?></td>
 										<td><?php echo $customer[$k]["FROM_PINCODE"]; ?></td>
 										<td><?php echo isset($customer[$k]["TO_COUNTRY_NAME"]) ? $customer[$k]["TO_COUNTRY_NAME"] : '-'; ?></td>
 										<td><?php echo $customer[$k]["TO_PINCODE"]; ?></td>
