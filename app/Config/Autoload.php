@@ -95,5 +95,5 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $helpers = ['sendmail_helper'];
+    public $helpers = ['sendmail_helper','encryption'];
 }

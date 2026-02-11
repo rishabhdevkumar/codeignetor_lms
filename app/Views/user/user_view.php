@@ -27,7 +27,6 @@
 									<th>Sl.</th>
 									<th>Name</th>	
 									<th>User Name</th>	
-									<!--<th>Password</th>-->
 									<th>Status</th>
 									<th>View</th>
 									<th>Edit</th>
@@ -45,13 +44,12 @@
 										?>								
 											<tr class="gradeX">																					
 												<td><?php echo $ctr;?></td>
-												<td><?php echo $user[$k]["name"];?></td>
-												<td><?php echo $user[$k]["user_name"];?></td>
-												<!--<td><?php echo decrypt($user[$k]["password"],$this->config->item('enc_dec_key'));?></td>-->
-												<td><?php if($user[$k]["status"]==1) echo "Active"; else echo "Deactive";?></td>
-												<td><a href="<?php echo base_url();?>User/view/<?php echo $user[$k]["id"];?>" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
-												<td><a href="<?php echo base_url();?>User/edit/<?php echo $user[$k]["id"];?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a></td>
-												<!--<td><a href="<?php echo base_url();?>User/del/<?php echo $user[$k]["id"];?>" onclick="return del(<?php echo $user[$k]["id"]; ?>)" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>-->
+												<td><?php echo $user[$k]["NAME"];?></td>
+												<td><?php echo $user[$k]["USERNAME"];?></td>
+												<td><?php if($user[$k]["STATUS"]==1) echo "Active"; else echo "Deactive";?></td>
+												<td><a href="<?php echo base_url();?>User/view/<?php echo $user[$k]["PP_ID"];?>" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+												<td><a href="<?php echo base_url();?>User/edit/<?php echo $user[$k]["PP_ID"];?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a></td>
+												<!--<td><a href="<?php echo base_url();?>User/del/<?php echo $user[$k]["PP_ID"];?>" onclick="return del(<?php echo $user[$k]["PP_ID"]; ?>)" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>-->
 											</tr>								
 										<?php
 											$ctr++;

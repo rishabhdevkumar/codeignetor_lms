@@ -19,7 +19,7 @@ $authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : array();
 			<?= session()->getFlashdata('message'); ?>
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5><?php echo $title; ?><small> </small></h5>
+
 				</div>
 				<div class="ibox-content">
 					<div class="form-horizontal">
@@ -222,7 +222,7 @@ $authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : array();
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-12" style="float:left;" style="margin-top:20px">
+		<div class="col-sm-12" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
 					<h5>Sub Menu Authorities <small> </small></h5> <br />
@@ -235,28 +235,42 @@ $authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : array();
 
 					<div class="row" id="sub_menus" style="max-height:500px;overflow-y: scroll;">
 
+						
 						<?php
-						foreach ($sub_menu_auth as $k => $v) {
+						$actions = ['index' => 'Index', 'add' => 'Add', 'edit' => 'Edit', 'view' => 'View'];
 
+						foreach ($sub_menu_auth as $row) {
+							$ppId = $row['PP_ID'];
+							$menuName = $row['SUB_MENU3'] ?: $row['SUB_MENU2'];
+							$selected = $menu_control[$ppId] ?? [];
 						?>
 							<div class="col-sm-4 col-xs-4 mb-0 menu_row">
-								<div class="" style="color:#2C8F7B;"><label> <b> <?php echo $sub_menu_auth[$k]['sub_menu3'] ? $sub_menu_auth[$k]['sub_menu3'] : $sub_menu_auth[$k]['sub_menu2'] ?> </b><br></label>
+								<div style="color:#2C8F7B;">
+									<label><b><?= htmlspecialchars($menuName) ?></b></label>
 								</div>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['ORDER_ID'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="index" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('index', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Index</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['ORDER_ID'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="add" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('add', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Add</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['ORDER_ID'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="edit" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('edit', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Edit</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['ORDER_ID'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="view" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('view', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>View</label>
+
+								<?php foreach ($actions as $key => $label): ?>
+									<label>
+										<input type="checkbox"
+											class="sub_menu_auth"
+											style="width:18px;height:18px;"
+											data-order_id="<?= $row['ORDER_ID'] ?>"
+											onclick="check_menu(this)"
+											name="sub_auth_control[<?= $ppId ?>][]"
+											value="<?= $key ?>"
+											<?= in_array($key, $selected) ? 'checked' : '' ?>>
+										<?= $label ?>
+									</label>
+								<?php endforeach; ?>
 							</div>
 						<?php
 						}
-
-
 						?>
+
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</form>
 </div>
 <script>
@@ -273,7 +287,29 @@ $authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : array();
 
 	});
 
+	// function check_menu(x) {
+	// 	order_id = $(x).data("order_id");
+
+	// 	if ($(x).prop("checked")) {
+	// 		$("input[value='" + order_id + "']").prop("checked", true);
+	// 	} else {
+	// 		//$("input[value='"+order_id+"']").prop("checked",false);
+	// 	}
+
+	// }
+
 	function check_menu(x) {
+		const $row = $(x).closest('.menu_row');
+
+		if ($(x).prop('checked') && $(x).val() !== 'index') {
+			$row.find("input[value='index']").prop('checked', true);
+		}
+
+		// If index is unchecked → uncheck all
+		if ($(x).val() === 'index' && !$(x).prop('checked')) {
+			$row.find("input[type='checkbox']").prop('checked', false);
+		}
+
 		order_id = $(x).data("order_id");
 
 		if ($(x).prop("checked")) {
@@ -281,7 +317,6 @@ $authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : array();
 		} else {
 			//$("input[value='"+order_id+"']").prop("checked",false);
 		}
-
 	}
 
 	function deselect_submenu(x) {

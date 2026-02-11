@@ -6,7 +6,7 @@ use CodeIgniter\RESTful\ResourceController;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
-class AllPlanningApi extends ResourceController
+class SchedulePlanningApi extends ResourceController
 {
     public function UpdatePlanning()
     {
@@ -160,7 +160,7 @@ class AllPlanningApi extends ResourceController
 
         return $this->respond([
             'status' => true,
-            'message' => 'Production Planning update completed successfully',
+            'message' => 'Production Planning update completed',
             'data' => $responseData
         ], 200);
     }

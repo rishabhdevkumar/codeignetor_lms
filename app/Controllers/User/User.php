@@ -5,7 +5,6 @@ namespace App\Controllers\User;
 use App\Models\Crud_Model;
 use App\Models\User_Model;
 use Config\Database;
-
 use App\Controllers\BaseController;
 
 class User extends BaseController
@@ -67,7 +66,6 @@ class User extends BaseController
 		// 	return redirect()->to('auth/logout');
 		// }
 
-
 		$db = Database::connect();
 
 		$arr = array("PP_ID" => 1);
@@ -105,31 +103,42 @@ class User extends BaseController
 		// if (! $session->get('erp_user_id')) {
 		// 	return redirect()->to('auth/logout');
 		// }
+		$db = Database::connect();
 
 		$rules = [
-			'name'             => 'required|trim',
-			'user_name'        => 'required|trim|is_unique[users.user_name]',
-			'password'         => 'required|min_length[6]|matches[confirm_password]',
-			'confirm_password' => 'required',
-			'status'           => 'required'
+			'name'             => 'required|trim'
+			// 'user_name'        => 'required|trim|is_unique[pp_users_master.USERNAME]',
+			// 'password'         => 'required|min_length[6]|matches[confirm_password]',
+			// 'confirm_password' => 'required',
+			// 'status'           => 'required'
 		];
 
 
 		if (! $this->validate($rules)) {
 			$result['validation'] = $this->validator;
-			// return view('user/add_user_view', $result);
 		} else {
 
-			$password = encrypt($this->request->getPost('password'), config('App')->enc_dec_key);
+			$encrypter = \Config\Services::encrypter();
+
+			$password = $encrypter->encrypt(
+				$this->request->getPost('password')
+			);
+			// encrypt($this->request->getPost('password'), config('App')->enc_dec_key);
 			$authorities = $this->request->getPost('authorities');
-			$authorities = implode(",", $authorities);
+			$authorities = is_array($authorities)
+				? implode(',', $authorities)
+				: null;
+
 
 			$subMenuAuth = $this->request->getPost('sub_auth_control');
-			$subMenuAuth = $subMenuAuth ? json_encode($subMenuAuth) : '';
+			$subMenuAuth = is_array($subMenuAuth)
+				? json_encode($subMenuAuth, JSON_UNESCAPED_UNICODE)
+				: json_encode([]);
 
+				
 			$data = [
 				'NAME'          => $this->request->getPost('name'),
-				'USER_NAME'     => $this->request->getPost('user_name'),
+				'USERNAME'     => $this->request->getPost('user_name'),
 				'CONTACT_NO'    => $this->request->getPost('contact_no'),
 				'EMAIL'         => $this->request->getPost('email'),
 				'PASSWORD'      => $password,
@@ -139,9 +148,13 @@ class User extends BaseController
 				'ROLE'          => $this->request->getPost('role')
 			];
 
-			$data = esc($data);
-
-			$insert = $this->crudModel->save("pp_users_master", $data);				 								 //echo $this->db->last_query();die;			
+			$data = esc($data);	
+	// 		echo '<pre>';
+    // print_r($data);
+    // echo '</pre>';
+    // exit;	
+			$insert = $this->userModel->insert( $data);	
+				
 			if ($insert) {
 				$session->setFlashdata(
 					'message',
