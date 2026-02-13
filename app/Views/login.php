@@ -16,21 +16,21 @@
     </script>
 </head>
 
-<body >
+<body style="background-color: #FFF0D1">
     <div class="container">
         <div class="page">
-            <center><img class="img-responsive" src="<?php echo base_url(); ?>assets/img/new_logo1.png" /></center>
+            <center><img class="img-responsive" src="<?php echo base_url(); ?>assets/img/logoHeader.png" /></center>
             <div class="row mt-5">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <center><img src="<?php echo base_url() ?>uploads/logo-white.png" class="img-responsive rounded" style=" margin-bottom: 10px !important;"></center>
+                    <!-- <center><img src="<?php echo base_url() ?>uploads/logo-white.png" class="img-responsive rounded" style=" margin-bottom: 10px !important;"></center> -->
 
                     <h3>Pakka Limited</h3>
                     </p>
                     <p>
                         <center><?php echo $title; ?></center>
                     </p>
-                    <form class="m-t" role="form" action="" autocomplete="off" method="post" id="frm">
+                    <form class="m-t" role="form" action="<?= base_url('Auth/Attemptlogin') ?>" autocomplete="off" method="post" id="frm">
                        <?= csrf_field() ?>
                         <div class="form-group">
                             <input type="text" name="user_name" id="user_name" class="form-control <?php if (isset($validation)) $validation->getError('user_name'); ?>" placeholder="User Name" value="<?php echo set_value('user_name'); ?>" autocomplete="off">
@@ -57,21 +57,14 @@
                         <div id="status">
                            <?= session()->getFlashdata('message'); ?>
                         </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                        <button type="submit" style="background-color:#A3243C;" class="btn block full-width m-b">Login</button>
                     </form>
                     <!--<p class="m-t"> <center><small>&copy; 2020-2021</small> </center></p>-->
                 </div>
                 <div class="col-sm-4"></div>
             </div>
 
-            <div class="row footer">
-                <div class="col-sm-6 col-xs-6 text-left"></div>
-                <div class="col-sm-6 col-xs-6 text-right">
-                    <!-- <span>Designed & Developed By : </span>
-                    <img class="img-responsive" src="<?php echo base_url(); ?>assets/img/chaya_it_logo.png" /> -->
-                </div>
-             
-            </div>
+            
         </div>
     </div>
 

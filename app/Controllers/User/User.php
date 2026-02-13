@@ -124,6 +124,9 @@ class User extends BaseController
 				$this->request->getPost('password')
 			);
 			// encrypt($this->request->getPost('password'), config('App')->enc_dec_key);
+
+			 $hashedPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
 			$authorities = $this->request->getPost('authorities');
 			$authorities = is_array($authorities)
 				? implode(',', $authorities)
@@ -141,18 +144,15 @@ class User extends BaseController
 				'USERNAME'     => $this->request->getPost('user_name'),
 				'CONTACT_NO'    => $this->request->getPost('contact_no'),
 				'EMAIL'         => $this->request->getPost('email'),
-				'PASSWORD'      => $password,
-				'AUTHORITIES'   => $authorities,
+				'PASSWORD'      => $hashedPassword,
+				'AUTHORIZATION' => $authorities,
 				'SUB_MENU_AUTH' => $subMenuAuth,
 				'STATUS'        => $this->request->getPost('status'),
 				'ROLE'          => $this->request->getPost('role')
 			];
 
 			$data = esc($data);	
-	// 		echo '<pre>';
-    // print_r($data);
-    // echo '</pre>';
-    // exit;	
+
 			$insert = $this->userModel->insert( $data);	
 				
 			if ($insert) {
@@ -160,7 +160,7 @@ class User extends BaseController
 					'message',
 					'<div class="alert alert-success">User Added</div>'
 				);
-				return redirect()->to('user');
+				return redirect()->to('User');
 			}
 		}
 	}

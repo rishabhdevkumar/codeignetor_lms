@@ -1,7 +1,7 @@
 <?php
-$from_country             = old('FROM_COUNTRY', $customer['FROM_COUNTRY']);
+$from_country             = old('FROM_COUNTRY', $customer['FROM_COUNTRY_NAME']);
 $from_pincode             = old('FROM_PINCODE', $customer['FROM_PINCODE']);
-$to_country             = old('TO_COUNTRY', $customer['TO_COUNTRY']);
+$to_country             = old('TO_COUNTRY', $customer['TO_COUNTRY_NAME']);
 $to_pincode             = old('TO_PINCODE', $customer['TO_PINCODE']);
 $distance              = old('DISTANCE', $customer['DISTANCE']);
 $transit_time            = old('TRANSIT_TIME', $customer['TRANSIT_TIME']);

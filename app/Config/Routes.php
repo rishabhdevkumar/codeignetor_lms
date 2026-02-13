@@ -43,10 +43,14 @@ $routes->set404Override();
 // $routes->get('/', 'Auth::index');
 
 $routes->get('/', 'Dashboard::index');
+$routes->get('/Dashboard', 'Dashboard::index');
 
 $routes->get('/MasterManagement', 'MasterManagement::index');
 
-$routes->get('/Auth/login', 'Auth::login');
+$routes->get('/Auth/login', 'Authorise::login');
+$routes->post('/Auth/Attemptlogin', 'Authorise::attemptLogin');
+$routes->get('/Auth/logout', 'Authorise::logout');
+
 $routes->get('/User', 'User\User::index');
 $routes->get('/User/add', 'User\User::add');
 $routes->post('/User/insertData', 'User\User::insertData');

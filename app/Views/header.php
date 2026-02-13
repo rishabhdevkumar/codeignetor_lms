@@ -22,7 +22,7 @@
     <!-- <link href="<?php echo base_url(); ?>assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 	<link href="<?php echo base_url(); ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo base_url(); ?>assets/css/plugins/select2/select2.min.css" rel="stylesheet">  -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.1.1.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/daterangepicker.css" />
@@ -61,7 +61,6 @@
             height: 86px;
             color: #1ab394;
         }
-
     </style>
 
 
@@ -95,9 +94,9 @@
                         </li>
                         <li class="nav-item dropdown">Planning &nbsp;<i class="fa fa-angle-double-down"></i>
                             <ul class="dropdown-content">
-                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning">Upload</a></li>
-                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">View</a></li>
-                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Re-Calculate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning">Upload</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">View</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Re-Calculate</a></li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item ">
@@ -106,10 +105,10 @@
                         <li class="nav-item ">
                             <a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">Calendar View</a>
                         </li> -->
-                         <li class="nav-item dropdown">Indent &nbsp;<i class="fa fa-angle-double-down"></i>
+                        <li class="nav-item dropdown">Indent &nbsp;<i class="fa fa-angle-double-down"></i>
                             <ul class="dropdown-content">
-                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning/allocation">Allocation</a></li>
-                                <li class="nav-item" ><a class="nav-link" href="<?php echo base_url() ?>production-planning/auto-allocation">Re-Allocation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/allocation">Allocation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/auto-allocation">Re-Allocation</a></li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item ">
@@ -125,18 +124,16 @@
                         <!-- <li class="nav-item ">
                             <a class="nav-link" href="<?php echo base_url() ?>production-planning/planning-approval">Planning Approval</a>
                         </li> -->
-                        
                     </ul>
                 </div>
 
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <i class="fa fa-user" style="color:#A3243C; font-size:30px;"></i>
-                        <!-- <img src="<?php echo base_url() ?>assets/img/license.png" class="img-responsive"> -->
+                <ul class="nav navbar-top-links ">
+                    <li class="nav-item"><a href="<?= base_url('User/view/' . session()->get('erp_user_id')) ?>">
+                        <i class="fa fa-user" style="color:#A3243C; font-size:30px;"></i></a>
                     </li>
-                    <!-- <li>
-                    <a class="" style="margin-top:0px" href="<?php echo base_url() ?>" ><i class="fa fa-arrow-circle-left"></i> Dashboard</a>	
-                </li> -->
+                    <li class="nav-item"><a href="<?php echo base_url() ?>Auth/logout">
+                        <i class="fa fa-sign-out" style="color:#A3243C; font-size:30px;"></i></a>
+                    </li>     
                 </ul>
             </nav>
         </div>

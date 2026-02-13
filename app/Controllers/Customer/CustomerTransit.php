@@ -44,10 +44,6 @@ class CustomerTransit extends BaseController
 		$result["title"] = "Add Customer Transit";
 
 		$result['countries'] = $this->countryModel->getActiveCountries();
-		// echo '<pre>';
-		// print_r($result['countries']);
-		// echo '</pre>';
-		// exit;
 
 		echo view('header', $result);
 		echo view('customertransit/add_customertransit_view', $result);
@@ -66,17 +62,7 @@ class CustomerTransit extends BaseController
 			'TRANSIT_TIME'         => $this->request->getPost('transit_time'),
 		];
 
-		// $arr2 = array('CUSTOMER_CODE' => $this->request->getPost('customer_code'));
-		// $result["customer"] = $this->customerTransitModel->all_customerstransit($arr2);
-
-		// if (!$result['customer']) {
 		$insert = $this->crudModel->saveData('pp_transit_master', $arr);
-		// } else {
-		// 	$result['error'] = "Customer Already Exist";
-		// 	return view('header', $result)
-		// 		. view('customertransit/add_customertransit_view', $result)
-		// 		. view('footer');
-		// }
 
 		if ($insert) {
 			return redirect()->back()->with('success', 'Customer Transit Created');
@@ -86,10 +72,12 @@ class CustomerTransit extends BaseController
 	public function edit($id)
 	{
 
-		$arr = array('PP_ID' => $id);
+		$arr = array('t.PP_ID' => $id);
 		$dataList = $this->customerTransitModel->all_customerstransit($arr);
 
 		$result["customer"] = $dataList[0];
+		
+		$result['countries'] = $this->countryModel->getActiveCountries();
 
 		if (!$result['customer']) {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("customer not found");
@@ -126,18 +114,16 @@ class CustomerTransit extends BaseController
 
 	public function view($id)
 	{
-		$arr = array('PP_ID' => $id);
+		$arr = array('t.PP_ID' => $id);
 		$dataList = $this->customerTransitModel->all_customerstransit($arr);
 
 		$result["customer"] = $dataList[0];
-
 
 		if (!$result['customer']) {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Customer not found");
 		}
 
 		$result["title"] = "View Customer Transit";
-
 
 		echo view('header', $result);
 		echo view('customertransit/view_customertransit_view', $result);
@@ -152,7 +138,6 @@ class CustomerTransit extends BaseController
 		if (!$result['customer']) {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Customer not found");
 		}
-
 
 		$condition = array("PP_ID" => $id);
 		$delete = $this->crudModel->del("pp_transit_master", $condition);

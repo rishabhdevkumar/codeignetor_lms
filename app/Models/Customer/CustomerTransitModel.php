@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class CustomerTransitModel extends Model
 {
-    protected $table            = 'pp_transit_master'; 
+    protected $table            = 'pp_transit_master';
     protected $primaryKey       = 'PP_ID';
     // protected $useAutoIncrement = true;
 
@@ -14,13 +14,13 @@ class CustomerTransitModel extends Model
     // protected $useSoftDeletes   = false;
 
     protected $allowedFields    = [
-       'FROM_COUNTRTY',
-       'FROM_PINCODE',
-       'TO_COUNTRY',
-       'TO_PINCODE',
-       'DISTANCE',
-       'TRANSIT_TIME'
-    //    'FROM_COUNTRY_NAME'
+        'FROM_COUNTRTY',
+        'FROM_PINCODE',
+        'TO_COUNTRY',
+        'TO_PINCODE',
+        'DISTANCE',
+        'TRANSIT_TIME'
+        //    'FROM_COUNTRY_NAME'
     ];
 
     protected $useTimestamps = false;
@@ -42,8 +42,8 @@ class CustomerTransitModel extends Model
         $builder->join('pp_country_master c2', 'c2.COUNTRY_ID = t.TO_COUNTRY', 'left');
 
         if (is_array($whereCondition) && !empty($whereCondition)) {
-    $builder->where($whereCondition);
-}
+            $builder->where($whereCondition);
+        }
 
 
         $builder->orderBy('t.PP_ID', 'DESC');
@@ -56,5 +56,4 @@ class CustomerTransitModel extends Model
 
         return false;
     }
-
 }

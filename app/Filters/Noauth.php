@@ -13,7 +13,7 @@ class Noauth implements FilterInterface
         
         if(session()->get('isLoggedIn'))
         {
-            return redirect()->to('/dashboard');
+            return redirect()->to('/Dashboard');
         }
     }
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null){

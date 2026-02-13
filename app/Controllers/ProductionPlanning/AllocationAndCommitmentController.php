@@ -103,6 +103,9 @@ class AllocationAndCommitmentController extends BaseController
 
             foreach ($orderDetails as $odKey => $od) {
 
+                $packagingDays = 0;
+                $transitDays = 0;
+
                 $indentStatus['in_no'] = $pendingIndents[$key]['order_details'][$odKey]['in_no'];
                 $indentStatus['line_item'] = $pendingIndents[$key]['order_details'][$odKey]['line_item'];
 

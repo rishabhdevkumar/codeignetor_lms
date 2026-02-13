@@ -194,12 +194,12 @@ class AutoAllocationController extends BaseController
             $toDate = (clone $fromDate)->modify("+{$durationSeconds} seconds");
 
             // packaging time
-            $material = $this->materialModel
-                ->select('PACKAGING_TIME')
-                ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
-                ->first();
+            // $material = $this->materialModel
+            //     ->select('PACKAGING_TIME')
+            //     ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
+            //     ->first();
 
-            $packagingDays = (int) ($material['PACKAGING_TIME'] ?? 0);
+            $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
@@ -207,13 +207,13 @@ class AutoAllocationController extends BaseController
             }
 
             // transit time
-            $transit = $this->transitMaster
-                ->select('TRANSIT_TIME')
-                ->where('FROM_PINCODE', $planning['MACHINE_PINCODE'] ?? null)
-                ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
-                ->first();
+            // $transit = $this->transitMaster
+            //     ->select('TRANSIT_TIME')
+            //     ->where('FROM_PINCODE', $planning['MACHINE_PINCODE'] ?? null)
+            //     ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
+            //     ->first();
 
-            $transitDays = (int) ($transit['TRANSIT_TIME'] ?? 0);
+            $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
             $doorStepDate = clone $finishingDate;
             if ($transitDays > 0) {

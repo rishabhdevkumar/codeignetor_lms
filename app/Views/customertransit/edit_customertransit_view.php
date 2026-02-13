@@ -31,7 +31,17 @@ $transit_id         = old('PP_ID', $customer['PP_ID']);
 
 										<div class="col-sm-4 col-xs-12">
 											<label>From Country</label>
-											<input type="text" class="form-control" name="from_country" id="from_country" maxlength="20" value="<?php echo $from_country; ?>">
+											<select class="form-control" name="from_country" id="from_country" required>
+												<option value="">Select Country</option>
+												<?php if (!empty($countries)): ?>
+													<?php foreach ($countries as $country): ?>
+														<option value="<?= esc($country['COUNTRY_ID']); ?>"
+															<?= (isset($from_country) && $from_country == $country['COUNTRY_ID']) ? 'selected' : ''; ?>>
+															<?= esc($country['COUNTRY_NAME']); ?>
+														</option>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											</select>
 											<div class="error"></div>
 										</div>
 
@@ -52,7 +62,17 @@ $transit_id         = old('PP_ID', $customer['PP_ID']);
 
 										<div class="col-sm-4 col-xs-12">
 											<label>To Country</label>
-											<input type="text" class="form-control" name="to_country" id="to_country" maxlength="20" value="<?php echo $to_country; ?>">
+											<select class="form-control" name="to_country" id="to_country" required>
+												<option value="">Select Country</option>
+												<?php if (!empty($countries)): ?>
+													<?php foreach ($countries as $country): ?>
+														<option value="<?= esc($country['COUNTRY_ID']); ?>"
+															<?= (isset($to_country) && $to_country == $country['COUNTRY_ID']) ? 'selected' : ''; ?>>
+															<?= esc($country['COUNTRY_NAME']); ?>
+														</option>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											</select>
 											<div class="error"></div>
 										</div>
 

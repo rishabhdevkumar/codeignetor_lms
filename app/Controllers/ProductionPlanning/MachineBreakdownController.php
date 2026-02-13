@@ -84,16 +84,27 @@ class MachineBreakdownController extends Controller
                     ->where('TO_DATE_TIME >', $bdFrom->format('Y-m-d H:i:s'))
                     ->findAll();
 
+                    // echo '<pre>';
+                    // print_r($plannings);
+                    // echo '</pre>';
+                    // exit;
+
                 foreach ($plannings as $plan) {
                     $planFrom = new \DateTime($plan['FROM_DATE_TIME']);
                     $planTo = new \DateTime($plan['TO_DATE_TIME']);
 
-                    $overlapStart = max($planFrom, $bdFrom);
-                    $overlapEnd = min($planTo, $bdTo);
+                    $overlapStart = ($planFrom > $bdFrom) ? $planFrom : $bdFrom;
+                    $overlapEnd   = ($planTo < $bdTo) ? $planTo : $bdTo;
 
-                    if ($overlapEnd <= $overlapStart) {
-                        continue; // no impact
-                    }
+                    // echo '<pre>';
+                    // print_r($overlapEnd);
+                    // echo '</pre>';
+                    // exit;
+
+
+                    // if ($overlapEnd <= $overlapStart) {
+                    //     continue; // no impact
+                    // }
 
                     $overlapSeconds = $overlapEnd->getTimestamp() - $overlapStart->getTimestamp();
 
@@ -120,7 +131,6 @@ class MachineBreakdownController extends Controller
                     $updatedPlanning['TO_DATE_TIME'] = $newTo->format('Y-m-d H:i:s');
 
                     $this->recalculateIndentAllotments($plan['PP_ID'], $updatedPlanning);
-
                 }
 
 
@@ -158,7 +168,6 @@ class MachineBreakdownController extends Controller
                 'status' => true,
                 'message' => 'Machine breakdown impact processed successfully'
             ]);
-
         } catch (\Throwable $e) {
 
             $this->db->transRollback();
@@ -214,25 +223,25 @@ class MachineBreakdownController extends Controller
             $toDate->modify("+{$durationSeconds} seconds");
 
 
-            $material = $this->materialModel
-                ->select('PACKAGING_TIME')
-                ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
-                ->first();
+            // $material = $this->materialModel
+            //     ->select('PACKAGING_TIME')
+            //     ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
+            //     ->first();
 
-            $packagingDays = (int) ($material['PACKAGING_TIME'] ?? 0);
+            $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
                 $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
 
-            $transit = $this->transitMaster
-                ->select('TRANSIT_TIME')
-                ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
-                ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
-                ->first();
+            // $transit = $this->transitMaster
+            //     ->select('TRANSIT_TIME')
+            //     ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
+            //     ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
+            //     ->first();
 
-            $transitDays = (int) ($transit['TRANSIT_TIME'] ?? 0);
+            $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
             $doorStepDate = clone $finishingDate;
             if ($transitDays > 0) {
