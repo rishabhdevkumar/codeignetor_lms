@@ -34,29 +34,27 @@ class User extends BaseController
 	}
 
 	public function index()
-	{
-		// if ($this->session->get('erp_user_id')) {
+{
+    $arr = array("PP_ID" => 1);
+    $settings = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
 
-		$arr = array("PP_ID" => 1);
-		$result["settings"] = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
+    $result["settings"] = $settings[0] ?? []; // ✅ Fix applied
 
-		$user_id = $this->session->get('erp_user_id');
+    $user_id = $this->session->get('erp_user_id');
 
-		$arr = array("PP_ID" => $user_id);
-		$result["user_details"] = $this->crudModel->select("pp_users_master", $arr, "PP_ID", "ASC");
+    $arr = array("PP_ID" => $user_id);
+    $result["user_details"] = $this->crudModel->select("pp_user_login", $arr, "PP_ID", "ASC");
 
-		$arr = array("PP_ID>=" => 1);
-		$result["user"] = $this->crudModel->select("pp_users_master", $arr, "PP_ID", "ASC");
+    $arr = array("PP_ID>=" => 1);
+    $result["user"] = $this->crudModel->select("pp_user_login", $arr, "PP_ID", "ASC");
 
-		$result['title'] = 'Users';
+    $result['title'] = 'Users';
 
-		echo view('header', $result);
-		echo view('user/user_view');
-		echo view('footer');
-		// } else {
-		// 	return redirect()->to('auth/logout');
-		// }
-	}
+    echo view('header', $result);
+    echo view('user/user_view');
+    echo view('footer');
+}
+
 
 	public function add()
 	{

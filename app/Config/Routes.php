@@ -147,6 +147,8 @@ $routes->get('production-planning/auto-allocation', 'ProductionPlanning\AutoAllo
 
 $routes->get('production-planning/process-machine-breakdown', 'ProductionPlanning\MachineBreakdownController::process');
 
+$routes->get('OrderGeneration', 'OrderGeneration\IndentAllotment::index');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
