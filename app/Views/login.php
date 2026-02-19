@@ -16,13 +16,15 @@
     </script>
 </head>
 
-<body style="background-color: #FFF0D1">
+<body >
     <div class="container">
+          <center><img class="img-responsive  mt-5" src="<?php echo base_url(); ?>assets/img/logoHeader.png" /></center>
+           
         <div class="page">
-            <center><img class="img-responsive" src="<?php echo base_url(); ?>assets/img/logoHeader.png" /></center>
-            <div class="row mt-5">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
+            <!-- <center><img class="img-responsive" src="<?php echo base_url(); ?>assets/img/logoHeader.png" /></center>
+            <div class="row mt-5"> -->
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
                     <!-- <center><img src="<?php echo base_url() ?>uploads/logo-white.png" class="img-responsive rounded" style=" margin-bottom: 10px !important;"></center> -->
 
                     <h3>Pakka Limited</h3>
@@ -61,7 +63,7 @@
                     </form>
                     <!--<p class="m-t"> <center><small>&copy; 2020-2021</small> </center></p>-->
                 </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-3"></div>
             </div>
 
             

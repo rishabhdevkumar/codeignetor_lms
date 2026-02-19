@@ -54,7 +54,7 @@ class PlanningProductionController extends BaseController
 
         $data['records'] = $this->model->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.MR_MATERIAL_CODE, pp_mr_material_master.GRADE, pp_mr_material_master.GSM')
             ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
-            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT' )
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT')
             ->findAll();
 
         $data['title'] = 'Planning Calendar';
@@ -219,6 +219,8 @@ class PlanningProductionController extends BaseController
                 $gradeChangeTime = $machine['GRADE_CHANGE_TIME_MIN'];
                 $sapplant = $machine['SAP_PLANT'];
 
+                $currentDateTime = new \DateTime(); // current system datetime
+
                 // previous planning latest date time
                 $latestPlan = $db->table('pp_production_planning_master')
                     ->select('*')
@@ -232,6 +234,11 @@ class PlanningProductionController extends BaseController
                 if ($latestPlan && !empty($latestPlan['TO_DATE_TIME'])) {
                     $startDateTime = new \DateTime($latestPlan['TO_DATE_TIME']);
                     $initialStartDateTime = new \DateTime($latestPlan['TO_DATE_TIME']);
+
+                    if ($startDateTime < $currentDateTime) {
+                        $startDateTime = new \DateTime('tomorrow 00:00:00');
+                        $initialStartDateTime = new \DateTime('tomorrow 00:00:00');
+                    }
 
                     // Fetch latest mother roll
                     $latestmotherRoll = $db->table('pp_mr_material_master')

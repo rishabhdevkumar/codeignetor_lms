@@ -39,8 +39,8 @@
             background: #ffffff;
             border: 1px solid #d9d9d9;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
         /* Filter labels */
@@ -114,10 +114,10 @@
 
 <body>
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid">
         <div class="sap-card">
 
-            <h6 class="mb-4">Production Planning: Calendar View</h6>
+            <h6 class="mb-2">Production Planning: Calendar View</h6>
 
             <!-- Flash Messages -->
             <?php if (session()->getFlashdata('success')): ?>
@@ -132,41 +132,41 @@
             <div class="filters-bar">
                 <div class="row g-3">
 
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <label for="filterVersion" class="filter-label">Version</label>
                         <input type="text" id="filterVersion" class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="filterMachine" class="filter-label">Machine</label>
                         <select id="filterMachine" class="form-select">
                             <option value="">All Machines</option>
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="filterMotherRoll" class="filter-label">Mother Roll</label>
                         <input type="text" id="filterMotherRoll" class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="filterGrade" class="filter-label">Grade</label>
                         <select id="filterGrade" class="form-select">
                             <option value="">All Grades</option>
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <label for="filterGsm" class="filter-label">GSM</label>
                         <input type="number" id="filterGsm" class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="fromDate" class="filter-label">From Start Date</label>
                         <input type="date" id="fromDate" class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="toDate" class="filter-label">To Start Date</label>
                         <input type="date" id="toDate" class="form-control">
                     </div>

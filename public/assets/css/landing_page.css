@@ -1,86 +1,95 @@
-body
-{
-    background-color:  #FFF0D1;
+body {
+    background-color: #FFF0D1;
 }
-.page
-{
-    border:1px solid #A3243C;
-    padding:40px;
-    margin-top:6%;
-    background:#FFC544;
+
+.container,
+.container-lg,
+.container-md,
+.container-sm {
+    max-width: 900px;
 }
-.page img
-{
-  height:100px;
-}
-.page h1,h3
-{
-    text-align:center;
-    font-weight:bold;
-    color:#A3243C;
-}
-.page label
-{
-    font-size:18px;
-    font-weight:bold;
-    width:100%;
-    text-align:right;
-    color:#1ab394;
-}
-.border
-{
-    border:1px solid #A3243C !important;
-}
-.btn
-{
-    background: #A3243C !important;
-    color:#fff;
+
+.page {
+    border: 1px solid #A3243C;
+    padding: 60px;
+    margin-top: 6%;
+    background: #FFC544;
     border-radius: 40px;
 }
+
+.page img {
+    height: 100px;
+}
+
+.page h1,
+h3 {
+    text-align: center;
+    font-weight: bold;
+    color: #A3243C;
+}
+
+.page label {
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    text-align: right;
+    color: #1ab394;
+}
+
+.border {
+    border: 1px solid #A3243C !important;
+}
+
+.btn {
+    background: #A3243C !important;
+    color: #fff;
+    border-radius: 40px;
+}
+
 .form-control {
     border-radius: 40px;
 }
-.footer span
-{
-    color:#F83146;
-    width:100%;
-    float:left;
-    margin-bottom:10px;
+
+.footer span {
+    color: #F83146;
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
 }
-.footer
-{
-    position:relative !important;
-    border :none !important;
+
+.footer {
+    position: relative !important;
+    border: none !important;
 }
-.footer img
-{
-    height:50px;
+
+.footer img {
+    height: 50px;
 }
-@media(max-width:767px)
-{
-    .page img
-    {
-        width:100% !important;
-        height:auto !important;
+
+@media(max-width:767px) {
+    .page img {
+        width: 100% !important;
+        height: auto !important;
     }
-    .page label
-    {
-         text-align:center !important;
+
+    .page label {
+        text-align: center !important;
     }
-    .btn
-    {
-       margin-top:10px;
-       text-align:center;
-        
+
+    .btn {
+        margin-top: 10px;
+        text-align: center;
+
     }
-    .footer img
-    {
-        width:100px !important;
-        height:auto !important;
+
+    .footer img {
+        width: 100px !important;
+        height: auto !important;
     }
-    .text-left,.text-right
-    {
-        text-align:center !important;
-        margin-bottom:20px;
+
+    .text-left,
+    .text-right {
+        text-align: center !important;
+        margin-bottom: 20px;
     }
 }

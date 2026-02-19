@@ -144,7 +144,7 @@ h5 {
 .dropdown-menu {
   border: medium none;
   border-radius: 3px;
-  box-shadow: 0 0 3px rgba(86, 96, 117, 0.7);
+  /* box-shadow: 0 0 3px rgba(86, 96, 117, 0.7); */
   display: none;
   float: left;
   font-size: 12px;
@@ -159,7 +159,7 @@ h5 {
 
 .dropdown-menu>li>a {
   border-radius: 3px;
-  color: inherit;
+  /* color: inherit; */
   line-height: 25px;
   margin: 4px;
   text-align: left;
@@ -178,7 +178,7 @@ h5 {
 .dropdown-menu>.active>a,
 .dropdown-menu>.active>a:focus,
 .dropdown-menu>.active>a:hover {
-  color: #fff;
+  /* color: #fff; */
   text-decoration: none;
   background-color: #1ab394;
   outline: 0;

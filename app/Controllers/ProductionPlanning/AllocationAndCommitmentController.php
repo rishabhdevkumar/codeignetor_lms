@@ -273,7 +273,8 @@ class AllocationAndCommitmentController extends BaseController
                     $customerTypeBalanceQtyField = $pendingIndents[$key]['CUSTOMER_TYPE'] . "_BALANCE_QTY_MT";
 
                     $baseQuery = $this->planningProductionModel
-                        ->where('FROM_DATE_TIME >=', $currentDateTime);
+                        ->where('TO_DATE_TIME >', $currentDateTime)
+                        ->where('REALLOCATION_STATUS', 0);
 
                     $mrMaterialCode = $pendingIndents[$key]['order_details'][$odKey]['MR_MATERIAL_CODE'] ?? null;
                     $finishMaterialCode = $pendingIndents[$key]['order_details'][$odKey]['FINISH_MATERIAL_CODE'] ?? null;
