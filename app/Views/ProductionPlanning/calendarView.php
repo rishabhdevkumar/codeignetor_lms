@@ -47,7 +47,7 @@
         .filter-label {
             font-size: 12px;
             font-weight: 600;
-            color: #5f6368;
+            color: black;
             margin-bottom: 4px;
             display: block;
         }
@@ -81,7 +81,6 @@
 
         table.dataTable tbody td {
             font-size: 13px;
-            color: #32363a;
         }
 
         table.dataTable tbody tr:hover {
@@ -109,6 +108,30 @@
             font-size: 12px;
             color: #6a6d70;
         }
+
+        th {
+            background-color: #FCE7C2 !important;
+        }
+
+        .prepone {
+            background-color: #d4edda !important;
+            color: #155724;
+            font-weight: 600;
+        }
+
+        .postpone {
+            background-color: #f8d7da !important;
+            color: #721c24;
+            font-weight: 600;
+            transition: 0.3s ease;
+        } 
+
+        .postpone-approval {
+            background-color: #a0e0f0 !important;
+            color: #721c24;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
     </style>
 </head>
 
@@ -117,7 +140,16 @@
     <div class="container-fluid">
         <div class="sap-card">
 
-            <h6 class="mb-2">Production Planning: Calendar View</h6>
+            <div class="mb-2">
+                <span>
+                    <p class="mb-2"><b>Production Planning: Calendar View</b>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="badge prepone">Prepone</span>
+                        <span class="badge postpone">Postpone(Downtime)</span>
+                        <span class="badge postpone-approval">Postpone(Approval)</span>
+                    </p>
+                </span>
+            </div>
 
             <!-- Flash Messages -->
             <?php if (session()->getFlashdata('success')): ?>
@@ -177,10 +209,10 @@
 
 
             <!-- Table -->
-            <div class="table-responsive" style="max-height: 550px;">
+            <div class="table-responsive" style="max-height: 500px;">
                 <table id="productionTable"
-                    class="table table-bordered table-hover table-striped text-center align-middle">
-                    <thead>
+                    class="table table-bordered table-hover text-center align-middle">
+                    <thead style="position: sticky; top: 0; z-index: 1;">
                         <tr>
                             <th>Calendar Id</th>
                             <th>Version</th>
@@ -207,30 +239,64 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($records as $row): ?>
-                            <tr>
-                                <td><?= $row['PP_ID'] ?></td>
-                                <td><?= $row['VERSION'] ?></td>
-                                <td><?= $row['MACHINE_TPM_ID'] ?></td>
-                                <td><?= $row['SAP_MR_FG_CODE'] ?></td>
-                                <td><?= $row['GRADE'] ?></td>
-                                <td><?= $row['GSM'] ?></td>
-                                <td><?= $row['QTY_MT'] ?></td>
-                                <td><?= $row['FROM_DATE_TIME'] ?></td>
-                                <td><?= $row['TO_DATE_TIME'] ?></td>
-                                <td><?= $row['UTILISED_QTY'] ?></td>
-                                <td><?= $row['BALANCE_QTY'] ?></td>
-                                <td><?= $row['KC1_QTY_MT'] ?></td>
-                                <td><?= $row['KC2_QTY_MT'] ?></td>
-                                <td><?= $row['NKC_QTY_MT'] ?></td>
-                                <td><?= $row['KC1_UTILISED_QTY_MT'] ?></td>
-                                <td><?= $row['KC2_UTILISED_QTY_MT'] ?></td>
-                                <td><?= $row['NKC_UTILISED_QTY_MT'] ?></td>
-                                <td><?= $row['KC1_BALANCE_QTY_MT'] ?></td>
-                                <td><?= $row['KC2_BALANCE_QTY_MT'] ?></td>
-                                <td><?= $row['NKC_BALANCE_QTY_MT'] ?></td>
-                                <td><?= $row['UPLOADED_BY'] ?></td>
-                                <td><?= $row['UPLOADED_DATE'] ?></td>
+                        <?php
+
+                        $historyIndex = [];
+                        foreach ($history as $h) {
+                            $historyIndex[$h['PLANNING_CAL_ID']] = $h;
+                        }
+
+                        foreach ($records as $row):
+
+                            $old = $historyIndex[$row['PP_ID']] ?? null;
+
+                            $toDate = $row['TO_DATE_TIME'];
+                            $oldtoDate = $old['TO_DATE_TIME'] ?? null;
+
+                            // Check if OLD_FROM_DATE is initial
+                            $isOldInitial = empty($oldtoDate)
+                                || $oldtoDate == '0000-00-00 00:00:00';
+
+                            $newTime = strtotime($toDate);
+                            $oldTime = strtotime($oldtoDate);
+
+                            $class = '';
+                            if (!$isOldInitial) {
+                                if ($newTime < $oldTime) {
+                                    $class = 'prepone';
+                                } elseif ($newTime > $oldTime) {
+                                    if ($old['REMARKS'] == 'Downtime') {
+                                        $class = 'postpone';
+                                    } elseif($old['REMARKS'] == 'Approval') {
+                                        $class = 'postpone-approval';
+                                    }
+                                }
+                            }
+
+                        ?>
+                            <tr class="<?= $class ?>">
+                                <td class="<?= $class ?>"><?= $row['PP_ID'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['VERSION'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['MACHINE_TPM_ID'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['SAP_MR_FG_CODE'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['GRADE'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['GSM'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['FROM_DATE_TIME'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['TO_DATE_TIME'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['UTILISED_QTY'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['BALANCE_QTY'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC1_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC2_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['NKC_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC1_UTILISED_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC2_UTILISED_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['NKC_UTILISED_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC1_BALANCE_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['KC2_BALANCE_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['NKC_BALANCE_QTY_MT'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['UPLOADED_BY'] ?></td>
+                                <td class="<?= $class ?>"><?= $row['UPLOADED_DATE'] ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -241,22 +307,22 @@
     </div>
 
     <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script> -->
 
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script> -->
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             // Date range filter
-            $.fn.dataTable.ext.search.push(function (settings, data) {
+            $.fn.dataTable.ext.search.push(function(settings, data) {
 
                 let filterFrom = $('#fromDate').val();
                 let filterTo = $('#toDate').val();
@@ -290,32 +356,40 @@
 
 
             let table = $('#productionTable').DataTable({
-                pageLength: 25,
-                order: [[6, 'desc']],
+                pageLength: 50,
+                order: [
+                    [6, 'desc']
+                ],
                 responsive: true,
 
-                dom:
-                    "<'row mb-2'<'col-md-6'B><'col-md-6 text-end'l>>" +
+                dom: "<'row mb-2'<'col-md-6'B><'col-md-6 text-end'l>>" +
                     "<'row'<'col-md-12'tr>>" +
                     "<'row mt-2'<'col-md-5'i><'col-md-7 text-end'p>>",
 
-                buttons: [
-                    { extend: 'excel' },
-                    { extend: 'csv' },
-                    { extend: 'print' }
+                buttons: [{
+                        extend: 'excel'
+                    },
+                    {
+                        extend: 'csv'
+                    },
+                    {
+                        extend: 'print'
+                    }
                 ]
             });
+
+
 
             // Populate dropdown filters
             function populateFilter(colIndex, selector) {
                 let column = table.column(colIndex);
                 let select = $(selector);
 
-                column.data().unique().sort().each(function (d) {
+                column.data().unique().sort().each(function(d) {
                     if (d) select.append(`<option value="${d}">${d}</option>`);
                 });
 
-                select.on('change', function () {
+                select.on('change', function() {
                     column.search(this.value).draw();
                 });
             }
@@ -323,19 +397,19 @@
             populateFilter(2, '#filterMachine');
             populateFilter(4, '#filterGrade');
 
-            $('#filterVersion').on('keyup change', function () {
+            $('#filterVersion').on('keyup change', function() {
                 table.column(1).search(this.value).draw();
             });
 
-            $('#filterMotherRoll').on('keyup change', function () {
+            $('#filterMotherRoll').on('keyup change', function() {
                 table.column(1).search(this.value).draw();
             });
 
-            $('#filterGsm').on('keyup change', function () {
+            $('#filterGsm').on('keyup change', function() {
                 table.column(5).search(this.value).draw();
             });
 
-            $('#fromDate, #toDate').on('change', function () {
+            $('#fromDate, #toDate').on('change', function() {
                 table.draw();
             });
 

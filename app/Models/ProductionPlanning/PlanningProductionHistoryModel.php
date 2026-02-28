@@ -37,7 +37,8 @@ class PlanningProductionHistoryModel extends Model
         'PO_LINE_ITEM',
         'SCHEDULE_LINE_ITEM',
         'UPLOADED_BY',
-        'UPLOADED_DATE'
+        'UPLOADED_DATE',
+        'REMARKS'
     ];
 
     protected $useTimestamps = false;

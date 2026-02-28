@@ -6,8 +6,9 @@ use CodeIgniter\Controller;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\ProductionPlanning\PpCalendarApprovalModel;
 use App\Models\ProductionPlanning\PpMachineAvailabilityModel;
+use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
 use App\Models\Machine_Model;
-use App\Models\OrderGeneration\IndentAllotmentModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\MasterModels\TransitMaster;
 use App\Models\Material_Model;
 
@@ -16,6 +17,7 @@ class MachineBreakdownController extends Controller
     protected $planningModel;
     protected $approvalModel;
     protected $availabilityModel;
+    protected $planningCalhistoryModel;
     protected $machineMasterModel;
     protected $indentAllotment;
     protected $materialModel;
@@ -27,6 +29,7 @@ class MachineBreakdownController extends Controller
         $this->planningModel = new PlanningProductionModel();
         $this->approvalModel = new PpCalendarApprovalModel();
         $this->availabilityModel = new PpMachineAvailabilityModel();
+        $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
         $this->machineMasterModel = new Machine_Model();
         $this->indentAllotment = new IndentAllotmentModel();
         $this->transitMaster = new TransitMaster();
@@ -36,7 +39,11 @@ class MachineBreakdownController extends Controller
 
     public function process()
     {
+
+        $currentDateTime = date('Y-m-d H:i:s');
+
         $breakdowns = $this->availabilityModel
+            ->where('FROM_DATE >', $currentDateTime)
             ->groupStart()
             ->where('PROCESS_DATE_TIME', '0000-00-00 00:00:00')
             ->orWhere('PROCESS_DATE_TIME IS NULL')
@@ -80,14 +87,11 @@ class MachineBreakdownController extends Controller
                 // LIVE PLANNING CALENDARS
                 $plannings = $this->planningModel
                     ->where('MACHINE', $machineId)
-                    // ->where('FROM_DATE_TIME <', $bdTo->format('Y-m-d H:i:s'))
+                    ->where('FROM_DATE_TIME <', $bdTo->format('Y-m-d H:i:s'))
                     ->where('TO_DATE_TIME >', $bdFrom->format('Y-m-d H:i:s'))
                     ->findAll();
 
-                    // echo '<pre>';
-                    // print_r($plannings);
-                    // echo '</pre>';
-                    // exit;
+
 
                 foreach ($plannings as $plan) {
                     $planFrom = new \DateTime($plan['FROM_DATE_TIME']);
@@ -96,15 +100,17 @@ class MachineBreakdownController extends Controller
                     $overlapStart = ($planFrom > $bdFrom) ? $planFrom : $bdFrom;
                     $overlapEnd   = ($planTo < $bdTo) ? $planTo : $bdTo;
 
-                    // echo '<pre>';
-                    // print_r($overlapEnd);
-                    // echo '</pre>';
-                    // exit;
+                    if ($overlapEnd <= $overlapStart) {
+                        continue; // no impact
+                    }
 
+                    $oldPlanning = $this->planningModel
+                        ->where('PP_ID', $plan['PP_ID'])
+                        ->first();
 
-                    // if ($overlapEnd <= $overlapStart) {
-                    //     continue; // no impact
-                    // }
+                    $oldPlanning['PLANNING_CAL_ID'] = $plan['PP_ID'];
+                    $oldPlanning['REMARKS'] = 'Downtime';
+                    $this->planningCalhistoryModel->insert($oldPlanning);
 
                     $overlapSeconds = $overlapEnd->getTimestamp() - $overlapStart->getTimestamp();
 
@@ -222,24 +228,12 @@ class MachineBreakdownController extends Controller
             $toDate = clone $fromDate;
             $toDate->modify("+{$durationSeconds} seconds");
 
-
-            // $material = $this->materialModel
-            //     ->select('PACKAGING_TIME')
-            //     ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
-            //     ->first();
-
             $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
                 $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
-
-            // $transit = $this->transitMaster
-            //     ->select('TRANSIT_TIME')
-            //     ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
-            //     ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
-            //     ->first();
 
             $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
@@ -254,6 +248,12 @@ class MachineBreakdownController extends Controller
                 'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
+
+                'OLD_FROM_DATE' => $allotment['FROM_DATE'],
+                'OLD_TO_DATE' => $allotment['TO_DATE'],
+                'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],
+                'OLD_DOOR_STEP_DEL_DATE' => $allotment['DOOR_STEP_DEL_DATE'],
+
                 'MODIFICATION_FLAG' => 1
             ]);
 

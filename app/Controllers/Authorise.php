@@ -179,10 +179,7 @@ class Authorise extends BaseController
 					'loggedin_id',
 					$this->crudModel->getInsertId()
 				);
-				// echo '<pre>';
-				// print_r($db);
-				// echo '</pre>';
-				// exit;
+
 				return redirect()->to('/Dashboard');
 			}
 		} else {

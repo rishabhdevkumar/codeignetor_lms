@@ -6,7 +6,7 @@ body {
 .container-lg,
 .container-md,
 .container-sm {
-    max-width: 900px;
+    max-width: 600px;
 }
 
 .page {

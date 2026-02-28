@@ -139,10 +139,6 @@
                             <th>Indent Line Item</th>
                              <th>Material</th> 
                              <th>Quantity</th>
-                            <!-- <th>From DATE/TIME</th>
-                            <th>To DATE/TIME</th>
-                            <th>Finishing DATE/TIME</th>
-                            <th>Doorstep Del. DATE/TIME</th> -->
                              <th>Ship To Customer</th>
                             <th>Status</th>
                         </tr>

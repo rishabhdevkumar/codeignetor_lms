@@ -5,7 +5,7 @@ namespace App\Controllers\OrderGeneration;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\OrderGeneration\IndentModel;
 use App\Models\OrderGeneration\IndentDetailsModel;
-use App\Models\OrderGeneration\IndentAllotmentModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\Material\MaterialModel;
 
 

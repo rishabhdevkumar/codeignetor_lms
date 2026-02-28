@@ -1,8 +1,8 @@
 <?php
-    namespace App\Controllers\OrderGeneration;
+    namespace App\Controllers\IndentAllotment;
 
     use App\Models\Crud_Model;
-    use App\Models\OrderGeneration\IndentAllotmentModel;
+    use App\Models\IndentAllotment\IndentAllotmentModel;
     use CodeIgniter\Controller;
 
     class IndentAllotment Extends Controller {
@@ -27,10 +27,10 @@
 
 		$result['title'] = "IndentAllotment";
 		$where = [];
-		$result['indentallotment'] = $this->indentallotmentModel->findAll();
+		$result['indentallotment'] = $this->indentallotmentModel->all_indents($where);
 
 		echo view('header', $result);
-		echo view('IndentAllotment/indentallotment_view', $result);
+		echo view('indentallotment/indentallotment_view', $result);
 		echo view('footer');
 	}
 

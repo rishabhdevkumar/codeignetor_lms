@@ -116,18 +116,7 @@ $(document).ready(function()
 	
 	
 });
-function del(id)
-{
-	var x=confirm("Do you want to delete this record ???");
-	if(x==true)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+
 
 </script>
 

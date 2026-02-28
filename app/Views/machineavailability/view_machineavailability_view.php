@@ -2,8 +2,8 @@
 $machine_tpm_id      = old('MACHINE_TPM_ID', $machine['MACHINE_TPM_ID']);
 $sap_notification_no = old('SAP_NOTIFICATION_NO', $machine['SAP_NOTIFICATION_NO']);
 $type                = old('TYPE', $machine['TYPE']);
-$from_date           = old('FROM_DATE', $machine['FROM_DATE']);
-$to_date             = old('TO_DATE', $machine['TO_DATE']);
+$from_date           = old('FROM_DATE', isset($machine['FROM_DATE']) ? date('Y-m-d\TH:i', strtotime($machine['FROM_DATE'])) : '');
+$to_date             = old('TO_DATE', isset($machine['TO_DATE']) ? date('Y-m-d\TH:i', strtotime($machine['TO_DATE'])) : '');
 $machine_id          = old('PP_ID', $machine['PP_ID']);
 ?>
 
@@ -27,15 +27,17 @@ $machine_id          = old('PP_ID', $machine['PP_ID']);
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-6 col-xs-12">
-                                            <label>Machine TPM ID</label>
-                                            <input type="text" class="form-control" name="machine_tpm_id" value="<?php echo $machine_tpm_id; ?>" readonly>
-                                        </div>
 
                                         <div class="col-sm-6 col-xs-12">
                                             <label>SAP Notification No</label>
                                             <input type="text" class="form-control" name="sap_notification_no" value="<?php echo $sap_notification_no; ?>" readonly>
                                         </div>
+                                        
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>Machine TPM ID</label>
+                                            <input type="text" class="form-control" name="machine_tpm_id" value="<?php echo $machine_tpm_id; ?>" readonly>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -50,7 +52,7 @@ $machine_id          = old('PP_ID', $machine['PP_ID']);
 
                                         <div class="col-sm-6 col-xs-12">
                                             <label>From Date</label>
-                                            <input type="date" class="form-control" name="from_date" value="<?php echo date('Y-m-d', strtotime($from_date)); ?>" readonly>
+                                            <input type="datetime-local" class="form-control" name="from_date" value="<?php echo $from_date; ?>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +63,7 @@ $machine_id          = old('PP_ID', $machine['PP_ID']);
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
                                             <label>To Date</label>
-                                            <input type="date" class="form-control" name="to_date" value="<?php echo date('Y-m-d', strtotime($to_date)); ?>" readonly>
+                                            <input type="datetime-local" class="form-control" name="to_date" value="<?php echo $to_date; ?>" readonly>
                                         </div>
                                     </div>
                                 </div>

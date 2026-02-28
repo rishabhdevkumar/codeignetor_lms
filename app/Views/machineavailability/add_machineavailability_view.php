@@ -14,29 +14,48 @@
                     <div class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-12">
+
                                 <div class="form-group">
-                                    <label>Machine Code</label>
-                                    <input type="text" name="machine_tpm_id" class="form-control" required>
+                                    <div class="row">
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>SAP Notification No</label>
+                                            <input type="text" name="sap_notification_no" class="form-control">
+                                        </div>
+                                        
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>Machine Code</label>
+                                            <input type="text" name="machine_tpm_id" class="form-control" required>
+                                        </div>
+
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>SAP Notification No</label>
-                                    <input type="text" name="sap_notification_no" class="form-control">
+                                    <div class="row">
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>Type</label>
+                                            <input type="text" name="type" class="form-control">
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>From Date</label>
+                                            <input type="datetime-local" name="from_date" class="form-control">
+                                        </div>
+
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Type</label>
-                                    <input type="text" name="type" class="form-control">
-                                </div>
+                                    <div class="row">
 
-                                <div class="form-group">
-                                    <label>From Date</label>
-                                    <input type="date" name="from_date" class="form-control">
-                                </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label>To Date</label>
+                                            <input type="datetime-local" name="to_date" class="form-control">
+                                        </div>
 
-                                <div class="form-group">
-                                    <label>To Date</label>
-                                    <input type="date" name="to_date" class="form-control">
+                                    </div>
                                 </div>
 
                                 <div class="text-center">

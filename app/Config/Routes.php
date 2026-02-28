@@ -147,7 +147,9 @@ $routes->get('production-planning/auto-allocation', 'ProductionPlanning\AutoAllo
 
 $routes->get('production-planning/process-machine-breakdown', 'ProductionPlanning\MachineBreakdownController::process');
 
-$routes->get('OrderGeneration', 'OrderGeneration\IndentAllotment::index');
+$routes->get('IndentAllotmentView', 'IndentAllotment\IndentAllotment::index');
+
+$routes->post('/api/ScheduleDateApi', 'IndentAllotment\ScheduleDateApi::getScheduleDetails');
 
 /*
  * --------------------------------------------------------------------

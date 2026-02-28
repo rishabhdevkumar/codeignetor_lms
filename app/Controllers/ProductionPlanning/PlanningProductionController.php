@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\ProductionPlanning\PpCalendarApprovalModel;
 use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
-use App\Models\OrderGeneration\IndentAllotmentModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\MasterModels\TransitMaster;
 use App\Models\Material_Model;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -58,6 +58,27 @@ class PlanningProductionController extends BaseController
             ->findAll();
 
         $data['title'] = 'Planning Calendar';
+
+        $currentDateTime = date('Y-m-d H:i:s');
+
+        // $data['history'] = $this->planningCalhistoryModel
+        //     ->select('PLANNING_CAL_ID,FROM_DATE_TIME,REMARKS')
+        //     ->orderBy('PP_ID', 'DESC')
+        //     ->groupBy('PLANNING_CAL_ID')
+        //     ->findAll();
+
+        $builder = $this->planningCalhistoryModel->builder();
+
+        $subQuery = $builder
+            ->select('MAX(PP_ID)', false)
+            ->groupBy('PLANNING_CAL_ID')
+            ->getCompiledSelect();
+
+        $data['history'] = $this->planningCalhistoryModel
+            ->select('PLANNING_CAL_ID, FROM_DATE_TIME, TO_DATE_TIME, REMARKS')
+            ->where("PP_ID IN ($subQuery)", null, false)
+            ->orderBy('PP_ID', 'DESC')
+            ->findAll();
 
         echo view('header', $data);
         echo view('ProductionPlanning/calendarView', $data);
@@ -497,6 +518,7 @@ class PlanningProductionController extends BaseController
 
                 // Save history
                 $oldPlanning['PLANNING_CAL_ID'] = $oldPlanning['PP_ID'];
+                $oldPlanning['REMARKS'] = 'Approval';
                 $this->planningCalhistoryModel->insert($oldPlanning);
 
                 // Update master
@@ -1042,8 +1064,8 @@ class PlanningProductionController extends BaseController
 
         foreach ($allotments as $allotment) {
 
-            $oldFrom = new \DateTime($allotment['OLD_FROM_DATE'] ?? $allotment['FROM_DATE']);
-            $oldTo = new \DateTime($allotment['OLD_TO_DATE'] ?? $allotment['TO_DATE']);
+            $oldFrom = new \DateTime($allotment['FROM_DATE']);
+            $oldTo = new \DateTime($allotment['TO_DATE']);
 
             $durationSeconds = $oldTo->getTimestamp() - $oldFrom->getTimestamp();
 
@@ -1056,23 +1078,12 @@ class PlanningProductionController extends BaseController
             $toDate = clone $fromDate;
             $toDate->modify("+{$durationSeconds} seconds");
 
-            $material = $this->materialModel
-                ->select('PACKAGING_TIME')
-                ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
-                ->first();
-
             $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
                 $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
-
-            $transit = $this->transitMaster
-                ->select('TRANSIT_TIME')
-                ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
-                ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
-                ->first();
 
             $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
@@ -1086,6 +1097,12 @@ class PlanningProductionController extends BaseController
                 'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
+
+                'OLD_FROM_DATE' => $allotment['FROM_DATE'],
+                'OLD_TO_DATE' => $allotment['TO_DATE'],
+                'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],
+                'OLD_DOOR_STEP_DEL_DATE' => $allotment['DOOR_STEP_DEL_DATE'],
+
                 'MODIFICATION_FLAG' => 1
             ]);
 

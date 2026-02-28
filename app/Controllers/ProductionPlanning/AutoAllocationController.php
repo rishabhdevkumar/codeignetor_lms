@@ -4,8 +4,9 @@ namespace App\Controllers\ProductionPlanning;
 
 use App\Controllers\BaseController;
 use App\Models\ProductionPlanning\PlanningProductionModel;
-use App\Models\OrderGeneration\IndentAllotmentModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\MasterModels\TransitMaster;
+use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
 use App\Models\Material_Model;
 use CodeIgniter\Controller;
 
@@ -13,8 +14,9 @@ class AutoAllocationController extends BaseController
 {
     protected $planningModel;
     protected $indentModel;
-    protected $materialModel;
     protected $transitMaster;
+    protected $planningCalhistoryModel;
+    protected $materialModel;
     protected $db;
 
     public function __construct()
@@ -22,6 +24,7 @@ class AutoAllocationController extends BaseController
         $this->planningModel = new PlanningProductionModel();
         $this->indentModel = new IndentAllotmentModel();
         $this->transitMaster = new TransitMaster();
+        $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
         $this->materialModel = new Material_Model();
         $this->db = \Config\Database::connect();
     }
@@ -139,6 +142,9 @@ class AutoAllocationController extends BaseController
 
             $this->db->transCommit();
 
+            $this->deleteUnUtilizedPlan();
+            $this->deletePartialUtilizedPlan();
+
             return $this->response->setJSON([
                 'status' => true,
                 'message' => 'Reallocation completed successfully'
@@ -166,13 +172,13 @@ class AutoAllocationController extends BaseController
             return;
         }
 
-        // 1️ First row = EXISTING anchor (DO NOT TOUCH)
+        // First row = EXISTING anchor (DO NOT TOUCH)
         $first = array_shift($allotments);
 
         // Anchor from existing TO_DATE
         $currentStart = new \DateTime($first['TO_DATE']);
 
-        // 2️ Process remaining rows
+        // Process remaining rows
         foreach ($allotments as $allotment) {
 
             // Skip existing indents (extra safety)
@@ -194,11 +200,6 @@ class AutoAllocationController extends BaseController
             $toDate = (clone $fromDate)->modify("+{$durationSeconds} seconds");
 
             // packaging time
-            // $material = $this->materialModel
-            //     ->select('PACKAGING_TIME')
-            //     ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
-            //     ->first();
-
             $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
@@ -207,12 +208,6 @@ class AutoAllocationController extends BaseController
             }
 
             // transit time
-            // $transit = $this->transitMaster
-            //     ->select('TRANSIT_TIME')
-            //     ->where('FROM_PINCODE', $planning['MACHINE_PINCODE'] ?? null)
-            //     ->where('TO_PINCODE', $allotment['CUSTOMER_PIN_CODE'] ?? null)
-            //     ->first();
-
             $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
             $doorStepDate = clone $finishingDate;
@@ -226,6 +221,12 @@ class AutoAllocationController extends BaseController
                 'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
+
+                'OLD_FROM_DATE' => $allotment['FROM_DATE'],
+                'OLD_TO_DATE' => $allotment['TO_DATE'],
+                'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],
+                'OLD_DOOR_STEP_DEL_DATE' => $allotment['DOOR_STEP_DEL_DATE'],
+
                 'MODIFICATION_FLAG' => 1
             ]);
 
@@ -234,6 +235,252 @@ class AutoAllocationController extends BaseController
         }
     }
 
+    private function deleteUnUtilizedPlan()
+    {
+        $tomorrowStart = date('Y-m-d 00:00:00', strtotime('+1 day'));
+        $tomorrowEnd = date('Y-m-d 23:59:59', strtotime('+1 day'));
+
+        $unutilizedplanningSlots = $this->planningModel
+            ->where('FROM_DATE_TIME >=', $tomorrowStart)
+            ->where('FROM_DATE_TIME <=', $tomorrowEnd)
+            ->where('REALLOCATION_STATUS', 1)
+            ->where('UTILISED_QTY =', 0.00)
+            ->findAll();
+
+        $this->db->transBegin();
+
+        try {
+
+            foreach ($unutilizedplanningSlots as $slot) {
+
+                $oldPlanning = $this->planningModel
+                    ->where('PP_ID', $slot['PP_ID'])
+                    ->first();
+
+                $oldPlanning['PLANNING_CAL_ID'] = $oldPlanning['PP_ID'];
+                $oldPlanning['REMARKS'] = 'Plan Not Utilized';
+                $this->planningCalhistoryModel->insert($oldPlanning);
+
+                $totalElapsedSeconds = 0;
+
+                $start = strtotime($slot['FROM_DATE_TIME']);
+                $end   = strtotime($slot['TO_DATE_TIME']);
+
+                $totalElapsedSeconds += ($end - $start);
+
+                $remainingPlans = $this->planningModel
+                    ->where('FROM_DATE_TIME >=', $tomorrowEnd)
+                    ->where('MACHINE', $slot['MACHINE'])
+                    ->where('REALLOCATION_STATUS', 0)
+                    ->findAll();
+
+                foreach ($remainingPlans as $plan) {
+
+                    $newFrom = date(
+                        'Y-m-d H:i:s',
+                        strtotime($plan['FROM_DATE_TIME']) - $totalElapsedSeconds
+                    );
+
+                    $newTo = date(
+                        'Y-m-d H:i:s',
+                        strtotime($plan['TO_DATE_TIME']) - $totalElapsedSeconds
+                    );
+
+                    $remainingPlans['FROM_DATE_TIME'] = $newFrom;
+                    $remainingPlans['TO_DATE_TIME'] = $newTo;
+
+                    $this->planningModel->update($plan['PP_ID'], [
+                        'FROM_DATE_TIME' => $newFrom,
+                        'TO_DATE_TIME'   => $newTo
+                    ]);
+
+                    // Recalculate indent dates SEQUENTIALLY 
+                    $this->recalculateIndentAfterDeletion(
+                        $plan['PP_ID'],
+                        $remainingPlans
+                    );
+                }
+            }
+
+            $this->db->transCommit();
+        } catch (\Throwable $e) {
+
+            $this->db->transRollback();
+
+            return $this->response->setJSON([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    private function deletePartialUtilizedPlan()
+    {
+        $tomorrowStart = date('Y-m-d 00:00:00', strtotime('+1 day'));
+        $tomorrowEnd = date('Y-m-d 23:59:59', strtotime('+1 day'));
+
+        $partialutilizedplanningSlots = $this->planningModel
+            ->where('FROM_DATE_TIME >=', $tomorrowStart)
+            ->where('FROM_DATE_TIME <=', $tomorrowEnd)
+            ->where('REALLOCATION_STATUS', 1)
+            ->where('BALANCE_QTY >', 0.00)
+            ->findAll();
+
+        $this->db->transBegin();
+
+        try {
+
+            foreach ($partialutilizedplanningSlots as $slot) {
+
+                $oldPlanning = $this->planningModel
+                    ->where('PP_ID', $slot['PP_ID'])
+                    ->first();
+
+                $oldPlanning['PLANNING_CAL_ID'] = $oldPlanning['PP_ID'];
+                $oldPlanning['REMARKS'] = 'Plan Partial Utilized';
+                $this->planningCalhistoryModel->insert($oldPlanning);
+
+                $totalElapsedSeconds = 0;
+
+                $start = strtotime($slot['FROM_DATE_TIME']);
+                $end   = strtotime($slot['TO_DATE_TIME']);
+
+                $totalElapsedSeconds += ($end - $start);
+
+                // Logic to Short Close Planning Date on the basis of Utilized Qty
+                $plannedQty  = $slot['QTY_MT'];
+                $utilizedQty = $slot['BALANCE_QTY'];
+
+                $actualUsedSeconds = 0;
+
+                if ($plannedQty > 0) {
+                    $actualUsedSeconds = ($utilizedQty / $plannedQty) * $totalElapsedSeconds;
+                }
+
+                $shortCloseSeconds = $totalElapsedSeconds - $actualUsedSeconds;
+
+                $this->planningModel->update($slot['PP_ID'], [
+                    'TO_DATE_TIME' => date('Y-m-d H:i:s', strtotime($slot['TO_DATE_TIME']) - $shortCloseSeconds)
+                ]);
+
+                $remainingPlans = $this->planningModel
+                    ->where('FROM_DATE_TIME >=', $tomorrowEnd)
+                    ->where('MACHINE', $slot['MACHINE'])
+                    ->where('REALLOCATION_STATUS', 0)
+                    ->findAll();
+
+                foreach ($remainingPlans as $plan) {
+
+                    $newFrom = date(
+                        'Y-m-d H:i:s',
+                        strtotime($plan['FROM_DATE_TIME']) - $shortCloseSeconds
+                    );
+
+                    $newTo = date(
+                        'Y-m-d H:i:s',
+                        strtotime($plan['TO_DATE_TIME']) - $shortCloseSeconds
+                    );
+
+                    $remainingPlans['FROM_DATE_TIME'] = $newFrom;
+                    $remainingPlans['TO_DATE_TIME'] = $newTo;
+
+                    $this->planningModel->update($plan['PP_ID'], [
+                        'FROM_DATE_TIME' => $newFrom,
+                        'TO_DATE_TIME'   => $newTo
+                    ]);
+
+                    // Recalculate indent dates SEQUENTIALLY 
+                    $this->recalculateIndentAfterDeletion(
+                        $plan['PP_ID'],
+                        $remainingPlans
+                    );
+                }
+            }
+
+            $this->db->transCommit();
+        } catch (\Throwable $e) {
+
+            $this->db->transRollback();
+
+            return $this->response->setJSON([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    private function recalculateIndentAfterDeletion(int $planningCalId, array $newPlanning)
+    {
+
+        $allotments = $this->indentModel
+            ->where('PLANNING_CAL_ID', $planningCalId)
+            ->orderBy('PP_ID', 'ASC')
+            ->findAll();
+
+        if (empty($allotments)) {
+            return;
+        }
+
+        $planningFrom = new \DateTime($newPlanning['FROM_DATE_TIME']);
+        $planningTo   = new \DateTime($newPlanning['TO_DATE_TIME']);
+
+        $planTotalSeconds = $planningTo->getTimestamp() - $planningFrom->getTimestamp();
+
+        $currentStart = clone $planningFrom;
+        $consumedSeconds = 0;
+
+        foreach ($allotments as $index => $allotment) {
+
+            $oldFrom = new \DateTime($allotment['FROM_DATE']);
+            $oldTo = new \DateTime($allotment['TO_DATE']);
+
+            $durationSeconds = max(
+                $oldTo->getTimestamp() - $oldFrom->getTimestamp(),
+                60
+            );
+
+            // Safety: do not exceed planning window
+            if (($consumedSeconds + $durationSeconds) > $planTotalSeconds) {
+                $durationSeconds = $planTotalSeconds - $consumedSeconds;
+            }
+
+            $fromDate = clone $currentStart;
+
+            $toDate = clone $fromDate;
+            $toDate->modify("+{$durationSeconds} seconds");
+
+            $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
+
+            $finishingDate = clone $toDate;
+            if ($packagingDays > 0) {
+                $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
+            }
+
+            $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
+
+            $doorStepDate = clone $finishingDate;
+            if ($transitDays > 0) {
+                $doorStepDate->add(new \DateInterval("P{$transitDays}D"));
+            }
 
 
+            $this->indentModel->update($allotment['PP_ID'], [
+                'FROM_DATE' => $fromDate->format('Y-m-d H:i:s'),
+                'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
+                'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
+                'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
+
+
+                'OLD_FROM_DATE' => $allotment['FROM_DATE'],
+                'OLD_TO_DATE' => $allotment['TO_DATE'],
+                'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],
+                'OLD_DOOR_STEP_DEL_DATE' => $allotment['DOOR_STEP_DEL_DATE'],
+
+                'MODIFICATION_FLAG' => 1
+            ]);
+
+            $currentStart = clone $toDate;
+            $consumedSeconds += $durationSeconds;
+        }
+    }
 }

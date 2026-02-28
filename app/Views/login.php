@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title . " | " . $settings["COMPANY_NAME"]; ?></title>
+    <title><?php echo $title . " | " . $settings[0]["COMPANY_NAME"]; ?></title>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/animate.css" rel="stylesheet">
@@ -23,8 +23,8 @@
         <div class="page">
             <!-- <center><img class="img-responsive" src="<?php echo base_url(); ?>assets/img/logoHeader.png" /></center>
             <div class="row mt-5"> -->
-                <div class="col-sm-3"></div>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-3"></div> -->
+                <div class="col-sm-12">
                     <!-- <center><img src="<?php echo base_url() ?>uploads/logo-white.png" class="img-responsive rounded" style=" margin-bottom: 10px !important;"></center> -->
 
                     <h3>Pakka Limited</h3>
@@ -63,7 +63,7 @@
                     </form>
                     <!--<p class="m-t"> <center><small>&copy; 2020-2021</small> </center></p>-->
                 </div>
-                <div class="col-sm-3"></div>
+                <!-- <div class="col-sm-3"></div> -->
             </div>
 
             

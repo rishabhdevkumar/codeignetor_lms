@@ -96,7 +96,7 @@
                             <ul class="dropdown-content">
                                 <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning">Upload</a></li>
                                 <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">View</a></li>
-                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Re-Calculate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Downtime Calculation</a></li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item ">
@@ -108,7 +108,8 @@
                         <li class="nav-item dropdown">Indent &nbsp;<i class="fa fa-angle-double-down"></i>
                             <ul class="dropdown-content">
                                 <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/allocation">Allocation</a></li>
-                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/auto-allocation">Re-Allocation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>IndentAllotmentView">Allotment View</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/auto-allocation">UnUtilised Plan Transfer</a></li>
                             </ul>
                         </li>
                         <!-- <li class="nav-item ">

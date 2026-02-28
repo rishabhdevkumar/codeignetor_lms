@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\MasterModels\FinishStock;
 use App\Models\OrderGeneration\IndentModel;
 use App\Models\OrderGeneration\IndentDetailsModel;
-use App\Models\OrderGeneration\IndentAllotmentModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\MasterModels\PpCustomerMaster;
 use App\Models\MasterModels\TransitMaster;
 use App\Models\Material_Model;
@@ -49,6 +49,7 @@ class AllocationAndCommitmentController extends BaseController
         $pendingIndents = $this->indentModel
             ->select('id, in_no, bill_to_code, ship_to_code')
             ->where('sap_init', 0)
+            ->orderBy('id', 'ASC')
             ->findAll();
 
         if (empty($pendingIndents)) {
@@ -85,23 +86,23 @@ class AllocationAndCommitmentController extends BaseController
                 ->where('CUSTOMER_CODE', $indent['ship_to_code'])
                 ->first();
 
-            if (empty($customerPinCode)) {
-                $notAllotted[] = [
-                    'IN_NO'        => $indent['in_no'],
-                    'LINE_ITEM'    => $od['line_item'] ?? null,
-                    'MATERIAL'     => $od['material_code'] ?? null,
-                    'QTY'          => $od['quantity'] ?? 0,
-                    'SHIPCUSTOMER' => $indent['ship_to_code'],
-                    'STATUS'       => 'ShipTo Customer PinCode Not Found'
-                ];
-                // $indentStatus['STATUS'] = 'ShipTo Customer PinCode Not Found';
-                continue;
-            }
-
             $pendingIndents[$key]['CUSTOMER_PIN_CODE'] = $customerPinCode['PIN_CODE'] ?? null;
 
 
             foreach ($orderDetails as $odKey => $od) {
+
+                if (empty($customerPinCode)) {
+                    $notAllotted[] = [
+                        'IN_NO'        => $indent['in_no'],
+                        'LINE_ITEM'    => $od['line_item'] ?? null,
+                        'MATERIAL'     => $od['material_code'] ?? null,
+                        'QTY'          => $od['quantity'] ?? 0,
+                        'SHIPCUSTOMER' => $indent['ship_to_code'],
+                        'STATUS'       => 'ShipTo Customer PinCode Not Found'
+                    ];
+                    // $indentStatus['STATUS'] = 'ShipTo Customer PinCode Not Found';
+                    continue;
+                }
 
                 $packagingDays = 0;
                 $transitDays = 0;
@@ -264,7 +265,7 @@ class AllocationAndCommitmentController extends BaseController
                         'PO_LINE_ITEM' => '',
                         'SCHEDULE_LINE_ITEM' => '',
                         'FULFILLMENT_FLAG' => $pendingIndents[$key]['order_details'][$odKey]['fullfillment_flag'],
-
+                        'REMARKS'            => '',
                     ]);
                 } else {
                     // Query Production Planning
@@ -273,7 +274,7 @@ class AllocationAndCommitmentController extends BaseController
                     $customerTypeBalanceQtyField = $pendingIndents[$key]['CUSTOMER_TYPE'] . "_BALANCE_QTY_MT";
 
                     $baseQuery = $this->planningProductionModel
-                        ->where('TO_DATE_TIME >', $currentDateTime)
+                        ->where('FROM_DATE_TIME >', $currentDateTime)
                         ->where('REALLOCATION_STATUS', 0);
 
                     $mrMaterialCode = $pendingIndents[$key]['order_details'][$odKey]['MR_MATERIAL_CODE'] ?? null;
@@ -689,7 +690,8 @@ class AllocationAndCommitmentController extends BaseController
                             'PO_NO' => $allocationRecord['PO_NO'],
                             'PO_LINE_ITEM' => $allocationRecord['PO_LINE_ITEM'],
                             'FULFILLMENT_FLAG' => 1,
-                            'SCHEDULE_LINE_ITEM' => $allocationRecord['SCHEDULE_LINE_ITEM']
+                            'SCHEDULE_LINE_ITEM' => $allocationRecord['SCHEDULE_LINE_ITEM'],
+                            'REMARKS'            => '',
                         ];
                         $this->indentAllotment->insert($data);
 
@@ -724,6 +726,9 @@ class AllocationAndCommitmentController extends BaseController
             }
         }
 
+        if (!empty($notAllotted)) {
+            $this->updateNotAlloted($notAllotted);
+        }
 
         $indentStatus = [
             'title'        => 'Indent Allocation',
@@ -740,5 +745,33 @@ class AllocationAndCommitmentController extends BaseController
         //     'count' => count($pendingIndents),
         //     'data' => $pendingIndents
         // ]);
+    }
+
+    private function updateNotAlloted(array $notAllotted)
+    {
+      
+        foreach ($notAllotted as $row) {
+
+            $existing = $this->indentAllotment
+                ->where('INDENT_NO', $row['IN_NO'])
+                ->where('INDENT_LINE_ITEM', $row['LINE_ITEM'])
+                ->first();
+
+            $data = [
+                'INDENT_NO'                => $row['IN_NO'],
+                'INDENT_LINE_ITEM'         => $row['LINE_ITEM'],
+                'FINISH_MATERIAL_CODE'     => $row['MATERIAL'],
+                'QUANTITY'                 => $row['QTY'],
+                'REMARKS'                  => $row['STATUS']
+            ];
+
+            if ($existing) {
+
+                $this->indentAllotment->update($existing['PP_ID'], $data);
+            } else {
+
+                $this->indentAllotment->insert($data);
+            }
+        }
     }
 }
