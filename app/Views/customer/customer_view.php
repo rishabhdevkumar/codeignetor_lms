@@ -42,14 +42,14 @@
 							?>
 									<tr class="gradeX">
 										<td><?php echo $ctr; ?></td>
-										<td><?php echo $customer[$k]["CUSTOMER_CODE"]; ?></td>
+										<td><?php echo $customer[$k]["cust_no"]; ?></td>
 										<td><?php echo $customer[$k]["cust_name"]; ?></td>
-										<td><?php echo $customer[$k]["CUSTOMER_TYPE"]; ?></td>
+										<td><?php echo $customer[$k]["customer_type"]; ?></td>
 										<td><?php echo $customer[$k]["parent_cust_no"]; ?></td>
-										<td><?php echo $customer[$k]["STATE"]; ?></td>
-										<td><?php echo $customer[$k]["PIN_CODE"]; ?></td>
-										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
-										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["PP_ID"]; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
+										<td><?php echo $customer[$k]["state"]; ?></td>
+										<td><?php echo $customer[$k]["postal_code"]; ?></td>
+										<td><a href="<?php echo base_url(); ?>Customer/view/<?php echo $customer[$k]["id"]; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+										<td><a href="<?php echo base_url(); ?>Customer/edit/<?php echo $customer[$k]["id"]; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 									</tr>
 							<?php
 									$ctr++;

@@ -19,6 +19,8 @@ class CustomerModel extends Model
         'cust_name',
         'price_list_no',
         'parent_cust_no',
+        'customer_type',
+        'postal_code',
         'currency',
         'm_target',
         'dispatch'
@@ -28,17 +30,17 @@ class CustomerModel extends Model
 
     public function all_customer($whereCondition)
     {
-        $builder = $this->db->table('pp_customer_master m');
+        $builder = $this->db->table('vtiger_bp_customer_master v');
 
         $builder->select('
-            m.*
+            v.*
         ');
 
         if (!empty($whereCondition)) {
             $builder->where($whereCondition);
         }
 
-        $builder->orderBy('m.PP_ID', 'DESC');
+        $builder->orderBy('v.id', 'DESC');
 
         $query = $builder->get();
 
@@ -107,25 +109,21 @@ class CustomerModel extends Model
         }
     }
 
-    public function getCustomers(array $filters = [], int $limit = 50, int $offset = 0)
+    public function getCustomers(array $filters = [], int $limit = 50000, int $offset = 0)
     {
-        return $this->db->table('pp_customer_master m')
+        return $this->db->table('vtiger_bp_customer_master v')
             ->select([
-                'm.PP_ID',
-                'm.CUSTOMER_CODE',
+                'v.id',
+                'v.cust_no',
                 'v.cust_name',
-                'm.CUSTOMER_TYPE',
-                'm.PIN_CODE',
-                'm.STATE',
+                'v.customer_type',
+                'v.postal_code',
+                'v.state',
                 'v.parent_cust_no',
             ])
-            ->join(
-                'vtiger_bp_customer_master v',
-                'v.cust_no = m.CUSTOMER_CODE',
-                'left'
-            )
             ->where($filters)
-            ->orderBy('m.PP_ID', 'DESC')
+            ->orderBy('v.id', 'DESC')
+            ->groupBy('v.cust_no')
             ->limit($limit, $offset)
             ->get()
             ->getResultArray();

@@ -24,8 +24,9 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'auth' => \App\Filters\Auth::class,
-        'noauth' => \App\Filters\Noauth::class,
+        'permission'    => \App\Filters\PermissionFilter::class,
+        'auth'          => \App\Filters\Auth::class,
+        'noauth'        => \App\Filters\Noauth::class,
     ];
 
     /**

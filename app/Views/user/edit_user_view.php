@@ -1,90 +1,111 @@
 <?php
-$name = isset($_POST["name"]) ? $_POST["name"] : $user[0]["name"];
-$user_name = isset($_POST["user_name"]) ? $_POST["user_name"] : $user[0]["user_name"];
-$status = isset($_POST["status"]) ? $_POST["status"] : $user[0]["status"];
-$role = isset($_POST["role"]) ? $_POST["role"] : $user[0]["role"];
-$authorities = isset($_POST["authorities"]) ? $_POST["authorities"] : $user[0]["authorities"];
-$authorities = explode(",", $authorities);
+$name = isset($_POST["name"]) ? $_POST["name"] : $user[0]["NAME"];
+$username = isset($_POST["username"]) ? $_POST["username"] : $user[0]["USERNAME"];
+$status = isset($_POST["status"]) ? $_POST["status"] : $user[0]["STATUS"];
+$role = isset($_POST["role"]) ? $_POST["role"] : $user[0]["ROLE"];
+$authorization = isset($_POST["authorization"]) ? $_POST["authorization"] : $user[0]["AUTHORIZATION"];
+$authorization = explode(",", $authorization);
 
-$menu_control = json_decode($user[0]["sub_menu_auth"], true);
+$menu_control = json_decode(html_entity_decode($user[0]["SUB_MENU_AUTH"]), true);
 
-//echo $user[0]["user_name"]." : "."<pre>";print_r($menu_control);echo "<br>";print_r($sub_menu_auth);die;
-$user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : $user[0]["id"];
-$email = isset($_POST["email"]) ? $_POST["email"] : $user[0]["email"];
-$contact_no = isset($_POST["contact_no"]) ? $_POST["contact_no"] : $user[0]["contact_no"];
+//echo $user[0]["USERNAME"]." : "."<pre>";print_r($menu_control);echo "<br>";print_r($sub_menu_auth);die;
+$user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : $user[0]["PP_ID"];
+$email = isset($_POST["email"]) ? $_POST["email"] : $user[0]["EMAIL"];
+$contact_no = isset($_POST["contact_no"]) ? $_POST["contact_no"] : $user[0]["CONTACT_NO"];
 ?>
 <div class="row" style="float:left;width:100%">
-	<form action="" id="frm" autocomplete="off" method="POST" style="width:100%">
+	<form action="<?= base_url('User/updateData/' . $user_id) ?>" id="frm" autocomplete="off" method="POST" style="width:100%">
 		<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
-		<div class="col-sm-3" style="float:left;" style="margin-top:20px"></div>
-		<div class="col-sm-6" style="float:left;" style="margin-top:20px">
-			<?php echo $this->session->flashdata('message'); ?>
+		<?= csrf_field() ?>
+		<div class="col-sm-3" style="float:left;margin-top:20px"></div>
+		<div class="col-sm-6" style="float:left;margin-top:20px">
+			<?= session()->getFlashdata('message'); ?>
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5><?php echo $title; ?><small> </small></h5>
+					<!-- <h5><?php echo $title; ?><small> </small></h5> -->
 				</div>
 				<div class="ibox-content">
 					<div class="form-horizontal">
 						<div class="row">
 							<div class="col-sm-12">
+
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<input type="text" class="form-control <?php if (!empty(form_error('name'))) echo 'is-invalid'; ?>" name="name" id="name" Placeholder="Enter Name" autocomplete="off" value="<?php echo $name; ?>">
-											<div class="error"><?php echo form_error('name'); ?></div>
+											<input type="text" class="form-control <?php if (isset($validation)) $validation->getError('name'); ?>" name="name" id="name" Placeholder="Enter Name" autocomplete="off" value="<?php echo $name; ?>">
+											<?php if (isset($validation)) : ?>
+												<div class="error"><?= $validation->getError('name'); ?></div>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
+
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<input type="text" class="form-control <?php if (!empty(form_error('contact_no'))) echo 'is-invalid'; ?>" name="contact_no" id="contact_no" Placeholder="Enter Contact No" autocomplete="off" value="<?php echo $contact_no; ?>">
-											<div class="error"><?php echo form_error('contact_no'); ?></div>
+											<input type="text" class="form-control <?php if (isset($validation)) $validation->getError('contact_no'); ?>" name="contact_no" id="contact_no" Placeholder="Enter Contact No" autocomplete="off" value="<?php echo $contact_no; ?>">
+											<?php if (isset($validation)) : ?>
+												<div class="error">
+													<?= $validation->getError('contact_no'); ?>
+												</div>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
+
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<input type="text" class="form-control <?php if (!empty(form_error('email'))) echo 'is-invalid'; ?>" name="email" id="email" Placeholder="Enter Email" autocomplete="off" value="<?php echo $email; ?>">
-											<div class="error"><?php echo form_error('email'); ?></div>
+											<input type="text" class="form-control <?php if (isset($validation)) $validation->getError('email'); ?>" name="email" id="email" Placeholder="Enter Email" autocomplete="off" value="<?php echo $email; ?>">
+											<?php if (isset($validation)) : ?>
+												<div class="error">
+													<?= $validation->getError('email'); ?>
+												</div>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
-								<div class="hr-line-dashed"></div>
 
+								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<select class="form-control <?php if (!empty(form_error('status'))) echo 'is-invalid'; ?>" name="status" id="status">
+											<select class="form-control <?php if (isset($validation)) $validation->getError('status'); ?>" name="status" id="status">
 												<option value="">Select</option>
 												<option value="1" <?php if ($status == 1) echo "selected"; ?>>Active</option>
 												<option value="0" <?php if ($status == 0) echo "selected"; ?>>Deactive</option>
 											</select>
-											<div class="error"><?php echo form_error('status'); ?></div>
+											<?php if (isset($validation)) : ?>
+												<div class="error"><?= $validation->getError('status'); ?></div>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
+
+								<div class="hr-line-dashed"></div>
+
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
-											<select class="form-control <?php if (!empty(form_error('role'))) echo 'is-invalid'; ?>" name="role" id="role">
+											<select class="form-control <?php if (isset($validation)) $validation->getError('role'); ?>" name="role" id="role">
 
 												<option value="">Select</option>
 												<option value="1" <?php if ($role == 1) echo "selected"; ?>>Admin</option>
 												<option value="2" <?php if ($role == 2) echo "selected"; ?>>Staff</option>
 												<option value="3" <?php if ($role == 3) echo "selected"; ?>>Employee</option>
 											</select>
-											<div class="error"><?php echo form_error('role'); ?></div>
+											<?php if (isset($validation)) : ?>
+												<div class="error"><?= $validation->getError('role'); ?></div>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
+
 								<div class="hr-line-dashed"></div>
 
 								<div class="form-group">
@@ -93,16 +114,18 @@ $contact_no = isset($_POST["contact_no"]) ? $_POST["contact_no"] : $user[0]["con
 										foreach ($auth as $k => $v) {
 										?>
 											<div class="col-sm-6 col-xs-12">
-												<div class=""><label> <input type="checkbox" name="authorities[]" style="vertical-align: text-bottom;width:24px;height:24px;" onclick="deselect_submenu(this)" value="<?php echo $auth[$k]['order_id'] ?>" id="authorities-<?php echo $auth[$k]['order_id'] ?>" <?php echo (in_array($auth[$k]['order_id'], $authorities)) ? "checked='checked'" : "" ?>> <?php echo $auth[$k]['menu_name'] ?> </label>
+												<div class=""><label> <input type="checkbox" name="authorization[]" style="vertical-align: text-bottom;width:24px;height:24px;" onclick="deselect_submenu(this)" value="<?php echo $auth[$k]['ORDER_ID'] ?>" id="authorization-<?php echo $auth[$k]['ORDER_ID'] ?>" <?php echo (in_array($auth[$k]['ORDER_ID'], $authorization)) ? "checked='checked'" : "" ?>> <?php echo $auth[$k]['MENU_NAME'] ?> </label>
 												</div>
 											</div>
 										<?php
 										}
 
-
 										?>
 									</div>
 								</div>
+
+								<div class="hr-line-dashed"></div>
+
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12 col-xs-12">
@@ -120,10 +143,10 @@ $contact_no = isset($_POST["contact_no"]) ? $_POST["contact_no"] : $user[0]["con
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-12" style="float:left;" style="margin-top:20px">
+		<div class="col-sm-12" style="float:left;margin-top:20px">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>Sub Menu Authorities <small> </small></h5> <br />
+					<h5>Sub Menu AUTHORIZATION <small> </small></h5> <br />
 					<input id="myInput" class="form-control" style="max-width:150px;" type="text" placeholder="Filter..">
 					<label style="vertical-align: -3px;"> <input style="vertical-align: text-bottom;width:20px;height:20px;" type="checkbox" id="selection"><span id="text_select" style="font-size:20px;color:#2C8F7B">Select All</span></label>
 				</div>
@@ -133,23 +156,51 @@ $contact_no = isset($_POST["contact_no"]) ? $_POST["contact_no"] : $user[0]["con
 					<div class="row" id="sub_menus" style="max-height:500px;overflow-y: scroll;">
 
 						<?php
-						foreach ($sub_menu_auth as $k => $v) {
+						$actions = ['index' => 'Index', 'add' => 'Add', 'edit' => 'Edit', 'view' => 'View'];
 
+						foreach ($sub_menu_auth as $menu) :
+
+							$menu_id  = $menu['PP_ID'];
+							$order_id = $menu['ORDER_ID'];
+
+							$title = !empty($menu['SUB_MENU3']) ? $menu['SUB_MENU3'] : $menu['SUB_MENU2'];
+
+							$selected_actions = $menu_control[$menu_id] ?? [];
 						?>
+
 							<div class="col-sm-4 col-xs-4 mb-0 menu_row">
-								<div class="" style="color:#2C8F7B;"><label> <b> <?php echo $sub_menu_auth[$k]['sub_menu3'] ? $sub_menu_auth[$k]['sub_menu3'] : $sub_menu_auth[$k]['sub_menu2'] ?> </b><br></label>
+
+								<div style="color:#2C8F7B;">
+									<label>
+										<b><?= esc($title) ?></b><br>
+									</label>
 								</div>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['order_id'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="index" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('index', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Index</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['order_id'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="add" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('add', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Add</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['order_id'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="edit" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('edit', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>Edit</label>
-								<label> <input type="checkbox" class='sub_menu_auth' style="vertical-align: text-bottom;width:18px;height:18px;" data-order_id="<?php echo $sub_menu_auth[$k]['order_id'] ?>" onclick="check_menu(this)" name="sub_auth_control[<?php echo $sub_menu_auth[$k]['id'] ?>][]" value="view" <?php echo isset($menu_control[$sub_menu_auth[$k]['id']]) ? in_array('view', $menu_control[$sub_menu_auth[$k]['id']]) ? "checked='checked'" : "" : ""; ?>>View</label>
+
+								<?php foreach ($actions as $value => $label) : ?>
+
+									<label>
+										<input
+											type="checkbox"
+											class="sub_menu_auth"
+											style="vertical-align:text-bottom;width:18px;height:18px;"
+											data-order_id="<?= esc($order_id) ?>"
+											onclick="check_menu(this)"
+											name="sub_auth_control[<?= esc($menu_id) ?>][]"
+											value="<?= esc($value) ?>"
+											<?= in_array($value, $selected_actions) ? 'checked' : '' ?>>
+										<?= esc($label) ?>
+									</label>
+
+								<?php endforeach; ?>
+
 							</div>
-						<?php
-						}
-						?>
+
+						<?php endforeach; ?>
+
 					</div>
 				</div>
 			</div>
+		</div>
 	</form>
 </div>
 <script>

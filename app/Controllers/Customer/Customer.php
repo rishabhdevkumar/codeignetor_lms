@@ -62,18 +62,18 @@ class Customer extends BaseController
 	{
 
 		$arr = [
-			'CUSTOMER_CODE'         =>  trim($this->request->getPost('customer_code')),
-			'CUSTOMER_TYPE'         => $this->request->getPost('customer_type'),
-			'COUNTRY'               => $this->request->getPost('country'),
-			'PIN_CODE'              =>  trim($this->request->getPost('pincode')),
-			'STATE'                 => $this->request->getPost('state'),
+			'cust_no'               => trim($this->request->getPost('customer_code')),
+			'customer_type'         => $this->request->getPost('customer_type'),
+			'country'               => $this->request->getPost('country'),
+			'postal_code'           => trim($this->request->getPost('pincode')),
+			'state'                 => $this->request->getPost('state'),
 		];
 
-		$arr2 = array('CUSTOMER_CODE' => trim($this->request->getPost('customer_code')));
+		$arr2 = array('cust_no' => trim($this->request->getPost('cust_no')));
 		$result["customer"] = $this->customerModel->all_customer($arr2);
 
 		if (!$result['customer']) {
-			$insert = $this->crudModel->saveData('pp_customer_master', $arr);
+			$insert = $this->crudModel->saveData('vtiger_bp_customer_master', $arr);
 		} else {
 			$result['error'] = "Customer Already Exist";
 			return view('header', $result)
@@ -89,7 +89,7 @@ class Customer extends BaseController
 	public function edit($id)
 	{
 
-		$arr = array('PP_ID' => $id);
+		$arr = array('id' => $id);
 		$dataList = $this->customerModel->all_customer($arr);
 
 		$result["customer"] = $dataList[0];
@@ -110,15 +110,15 @@ class Customer extends BaseController
 	{
 
 		$arr = [
-			'CUSTOMER_CODE'         => trim($this->request->getPost('customer_code')),
-			'CUSTOMER_TYPE'         => $this->request->getPost('customer_type'),
-			'COUNTRY'               => $this->request->getPost('country'),
-			'PIN_CODE'              => trim($this->request->getPost('pincode')),
-			'STATE'                 => $this->request->getPost('state'),
+			'cust_no'               => trim($this->request->getPost('customer_code')),
+			'customer_type'         => $this->request->getPost('customer_type'),
+			'country'               => $this->request->getPost('country'),
+			'postal_code'           => trim($this->request->getPost('pincode')),
+			'state'                 => $this->request->getPost('state'),
 		];
 
-		$condition = array("PP_ID" => $this->request->getPost('customer_id'));
-		$update = $this->crudModel->updateData('pp_customer_master', $arr, $condition);
+		$condition = array("cust_no" => $this->request->getPost('customer_code'));
+		$update = $this->crudModel->updateData('vtiger_bp_customer_master', $arr, $condition);
 
 		if ($update) {
 			// $this->session->set_flashdata("message","<div class='alert alert-success'>Customer Updated</div>");
@@ -128,7 +128,7 @@ class Customer extends BaseController
 
 	public function view($id)
 	{
-		$arr = array('PP_ID' => $id);
+		$arr = array('id' => $id);
 		$dataList = $this->customerModel->all_customer($arr);
 
 		$result["customer"] = $dataList[0];
@@ -146,23 +146,4 @@ class Customer extends BaseController
 		echo view('footer');
 	}
 
-	public function del($id)
-	{
-		$arr = array('PP_ID' => $id);
-		$result['customer'] = $this->customerModel->all_customer($arr);
-
-		if (!$result['customer']) {
-			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Customer not found");
-		}
-
-
-		$condition = array("PP_ID" => $id);
-		$delete = $this->crudModel->del("pp_customer_master", $condition);
-
-		if ($delete) {
-
-			// $this->session->set_flashdata("message","<div class='alert alert-success'>Customer Deleted</div>");
-			return redirect()->to('/Customer');
-		}
-	}
 }

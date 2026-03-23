@@ -1,10 +1,10 @@
 <?php
-$customer_code       = old('CUSTOMER_CODE', $customer['CUSTOMER_CODE']);
-$customer_type        = old('CUSTOMER_TYPE', $customer['CUSTOMER_TYPE']);
-$country             = old('COUNTRY', $customer['COUNTRY']);
-$state               = old('STATE', $customer['STATE']);
-$pincode             = old('PIN_CODE', $customer['PIN_CODE']);
-$customer_id         = old('PP_ID', $customer['PP_ID']);
+$customer_code       = old('cust_no', $customer['cust_no']);
+$customer_type        = old('customer_type', $customer['customer_type']);
+$country             = old('country', $customer['country']);
+$state               = old('state', $customer['state']);
+$pincode             = old('postal_code', $customer['postal_code']);
+$customer_id         = old('id', $customer['id']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

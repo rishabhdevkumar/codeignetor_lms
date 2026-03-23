@@ -58,14 +58,14 @@ ksort($pivot);
 	<div class="row">
 
 		<div class="col-lg-3 col-md-3 mb-3">
-			<div class="sap-card" style="height: 300px;">
-				<h5>Tommorrow's Planning</h5>
+			<div class="dashboard-card" style="height: 300px;">
+				<h5>Current Week Planning</h5>
 				<canvas id="plannerChart"></canvas>
 			</div>
 		</div>
 
 		<div class="col-lg-5 col-md-6 mb-3">
-			<div class="sap-card" style="height: 300px;">
+			<div class="dashboard-card" style="height: 300px;">
 				<h5>Machine Planning</h5>
 				<?php
 				$labels = [];
@@ -86,7 +86,7 @@ ksort($pivot);
 
 
 		<div class="col-lg-4 col-md-6 mb-3">
-			<div class="sap-card p-3" style="height: 300px;">
+			<div class="dashboard-card p-3" style="height: 300px;">
 				<h5>Downtime Scheduled</h5>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover text-center">
@@ -124,7 +124,7 @@ ksort($pivot);
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 mb-3">
-			<div class="sap-card p-3" style="height: 600px;">
+			<div class="dashboard-card p-3" style="height: 600px;">
 				<h5>Not-Allotted Indents</h5>
 				<div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
 					<table class="table table-bordered table-hover text-center">
@@ -162,7 +162,7 @@ ksort($pivot);
 
 
 		<div class="col-lg-6 col-md-6 mb-3">
-			<div class="sap-card p-3" style="height: 600px;">
+			<div class="dashboard-card p-3" style="height: 600px;">
 				<h5>Grade Planning (MT)</h5>
 				<div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
 					<table class="table table-bordered table-hover text-center">
@@ -362,18 +362,27 @@ ksort($pivot);
 			},
 			scales: {
 				x: {
-					stacked: true
+					stacked: false
 				},
 				y: {
-					stacked: true,
-					beginAtZero: true,
+					stacked: false,
+					// beginAtZero: true,
+					// ticks: {
+					// 	display: false
+					// },
+					// border: {
+					// 	display: false
+					// },
+					// grid: {
+					// 	display: false
+					// }
 					ticks: {
-						callback: function(value) {
-							return value.toLocaleString();
-						}
+					    callback: function(value) {
+					        return value.toLocaleString();
+					    }
 					}
 				}
-			}
+			}	
 		}
 	});
 </script>

@@ -18,6 +18,7 @@
 									<th style="background-color:#efd6bb; color:#000">SAP Plant</th>
 									<th style="background-color:#efd6bb; color:#000">Material Grade</th>
 									<th style="background-color:#efd6bb; color:#000">GSM</th>
+									<th style="background-color:#efd6bb; color:#000">Material Type</th>
 									<th style="background-color:#efd6bb; color:#000">View</th>
 									<th style="background-color:#efd6bb; color:#000">Edit</th>
 								</tr>
@@ -38,6 +39,7 @@
 												<td><?php echo $material[$k]["SAP_PLANT"];?></td>
 												<td><?php echo $material[$k]["GRADE"];?></td>
 												<td><?php echo $material[$k]["GSM"];?></td>
+												<td><?php echo $material[$k]["MATERIAL_TYPE"];?></td>
 												<td><a href="<?php echo base_url();?>MRMaterial/view/<?php echo $material[$k]["PP_ID"];?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
 												<td><a href="<?php echo base_url();?>MRMaterial/edit/<?php echo $material[$k]["PP_ID"];?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a></td>
 											</tr>								

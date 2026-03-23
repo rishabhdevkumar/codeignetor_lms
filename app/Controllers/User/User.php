@@ -34,26 +34,26 @@ class User extends BaseController
 	}
 
 	public function index()
-{
-    $arr = array("PP_ID" => 1);
-    $settings = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
+	{
+		$arr = array("PP_ID" => 1);
+		$settings = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
 
-    $result["settings"] = $settings[0] ?? []; // ✅ Fix applied
+		$result["settings"] = $settings[0] ?? []; // ✅ Fix applied
 
-    $user_id = $this->session->get('erp_user_id');
+		$user_id = $this->session->get('erp_user_id');
 
-    $arr = array("PP_ID" => $user_id);
-    $result["user_details"] = $this->crudModel->select("pp_user_login", $arr, "PP_ID", "ASC");
+		$arr = array("PP_ID" => $user_id);
+		$result["user_details"] = $this->crudModel->select("pp_user_login", $arr, "PP_ID", "ASC");
 
-    $arr = array("PP_ID>=" => 1);
-    $result["user"] = $this->crudModel->select("pp_user_login", $arr, "PP_ID", "ASC");
+		$arr = array("PP_ID>=" => 1);
+		$result["user"] = $this->crudModel->select("pp_users_master", $arr, "PP_ID", "ASC");
 
-    $result['title'] = 'Users';
+		$result['title'] = 'Users';
 
-    echo view('header', $result);
-    echo view('user/user_view');
-    echo view('footer');
-}
+		echo view('header', $result);
+		echo view('user/user_view');
+		echo view('footer');
+	}
 
 
 	public function add()
@@ -61,7 +61,7 @@ class User extends BaseController
 		$session = session();
 
 		// if (! $session->get('erp_user_id')) {
-		// 	return redirect()->to('auth/logout');
+		// 	return redirect()->to('Auth/login');
 		// }
 
 		$db = Database::connect();
@@ -123,7 +123,7 @@ class User extends BaseController
 			);
 			// encrypt($this->request->getPost('password'), config('App')->enc_dec_key);
 
-			 $hashedPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+			$hashedPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
 
 			$authorities = $this->request->getPost('authorities');
 			$authorities = is_array($authorities)
@@ -136,7 +136,7 @@ class User extends BaseController
 				? json_encode($subMenuAuth, JSON_UNESCAPED_UNICODE)
 				: json_encode([]);
 
-				
+
 			$data = [
 				'NAME'          => $this->request->getPost('name'),
 				'USERNAME'     => $this->request->getPost('user_name'),
@@ -149,10 +149,10 @@ class User extends BaseController
 				'ROLE'          => $this->request->getPost('role')
 			];
 
-			$data = esc($data);	
+			$data = esc($data);
 
-			$insert = $this->userModel->insert( $data);	
-				
+			$insert = $this->userModel->insert($data);
+
 			if ($insert) {
 				$session->setFlashdata(
 					'message',
@@ -169,17 +169,17 @@ class User extends BaseController
 
 		// Auth check
 		if (! $session->get('erp_user_id')) {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 
 		// Check user exists		
 		$user_id = $this->session->get('erp_user_id');
 		$arr = array("PP_ID" => $user_id);
 		$userExists = $this->crudModel
-			->select('users',  $arr, 'PP_ID', 'ASC');
+			->select('pp_users_master',  $arr, 'PP_ID', 'ASC');
 
 		if (! $userExists) {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 
 		if ($this->session->get('erp_user_id')) {
@@ -208,7 +208,7 @@ class User extends BaseController
 			echo view('user/edit_user_view');
 			echo view('footer');
 		} else {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 	}
 
@@ -218,7 +218,7 @@ class User extends BaseController
 
 		// Auth check
 		if (! $session->get('erp_user_id')) {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 
 		$rules = [
@@ -231,34 +231,38 @@ class User extends BaseController
 			$result['validation'] = $this->validator;
 		} else {
 
-			$authorities = $this->request->getPost('authorities') ?? [];
+			$authorities = $this->request->getPost('authorization') ?? [];
 			$authorities = implode(',', $authorities);
 
 			$subMenuAuth = $this->request->getPost('sub_auth_control');
-			$subMenuAuth = $subMenuAuth ? json_encode($subMenuAuth) : '';
+			$subMenuAuth = is_array($subMenuAuth)
+				? json_encode($subMenuAuth, JSON_UNESCAPED_UNICODE)
+				: json_encode([]);
 
 			$data = [
-				'name'          => $this->request->getPost('name'),
-				'authorities'   => $authorities,
-				'contact_no'    => $this->request->getPost('contact_no'),
-				'email'         => $this->request->getPost('email'),
-				'sub_menu_auth' => $subMenuAuth,
-				'status'        => $this->request->getPost('status'),
-				'role'          => $this->request->getPost('role')
+				'NAME'          => $this->request->getPost('name'),
+				'AUTHORIZATION' => $authorities,
+				'CONTACT_NO'    => $this->request->getPost('contact_no'),
+				'EMAIL'         => $this->request->getPost('email'),
+				'SUB_MENU_AUTH' => $subMenuAuth,
+				'STATUS'        => $this->request->getPost('status'),
+				'ROLE'          => $this->request->getPost('role')
 			];
 
 			// XSS-safe output
 			$data = esc($data);
 
 			$condition = array("PP_ID" => $this->request->getPost('user_id'));
-			$update = $this->crudModel->update("pp_users_master", $data, $condition);
+			$update = $this->crudModel->updateData("pp_users_master", $data, $condition);
 			if ($update) {
 				$session->setFlashdata(
 					'message',
 					'<div class="alert alert-success">User Updated</div>'
 				);
 
-				return redirect()->to('user');
+				cache()->delete('menu_'.$PP_ID);
+
+				return redirect()->to('User');
 			}
 		}
 	}
@@ -269,22 +273,23 @@ class User extends BaseController
 
 		// Auth check
 		if (! $session->get('erp_user_id')) {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 
 		// Check user exists		
 		$user_id = $this->session->get('erp_user_id');
 		$arr = array("PP_ID" => $user_id);
 		$userExists = $this->crudModel
-			->select('users',  $arr, 'PP_ID', 'ASC');
+			->select('pp_users_master',  $arr, 'PP_ID', 'ASC');
 
 		if (! $userExists) {
-			return redirect()->to('auth/logout');
+			return redirect()->to('Auth/login');
 		}
 
 		if ($this->session->get('erp_user_id')) {
 			$arr = array("PP_ID" => 1);
-			$result["settings"] = $this->crudModel->select("settings", $arr, "PP_ID", "ASC");
+			$result["settings"] = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
+
 			$user_id = $this->session->get('erp_user_id');
 			$arr = array("PP_ID" => $user_id);
 			$result["user_details"] = $this->crudModel->select("pp_users_master", $arr, "PP_ID", "ASC");
@@ -305,7 +310,7 @@ class User extends BaseController
 			echo view('user/view_user_view');
 			echo view('footer');
 		} else {
-			redirect('auth/logout');
+			redirect('Auth/login');
 		}
 	}
 

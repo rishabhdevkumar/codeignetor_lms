@@ -27,7 +27,7 @@
                 <div class="col-sm-12">
                     <!-- <center><img src="<?php echo base_url() ?>uploads/logo-white.png" class="img-responsive rounded" style=" margin-bottom: 10px !important;"></center> -->
 
-                    <h3>Pakka Limited</h3>
+                    <h3>Planner Portal</h3>
                     </p>
                     <p>
                         <center><?php echo $title; ?></center>

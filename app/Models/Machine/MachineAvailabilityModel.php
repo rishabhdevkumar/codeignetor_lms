@@ -15,7 +15,10 @@ class MachineAvailabilityModel extends Model
         'SAP_NOTIFICATION_NO',
         'TYPE',
         'FROM_DATE',
-        'TO_DATE'
+        'TO_DATE',
+        'UPDATED_BY',
+        'UPDATED_DATE',
+        'PROCESS_DATE_TIME'
     ];
 
     protected $useTimestamps = false;

@@ -159,6 +159,16 @@ class Authorise extends BaseController
 				// Set session
 				$this->session->set('erp_user_id', $response[0]['PP_ID']);
 
+
+				$permissions = json_decode(
+					html_entity_decode($response[0]['SUB_MENU_AUTH']),
+					true
+				);
+
+				$this->session->set([
+					'permissions' => $permissions
+				]);
+
 				// $menuHtml = menu($user['id'], false);
 
 				// $this->session->set_userdata('menu_html', $menuHtml);

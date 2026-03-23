@@ -5,9 +5,9 @@ namespace App\Controllers\ProductionPlanning;
 use App\Controllers\BaseController;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\IndentAllotment\IndentAllotmentModel;
-use App\Models\MasterModels\TransitMaster;
+use App\Models\Customer\CustomerTransitModel;
 use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
-use App\Models\Material_Model;
+use App\Models\Material\MaterialModel;
 use CodeIgniter\Controller;
 
 class AutoAllocationController extends BaseController
@@ -23,9 +23,9 @@ class AutoAllocationController extends BaseController
     {
         $this->planningModel = new PlanningProductionModel();
         $this->indentModel = new IndentAllotmentModel();
-        $this->transitMaster = new TransitMaster();
+        $this->transitMaster = new CustomerTransitModel();
         $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
-        $this->materialModel = new Material_Model();
+        $this->materialModel = new MaterialModel();
         $this->db = \Config\Database::connect();
     }
 

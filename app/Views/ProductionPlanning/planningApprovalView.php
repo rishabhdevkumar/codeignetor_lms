@@ -34,6 +34,20 @@
             margin-bottom: 20px;
         }
 
+        /* Filter */
+        #filterForm label {
+            margin-right: 12px;
+            font-weight: 500;
+        }
+        
+        #filterForm input,
+        #filterForm select {
+            padding: 5px 6px;
+            border: 1px solid #bfbfbf;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
         .compare-wrapper {
             display: flex;
             gap: 15px;
@@ -142,9 +156,10 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>PP ID</th>
+                                <th>Calendar ID</th>
                                 <th>Machine</th>
-                                <th>FG Code</th>
+                                <th>Material Code</th>
+                                <th>Description</th>
                                 <th>Qty</th>
                                 <th>From</th>
                                 <th>To</th>
@@ -154,8 +169,9 @@
                             <?php foreach ($originalPlans as $pp): ?>
                                 <tr data-machine="<?= esc($pp['MACHINE']) ?>">
                                     <td><?= esc($pp['PP_ID']) ?></td>
-                                    <td><?= esc($pp['MACHINE']) ?></td>
+                                    <td><?= esc($pp['MACHINE_TPM_ID']) ?></td>
                                     <td><?= esc($pp['SAP_MR_FG_CODE']) ?></td>
+                                    <td><?= esc($pp['DESCRIPTION']) ?></td>
                                     <td><?= esc($pp['QTY_MT']) ?></td>
                                     <td><?= esc($pp['FROM_DATE_TIME']) ?></td>
                                     <td><?= esc($pp['TO_DATE_TIME']) ?></td>
@@ -174,9 +190,10 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Planning calendar ID</th>
+                                <th>Calendar ID</th>
                                 <th>Machine</th>
-                                <th>FG Code</th>
+                                <th>Material Code</th>
+                                <th>Description</th>
                                 <th>Qty</th>
                                 <th>From</th>
                                 <th>To</th>
@@ -193,8 +210,9 @@
                                 ?>
                                 <tr data-id="<?= esc($rp['PLANNING_CAL_ID']) ?>" data-approval-id="<?= esc($rp['PP_ID']) ?>" data-machine="<?= esc($rp['MACHINE']) ?>">
                                     <td><?= esc($rp['PLANNING_CAL_ID']) ?></td>
-                                    <td><?= esc($rp['MACHINE']) ?></td>
+                                    <td><?= esc($rp['MACHINE_TPM_ID']) ?></td>
                                     <td><?= esc($rp['SAP_MR_FG_CODE']) ?></td>
+                                    <td><?= esc($rp['DESCRIPTION']) ?></td>
                                     <td class="<?= ($orig && $orig['QTY_MT'] != $rp['QTY_MT']) ? 'changed' : '' ?>">
                                         <?= esc($rp['QTY_MT']) ?>
                                     </td>

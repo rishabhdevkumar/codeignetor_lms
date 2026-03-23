@@ -1,112 +1,141 @@
-function menu($user_id)
-{
-$ci =& get_instance();
-$ci->load->database();
+<?php
 
-// Secure query binding
-$user = $ci->db
-->where('PP_ID', $user_id)
-->get('pp_users_master')
-->row_array();
+use Config\Database;
 
-if (!$user) {
-redirect('auth/logout');
-return;
-}
+if (!function_exists('menu')) {
 
-$authorities = $user['AUTHORIZATION'];
-$menuControl = json_decode($user['SUB_MENU_AUTH'], true);
+    function menu($user_id)
+    {
+        helper('url');
 
-if (empty($authorities)) {
-return;
-}
+        /*
+    |-----------------------------
+    | Check Cache
+    |-----------------------------
+    */
 
-$subMenuAuth = '0';
-if (is_array($menuControl) && !empty($menuControl)) {
-$subMenuAuth = implode(",", array_keys($menuControl));
-}
+        // $cache = cache();
+        // $cache_key = 'menu_' . $user_id;
 
-// Get main menus
-$menus = $ci->db
-->where_in('ORDER_ID', explode(',', $authorities))
-->order_by('ORDER_ID', 'ASC')
-->get('MENUS')
-->result_array();
+        // if ($menu = $cache->get($cache_key)) {
+        //     return $menu;
+        // }
 
-if (!$menus) {
-return;
-}
+        $db = Database::connect();
 
-$menu_tree = '';
+        /*
+    |-----------------------------
+    | USER PERMISSIONS
+    |-----------------------------
+    */
+        $user = $db->table('pp_users_master')
+            ->select('AUTHORIZATION, SUB_MENU_AUTH')
+            ->where('PP_ID', $user_id)
+            ->get()
+            ->getRowArray();
 
-foreach ($menus as $menu) {
-
-$subMenus = $ci->db
-->where_in('PP_ID', explode(',', $subMenuAuth))
-->where('ORDER_ID', $menu['ORDER_ID'])
-->order_by('ORDER_ID', 'ASC')
-->get('SUB_MENUS')
-->result_array();
-
-if (!$subMenus) continue;
-
-$menu_tree .= '<li>
-    <a href="#"><i class=""></i>'.$menu["MENU_NAME"].'<span class="fa arrow"></span></a>
-    <ul class="nav collapse">';
-
-        $grouped = [];
-
-        foreach ($subMenus as $item) {
-        $grouped[$item['SUB_MENU1']][$item['SUB_MENU2']][] = [
-        'SUB_MENU3' => $item['SUB_MENU3'],
-        'CONTROLLER'=> $item['CONTROLLER']
-        ];
+        if (!$user) {
+            return '';
         }
 
-        foreach ($grouped as $sm1 => $level2) {
+        $authorities = array_filter(explode(',', $user['AUTHORIZATION']));
 
-        $menu_tree .= '<li>
-            <a href="#">'.$sm1.'<span class="fa arrow"></span></a>
-            <ul class="nav collapse" style="background-color:#212d38">';
+        $menu_control = json_decode(html_entity_decode($user['SUB_MENU_AUTH']), true);
 
-                foreach ($level2 as $sm2 => $level3) {
+        $submenu_ids = is_array($menu_control) ? array_keys($menu_control) : [0];
 
-                if (count($level3) == 1 && empty($level3[0]['SUB_MENU3'])) {
+        /*
+    |-----------------------------
+    | MAIN MENUS
+    |-----------------------------
+    */
+        $menus = $db->table('pp_menu_master')
+            ->whereIn('ORDER_ID', $authorities)
+            ->orderBy('ORDER_ID', 'ASC')
+            ->get()
+            ->getResultArray();
 
-                $url = base_url($level3[0]['CONTROLLER'] ?: 'home');
+        /*
+    |-----------------------------
+    | SUB MENUS
+    |-----------------------------
+    */
+        $submenus = $db->table('pp_submenu_master')
+            ->whereIn('PP_ID', $submenu_ids)
+            ->orderBy('ORDER_ID', 'ASC')
+            ->get()
+            ->getResultArray();
 
-                $menu_tree .= '<li>
-                    <a style="color:#b0cfc1;" href="'.$url.'">'.$sm2.'</a>
-                </li>';
+        /*
+    |-----------------------------
+    | GROUP BY ORDER_ID
+    |-----------------------------
+    */
+        $group = [];
 
-                } else {
-
-                $menu_tree .= '<li>
-                    <a href="#">'.$sm2.'<span class="fa arrow"></span></a>
-                    <ul class="nav nav-fourth-level collapse" style="background-color:#1d262e">';
-
-                        foreach ($level3 as $v3) {
-
-                        $url = base_url($v3['CONTROLLER'] ?: 'home');
-                        $label = $v3['SUB_MENU3'] ?: $sm2;
-
-                        $menu_tree .= '<li>
-                            <a style="color:#b0cfc1;" href="'.$url.'">'.$label.'</a>
-                        </li>';
-                        }
-
-                        $menu_tree .= '</ul>
-                </li>';
-                }
-                }
-
-                $menu_tree .= '</ul>
-        </li>';
+        foreach ($submenus as $sm) {
+            $group[$sm['ORDER_ID']][] = $sm;
         }
 
-        $menu_tree .= '</ul>
-</li>';
-}
+        $html = '';
 
-echo $menu_tree;
+        foreach ($menus as $menu) {
+
+            $menu_id   = $menu['ORDER_ID'];
+            $menu_name = esc($menu['MENU_NAME']);
+
+            $menu_subs = $group[$menu_id] ?? [];
+
+            /*
+        |-----------------------------
+        | SINGLE SUBMENU
+        |-----------------------------
+        */
+            if (count($menu_subs) == 1) {
+
+                $route = $menu_subs[0]['ROUTES'];
+
+                $html .= '
+            <li class="nav-item mt-2">
+                <a class="nav-link" href="' . base_url($route) . '">
+                    ' . $menu_name . '
+                </a>
+            </li>';
+            } else {
+
+                /*
+            |-----------------------------
+            | DROPDOWN MENU
+            |-----------------------------
+            */
+
+                $html .= '
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    ' . $menu_name . '
+                </a>
+                <ul class="dropdown-content">';
+
+                foreach ($menu_subs as $sub) {
+
+                    $title = $sub['SUB_MENU2'];
+                    $url   = base_url($sub['ROUTES']);
+
+                    $html .= '
+                <li>
+                    <a class="dropdown-item" href="' . $url . '">
+                        ' . esc($title) . '
+                    </a>
+                </li>';
+                }
+
+                $html .= '</ul></li>';
+            }
+        }
+
+        // SAVE CACHE
+        // $cache->save($cache_key, $html, 3600);
+
+        return $html;
+    }
 }

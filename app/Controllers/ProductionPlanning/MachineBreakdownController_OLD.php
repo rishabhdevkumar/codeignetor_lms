@@ -2,30 +2,26 @@
 
 namespace App\Controllers\ProductionPlanning;
 
-use App\Models\Customer\CustomerModel;
 use CodeIgniter\Controller;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\ProductionPlanning\PpCalendarApprovalModel;
 use App\Models\ProductionPlanning\PpMachineAvailabilityModel;
 use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
 use App\Models\Machine\MachineModel;
+use App\Models\IndentAllotment\IndentAllotmentModel;
 use App\Models\Customer\CustomerTransitModel;
 use App\Models\Material\MaterialModel;
-use App\Models\OrderGeneration\IndentModel;
-use App\Models\IndentAllotment\IndentAllotmentModel;
 
 class MachineBreakdownController extends Controller
 {
     protected $planningModel;
     protected $approvalModel;
     protected $availabilityModel;
+    protected $planningCalhistoryModel;
     protected $machineMasterModel;
     protected $indentAllotment;
-    protected $planningCalhistoryModel;
     protected $materialModel;
     protected $transitMaster;
-    protected $indentModel;
-    protected $ppCustomerMaster;
     protected $db;
 
     public function __construct()
@@ -33,19 +29,21 @@ class MachineBreakdownController extends Controller
         $this->planningModel = new PlanningProductionModel();
         $this->approvalModel = new PpCalendarApprovalModel();
         $this->availabilityModel = new PpMachineAvailabilityModel();
+        $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
         $this->machineMasterModel = new MachineModel();
         $this->indentAllotment = new IndentAllotmentModel();
-        $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
-        $this->materialModel = new MaterialModel();
         $this->transitMaster = new CustomerTransitModel();
-        $this->indentModel = new IndentModel();
-        $this->ppCustomerMaster = new CustomerModel();
+        $this->materialModel = new MaterialModel();
         $this->db = \Config\Database::connect();
     }
 
     public function process()
     {
+
+        $currentDateTime = date('Y-m-d H:i:s');
+
         $breakdowns = $this->availabilityModel
+            ->where('FROM_DATE >', $currentDateTime)
             ->groupStart()
             ->where('PROCESS_DATE_TIME', '0000-00-00 00:00:00')
             ->orWhere('PROCESS_DATE_TIME IS NULL')
@@ -72,8 +70,6 @@ class MachineBreakdownController extends Controller
                     ->where('MACHINE_TPM_ID', $bd['MACHINE_TPM_ID'])
                     ->first();
 
-                $machine_pin_code = $machine['PIN_CODE'];
-
                 if (!$machine) {
                     continue;
                 }
@@ -91,19 +87,25 @@ class MachineBreakdownController extends Controller
                 // LIVE PLANNING CALENDARS
                 $plannings = $this->planningModel
                     ->where('MACHINE', $machineId)
-                    ->where('TO_DATE_TIME >', $bdFrom->format('Y-m-d H:i:s'))
+                    ->where('FROM_DATE_TIME <', $bdTo->format('Y-m-d H:i:s'))
+                    // ->where('TO_DATE_TIME >', $bdFrom->format('Y-m-d H:i:s'))
                     ->orderBy('FROM_DATE_TIME', 'ASC')
                     ->findAll();
 
-                $shiftSeconds = $bdSeconds;
-                $previousEnd = null;
+
 
                 foreach ($plannings as $plan) {
-
                     $planFrom = new \DateTime($plan['FROM_DATE_TIME']);
                     $planTo = new \DateTime($plan['TO_DATE_TIME']);
 
-                     $oldPlanning = $this->planningModel
+                    $overlapStart = ($planFrom > $bdFrom) ? $planFrom : $bdFrom;
+                    $overlapEnd   = ($planTo < $bdTo) ? $planTo : $bdTo;
+
+                    if ($overlapEnd <= $overlapStart) {
+                        continue; // no impact
+                    }
+
+                    $oldPlanning = $this->planningModel
                         ->where('PP_ID', $plan['PP_ID'])
                         ->first();
 
@@ -111,50 +113,31 @@ class MachineBreakdownController extends Controller
                     $oldPlanning['REMARKS'] = 'Downtime';
                     $this->planningCalhistoryModel->insert($oldPlanning);
 
-                    $durationSeconds = $planTo->getTimestamp() - $planFrom->getTimestamp();
+                    $overlapSeconds = $overlapEnd->getTimestamp() - $overlapStart->getTimestamp();
 
-                    // If plan starts before breakdown and overlaps
-                    if ($planTo > $bdFrom && $planFrom < $bdTo) {
+                    // ---- FROM DATE LOGIC ----
+                    $newFrom = clone $planFrom;
 
-                        $overlapStart = max($planFrom->getTimestamp(), $bdFrom->getTimestamp());
-                        $overlapEnd = min($planTo->getTimestamp(), $bdTo->getTimestamp());
-
-                        $shiftSeconds = $overlapEnd - $overlapStart;
-
-                        if ($shiftSeconds > 0) {
-                            $planTo->modify("+{$shiftSeconds} seconds");
-
-                            if ($planFrom >= $bdFrom) {
-                                $planFrom->modify("+{$shiftSeconds} seconds");
-                            }
-                        }
-                    } elseif ($planFrom >= $bdTo) {
-
-                        $bdDuration = $bdTo->getTimestamp() - $bdFrom->getTimestamp();
-
-                        $planFrom->modify("+{$bdDuration} seconds");
-                        $planTo->modify("+{$bdDuration} seconds");
+                    // shift FROM only if planning has not started
+                    if ($planFrom >= $bdFrom) {
+                        $newFrom->modify("+{$overlapSeconds} seconds");
                     }
 
-                    // Maintain continuity (important!)
-                    if ($previousEnd && $planFrom < $previousEnd) {
-                        $planFrom = clone $previousEnd;
-                        $planTo = (clone $planFrom)->modify("+{$durationSeconds} seconds");
-                    }
+                    // ---- TO DATE ALWAYS EXTENDS ----
+                    $newTo = clone $planTo;
+                    $newTo->modify("+{$overlapSeconds} seconds");
 
                     $this->planningModel->update($plan['PP_ID'], [
-                        'FROM_DATE_TIME' => $planFrom->format('Y-m-d H:i:s'),
-                        'TO_DATE_TIME' => $planTo->format('Y-m-d H:i:s')
+                        'FROM_DATE_TIME' => $newFrom->format('Y-m-d H:i:s'),
+                        'TO_DATE_TIME' => $newTo->format('Y-m-d H:i:s')
                     ]);
 
+                    // recalc indents using UPDATED planning window
                     $updatedPlanning = $plan;
-                    $updatedPlanning['FROM_DATE_TIME'] = $planFrom->format('Y-m-d H:i:s');
-                    $updatedPlanning['TO_DATE_TIME'] = $planTo->format('Y-m-d H:i:s');
-                    $updatedPlanning['MACHINE_PINCODE'] = $machine_pin_code;
+                    $updatedPlanning['FROM_DATE_TIME'] = $newFrom->format('Y-m-d H:i:s');
+                    $updatedPlanning['TO_DATE_TIME'] = $newTo->format('Y-m-d H:i:s');
 
                     $this->recalculateIndentAllotments($plan['PP_ID'], $updatedPlanning);
-
-                    $previousEnd = clone $planTo;
                 }
 
 
@@ -192,7 +175,6 @@ class MachineBreakdownController extends Controller
                 'status' => true,
                 'message' => 'Machine breakdown impact processed successfully'
             ]);
-
         } catch (\Throwable $e) {
 
             $this->db->transRollback();
@@ -209,7 +191,7 @@ class MachineBreakdownController extends Controller
 
         $allotments = $this->indentAllotment
             ->where('PLANNING_CAL_ID', $planningCalId)
-            ->orderBy('INDENT_LINE_ITEM', 'ASC')
+            ->orderBy('PP_ID', 'ASC')
             ->findAll();
 
         if (empty($allotments)) {
@@ -231,11 +213,16 @@ class MachineBreakdownController extends Controller
             $oldFrom = new \DateTime($allotment['FROM_DATE']);
             $oldTo = new \DateTime($allotment['TO_DATE']);
 
-            $durationSeconds = $oldTo->getTimestamp() - $oldFrom->getTimestamp();
+            // $durationSeconds = $oldTo->getTimestamp() - $oldFrom->getTimestamp();
 
-            if ($durationSeconds <= 0) {
-                $durationSeconds = $fallbackSeconds;
-            }
+            $durationSeconds = max(
+                $oldTo->getTimestamp() - $oldFrom->getTimestamp(),
+                60
+            );
+
+            // if ($durationSeconds <= 0) {
+            //     $durationSeconds = $fallbackSeconds;
+            // }
 
             $fromDate = clone $currentStart;
 
@@ -252,7 +239,6 @@ class MachineBreakdownController extends Controller
             $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
             $doorStepDate = clone $finishingDate;
-
             if ($transitDays > 0) {
                 $doorStepDate->add(new \DateInterval("P{$transitDays}D"));
             }
@@ -264,7 +250,6 @@ class MachineBreakdownController extends Controller
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
 
-                
                 'OLD_FROM_DATE' => $allotment['FROM_DATE'],
                 'OLD_TO_DATE' => $allotment['TO_DATE'],
                 'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],

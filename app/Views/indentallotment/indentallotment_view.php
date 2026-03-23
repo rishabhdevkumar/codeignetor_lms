@@ -11,6 +11,18 @@
   			color: #721c24;
   			font-weight: 600;
   		}
+
+  		#date {
+  			min-width: 130px;
+  			width: 130px;
+  			white-space: nowrap;
+  		}
+
+  		#remarks {
+  			min-width: 150px;
+  			width: 150px;
+  			white-space: nowrap;
+  		}
   	</style>
   </head>
   <div class="card mt-4">
@@ -26,6 +38,7 @@
   					<table id="tbl" class="table table-bordered table-hover dataTables-example">
   						<thead class="text-center">
   							<tr>
+  								<th hidden>ID</th>
   								<th style="background-color:#efd6bb; color:#000">Indent No</th>
   								<th style="background-color:#efd6bb; color:#000">Line Item</th>
   								<th style="background-color:#efd6bb; color:#000">Cal ID</th>
@@ -33,15 +46,15 @@
   								<th style="background-color:#efd6bb; color:#000">Finish Material</th>
   								<th style="background-color:#efd6bb; color:#000">MR Material</th>
   								<th style="background-color:#efd6bb; color:#000">Quantity</th>
-  								<th style="background-color:#efd6bb; color:#000">From Date</th>
-  								<th style="background-color:#efd6bb; color:#000">To Date</th>
-  								<th style="background-color:#efd6bb; color:#000">Finishing Date</th>
-  								<th style="background-color:#efd6bb; color:#000">Old Finishing Date</th>
-  								<th style="background-color:#efd6bb; color:#000">Delivery Date</th>
+  								<th id="date" style="background-color:#efd6bb; color:#000">From Date</th>
+  								<th id="date" style="background-color:#efd6bb; color:#000">To Date</th>
+  								<th id="date" style="background-color:#efd6bb; color:#000">Finishing Date</th>
+  								<th id="date" style="background-color:#efd6bb; color:#000">Commitment Date</th>
+  								<th id="date" style="background-color:#efd6bb; color:#000">Old Commitment Date</th>
   								<th style="background-color:#efd6bb; color:#000">Customer Type</th>
   								<th style="background-color:#efd6bb; color:#000">Sale Order</th>
-  								<th style="background-color:#efd6bb; color:#000">SAP Remarks</th>
-  								<th style="background-color:#efd6bb; color:#000">Indent Remarks</th>
+  								<th id="remarks" style="background-color:#efd6bb; color:#000">SAP Remarks</th>
+  								<th id="remarks" style="background-color:#efd6bb; color:#000">Indent Remarks</th>
   							</tr>
   						</thead>
   						<tbody id="tbody">
@@ -50,8 +63,8 @@
 								if ($indentallotment != false) {
 									foreach ($indentallotment as $k => $v) {
 
-										$finishingDate = $indentallotment[$k]['FINISHING_DATE'];
-										$oldfinishingDate = $indentallotment[$k]['OLD_FINISHING_DATE'] ?? null;
+										$finishingDate = $indentallotment[$k]['DOOR_STEP_DEL_DATE'];
+										$oldfinishingDate = $indentallotment[$k]['OLD_DOOR_STEP_DEL_DATE'] ?? null;
 
 										// Check if OLD_FROM_DATE is initial
 										$isOldInitial = empty($oldfinishingDate)
@@ -72,6 +85,7 @@
 										}
 								?>
   									<tr class="gradeX">
+										<td hidden><?php echo $indentallotment[$k]["PP_ID"]; ?></td>
   										<td><?php echo $indentallotment[$k]["INDENT_NO"]; ?></td>
   										<td><?php echo $indentallotment[$k]["INDENT_LINE_ITEM"]; ?></td>
   										<td><?php echo $indentallotment[$k]["PLANNING_CAL_ID"]; ?></td>
@@ -81,9 +95,9 @@
   										<td><?php echo $indentallotment[$k]["QUANTITY"]; ?></td>
   										<td><?php echo $indentallotment[$k]["FROM_DATE"]; ?></td>
   										<td><?php echo $indentallotment[$k]["TO_DATE"]; ?></td>
-  										<td class="<?= $class ?>"><?php echo $indentallotment[$k]["FINISHING_DATE"]; ?></td>
+  										<td><?php echo $indentallotment[$k]["FINISHING_DATE"]; ?></td>
+  										<td class="<?= $class ?>"><?php echo $indentallotment[$k]["DOOR_STEP_DEL_DATE"]; ?></td>
   										<td><?= $isOldInitial ? '-' : $oldfinishingDate ?></td>
-										<td><?php echo $indentallotment[$k]["DOOR_STEP_DEL_DATE"]; ?></td>
   										<td><?php echo $indentallotment[$k]["CUSTOMER_TYPE"]; ?></td>
   										<td><?php echo $indentallotment[$k]["SAP_ORDER_NO"]; ?></td>
   										<td><?php echo $indentallotment[$k]["SAP_REMARKS"]; ?></td>
@@ -107,42 +121,45 @@
   <script>
   	$(document).ready(function() {
 
+
+
   		$('.dataTables-example').
   		DataTable({
   			dom: '<"html5buttons"B>lTfgitp',
+			order: [[0, 'desc']],
   			buttons: [{
   					extend: 'copy',
   					title: 'Material',
   					exportOptions: {
-  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   					}
   				},
   				{
   					extend: 'csv',
   					title: 'Material',
   					exportOptions: {
-  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   					}
   				},
   				{
   					extend: 'excel',
   					title: 'Material',
   					exportOptions: {
-  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   					}
   				},
   				{
   					extend: 'pdf',
   					title: 'Material',
   					exportOptions: {
-  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   					}
   				},
   				{
   					extend: 'print',
   					title: 'Material',
   					exportOptions: {
-  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   					},
 
   					customize: function(win) {
@@ -156,7 +173,6 @@
   					}
   				}
   			]
-
   		});
 
 

@@ -15,6 +15,7 @@ class MRMaterialModel extends Model
 	   'SAP_PLANT',
 	   'GRADE',
 	   'GSM',
+       'MATERIAL_TYPE',
        'DESCRIPTION', 
        'DELIVERY_PLANT_YN',
        'MACHINE_OUTPUT_KG_HR'

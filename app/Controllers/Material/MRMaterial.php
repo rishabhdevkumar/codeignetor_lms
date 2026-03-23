@@ -63,6 +63,7 @@ class MRMaterial extends Controller
 			'SAP_PLANT'            => trim($this->request->getPost('sap_plant')),
 			'GRADE'                => trim($this->request->getPost('grade')),
 			'GSM'                  => $this->request->getPost('gsm'),
+			'MATERIAL_TYPE'        => $this->request->getPost('material_type'),
 			'DESCRIPTION'          => $this->request->getPost('description'),
 			'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
 			'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')
@@ -117,6 +118,7 @@ class MRMaterial extends Controller
 			'SAP_PLANT'            => trim($this->request->getPost('sap_plant')),
 			'GRADE'                => trim($this->request->getPost('grade')),
 			'GSM'                  => $this->request->getPost('gsm'),
+			'MATERIAL_TYPE'        => $this->request->getPost('material_type'),
 			'DESCRIPTION'          => $this->request->getPost('description'),
 			'DELIVERY_PLANT_YN'    => $this->request->getPost('delivery_plant'),
 			'MACHINE_OUTPUT_KG_HR' => $this->request->getPost('machine_output')

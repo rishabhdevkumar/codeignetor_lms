@@ -1,10 +1,10 @@
 <?php
-$customer_code       = old('CUSTOMER_CODE', $customer['CUSTOMER_CODE']);
-$customer_type        = old('CUSTOMER_TYPE', $customer['CUSTOMER_TYPE']);
-$country             = old('COUNTRY', $customer['COUNTRY']);
-$state               = old('STATE', $customer['STATE']);
-$pincode             = old('PIN_CODE', $customer['PIN_CODE']);
-$customer_id         = old('PP_ID', $customer['PP_ID']);
+$customer_code       = old('cust_no', $customer['cust_no']);
+$customer_type        = old('customer_type', $customer['customer_type']);
+$country             = old('country', $customer['country']);
+$state               = old('state', $customer['state']);
+$pincode             = old('postal_code', $customer['postal_code']);
+$customer_id         = old('id', $customer['id']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -31,7 +31,7 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 										<div class="col-sm-6 col-xs-12">
 											<label>Customer Code</label>
 											<input type="text" class="form-control" name="customer_code" id="customer_code"
-											 maxlength="20" value="<?php echo $customer_code; ?>" required>
+											 maxlength="20" value="<?php echo $customer_code; ?>" required readonly>
 											<div class="error"></div>
 										</div>
 
@@ -64,7 +64,7 @@ $customer_id         = old('PP_ID', $customer['PP_ID']);
 										<div class="col-sm-6 col-xs-12">
 											<label>State</label>
 											<input type="text" class="form-control" name="state" id="state" 
-											value="<?php echo $state; ?>" required>
+											value="<?php echo $state; ?>" >
 											<div class="error"></div>
 										</div>
 

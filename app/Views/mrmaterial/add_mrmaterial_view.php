@@ -1,4 +1,3 @@
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -25,13 +24,13 @@
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">MR Material Code<em>*</em></label>
 											<input type="text" class="form-control" name="material_code" id="material_code"
-											 maxlength="20" value="<?php echo set_value('material_code'); ?>" required>
+												maxlength="20" value="<?php echo set_value('material_code'); ?>" required>
 											<div class="error"></div>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">SAP Plant<em>*</em></label>
-											<input type="text" class="form-control" name="sap_plant" id="sap_plant" 
-											maxlength="5" value="<?php echo set_value('sap_plant'); ?>" required>
+											<input type="text" class="form-control" name="sap_plant" id="sap_plant"
+												maxlength="5" value="<?php echo set_value('sap_plant'); ?>" required>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -46,13 +45,13 @@
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">Grade</label>
 											<input type="text" class="form-control" name="grade" id="grade"
-											 maxlength="5" value="<?php echo set_value('grade'); ?>" required>
+												maxlength="5" value="<?php echo set_value('grade'); ?>" required>
 											<div class="error"></div>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">GSM</label>
 											<input type="text" class="form-control" name="gsm" id="gsm"
-											 maxlength="5" value="<?php echo set_value('gsm'); ?>" required>
+												maxlength="5" value="<?php echo set_value('gsm'); ?>" required>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -64,6 +63,16 @@
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
+											<label style="color: black;">Material Type</label>
+											<select class="form-control" name="material_type" id="material_type" required>
+												<option value="">Select</option>
+												<option value="POSTER">POSTER</option>
+												<option value="KRAFT">KRAFT</option>
+											</select>
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-6 col-xs-12">
 											<label style="color: black;">Delivery Plant</label>
 											<select class="form-control" name="delivery_plant" id="delivery_plant" required>
 												<option value="">Select</option>
@@ -73,24 +82,27 @@
 											<div class="error"></div>
 										</div>
 
-										<div class="col-sm-6 col-xs-12">
-											<label style="color: black;">Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" required
-											id="machine_output" value="<?php echo set_value('machine_output'); ?>">
-											<div class="error"></div>
-										</div>
 
 									</div>
 								</div>
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
-											<label style="color: black;">Description</label>
-											<textarea class="form-control" name="description" id="description" required
-											style="resize: none"><?php echo set_value('description'); ?></textarea>
+
+										<div class="col-sm-6 col-xs-12">
+											<label style="color: black;">Machine Output (KG/hr)</label>
+											<input type="number" class="form-control" name="machine_output" required
+												id="machine_output" value="<?php echo set_value('machine_output'); ?>">
 											<div class="error"></div>
 										</div>
+
+										<div class="col-sm-6 col-xs-12">
+											<label style="color: black;">Description</label>
+											<textarea class="form-control" name="description" id="description" required
+												style="resize: none"><?php echo set_value('description'); ?></textarea>
+											<div class="error"></div>
+										</div>
+
 									</div>
 								</div>
 

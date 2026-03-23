@@ -4,6 +4,7 @@ $sap_plant      = old('SAP_PLANT', $material['SAP_PLANT']);
 $grade          = old('GRADE', $material['GRADE']);
 $description    = old('DESCRIPTION', $material['DESCRIPTION']);
 $gsm            = old('GSM', $material['GSM']);
+$material_type  = old('MATERIAL_TYPE', $material['MATERIAL_TYPE']);
 $delivery_plant = old('DELIVERY_PLANT_YN', $material['DELIVERY_PLANT_YN']);
 $machine_output = old('MACHINE_OUTPUT_KG_HR', $material['MACHINE_OUTPUT_KG_HR']);
 $material_id    = old('PP_ID', $material['PP_ID']);
@@ -32,13 +33,13 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
 											<label>Material Code</label>
-											<input type="text" id="material_code" name="material_code" class="form-control" 
-											value="<?php echo $material_code; ?>" readonly>
+											<input type="text" id="material_code" name="material_code" class="form-control"
+												value="<?php echo $material_code; ?>" readonly>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label>SAP Plant</label>
 											<input type="text" class="form-control" name="sap_plant" id="sap_plant" maxlength="5"
-											 autocomplete="off" value="<?php echo $sap_plant; ?>" readonly>
+												autocomplete="off" value="<?php echo $sap_plant; ?>" readonly>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -50,14 +51,14 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 									<div class="row">
 										<div class="col-sm-6 col-xs-12">
 											<label>GSM</label>
-											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5" 
-											autocomplete="off" value="<?php echo $gsm; ?>" readonly>
+											<input type="text" class="form-control" name="gsm" id="gsm" maxlength="5"
+												autocomplete="off" value="<?php echo $gsm; ?>" readonly>
 											<div class="error"></div>
 										</div>
 										<div class="col-sm-6 col-xs-12">
 											<label>Grade</label>
-											<input type="text" class="form-control" name="grade" id="grade" maxlength="5" 
-											autocomplete="off" value="<?php echo $grade; ?>" readonly>
+											<input type="text" class="form-control" name="grade" id="grade" maxlength="5"
+												autocomplete="off" value="<?php echo $grade; ?>" readonly>
 											<div class="error"></div>
 										</div>
 									</div>
@@ -69,19 +70,22 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 									<div class="row">
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Delivery Plant</label>
-											<select class="form-control" name="delivery_plant" id="delivery_plant" readonly>
-												<option></option>
-												<option <?php if($delivery_plant=="Y") echo "selected";?> value="Y">YES</option>
-												<option <?php if($delivery_plant=="N") echo "selected";?> value="N">NO</option>
+											<label style="color: black;">Material Type</label>
+											<select class="form-control" name="material_type" id="material_type" readonly>
+												<option value="">Select</option>
+												<option <?php if ($material_type == "POSTER") echo "selected"; ?> value="POSTER">POSTER</option>
+												<option <?php if ($material_type == "KRAFT") echo "selected"; ?> value="KRAFT">KRAFT</option>
 											</select>
 											<div class="error"></div>
 										</div>
 
 										<div class="col-sm-6 col-xs-12">
-											<label>Machine Output (KG/hr)</label>
-											<input type="number" class="form-control" name="machine_output" id="machine_output"
-											 value="<?php echo $machine_output; ?>" readonly>
+											<label>Delivery Plant</label>
+											<select class="form-control" name="delivery_plant" id="delivery_plant" readonly>
+												<option></option>
+												<option <?php if ($delivery_plant == "Y") echo "selected"; ?> value="Y">YES</option>
+												<option <?php if ($delivery_plant == "N") echo "selected"; ?> value="N">NO</option>
+											</select>
 											<div class="error"></div>
 										</div>
 
@@ -92,10 +96,18 @@ $material_id    = old('PP_ID', $material['PP_ID']);
 
 								<div class="form-group">
 									<div class="row">
-										<div class="col-sm-12 col-xs-12">
+
+										<div class="col-sm-6 col-xs-12">
+											<label>Machine Output (KG/hr)</label>
+											<input type="number" class="form-control" name="machine_output" id="machine_output"
+												value="<?php echo $machine_output; ?>" readonly>
+											<div class="error"></div>
+										</div>
+
+										<div class="col-sm-6 col-xs-12">
 											<label>Description</label>
 											<textarea class="form-control" style="resize:none;"
-											name="description" id="description" readonly><?php echo $description; ?></textarea>
+												name="description" id="description" readonly><?php echo $description; ?></textarea>
 											<div class="error"></div>
 										</div>
 									</div>

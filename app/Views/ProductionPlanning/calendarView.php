@@ -113,6 +113,12 @@
             background-color: #FCE7C2 !important;
         }
 
+        #date {
+  			min-width: 110px;
+  			width: 110px;
+  			white-space: nowrap;
+  		}
+
         .prepone {
             background-color: #d4edda !important;
             color: #155724;
@@ -221,8 +227,8 @@
                             <th>Grade</th>
                             <th>GSM</th>
                             <th>Qty (MT)</th>
-                            <th>Start date</th>
-                            <th>End Date</th>
+                            <th id="date">Start date</th>
+                            <th id="date">End Date</th>
                             <th>Utilised</th>
                             <th>Balance</th>
                             <th>KC1</th>
@@ -358,8 +364,10 @@
             let table = $('#productionTable').DataTable({
                 pageLength: 50,
                 order: [
-                    [6, 'desc']
+                    [0, 'desc']
                 ],
+                // scrollX: true,
+                // autoWidth: false,
                 responsive: true,
 
                 dom: "<'row mb-2'<'col-md-6'B><'col-md-6 text-end'l>>" +

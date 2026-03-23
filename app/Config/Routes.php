@@ -51,6 +51,8 @@ $routes->get('/Auth/login', 'Authorise::login');
 $routes->post('/Auth/Attemptlogin', 'Authorise::attemptLogin');
 $routes->get('/Auth/logout', 'Authorise::logout');
 
+$routes->get('unauthorized', 'ErrorController::unauthorized');
+
 $routes->get('/User', 'User\User::index');
 $routes->get('/User/add', 'User\User::add');
 $routes->post('/User/insertData', 'User\User::insertData');
@@ -58,12 +60,16 @@ $routes->get('/User/edit/(:num)', 'User\User::edit/$1');
 $routes->post('/User/updateData/(:num)', 'User\User::updateData/$1');
 $routes->get('/User/view/(:num)', 'User\User::view/$1');
 
+// $routes->group('', ['filter' => 'permission'], function($routes){
+
 $routes->get('/Material', 'Material\Material::index');
 $routes->get('/Material/add', 'Material\Material::add');
 $routes->post('/Material/insertData', 'Material\Material::insertData');
 $routes->get('/Material/edit/(:num)', 'Material\Material::edit/$1');
 $routes->post('/Material/updateData/(:num)', 'Material\Material::updateData/$1');
 $routes->get('/Material/view/(:num)', 'Material\Material::view/$1');
+
+// });
 
 $routes->post('/api/material-update', 'Material\MaterialMasterApi::UpdateMaterialMaster');
 
@@ -150,6 +156,10 @@ $routes->get('production-planning/process-machine-breakdown', 'ProductionPlannin
 $routes->get('IndentAllotmentView', 'IndentAllotment\IndentAllotment::index');
 
 $routes->post('/api/ScheduleDateApi', 'IndentAllotment\ScheduleDateApi::getScheduleDetails');
+
+$routes->post('api/dealer-target-dispatch', 'DealerTargetDispatchApi::UpdateDealerTarget');
+
+
 
 /*
  * --------------------------------------------------------------------

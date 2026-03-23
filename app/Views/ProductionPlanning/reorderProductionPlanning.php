@@ -226,6 +226,7 @@
                         <th>Version</th>
                         <th>Machine</th>
                         <th>SAP MR FG Code</th>
+                        <th>Description</th>
                         <th>Qty (MT)</th>
                         <th>From Date Time</th>
                         <th>To Date Time</th>
@@ -253,8 +254,9 @@
                             <td>☰</td>
                             <td><?= $item['PP_ID'] ?></td>
                             <td><?= $item['VERSION'] ?></td>
-                            <td><?= $item['MACHINE'] ?></td>
+                            <td><?= $item['MACHINE_TPM_ID'] ?></td>
                             <td><?= $item['SAP_MR_FG_CODE'] ?></td>
+                            <td><?= $item['DESCRIPTION'] ?></td>
                             <td><?= $item['QTY_MT'] ?></td>
                             <td><?= $item['FROM_DATE_TIME'] ?></td>
                             <td><?= $item['TO_DATE_TIME'] ?></td>

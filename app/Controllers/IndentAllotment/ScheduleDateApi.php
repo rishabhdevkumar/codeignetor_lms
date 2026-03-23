@@ -4,9 +4,9 @@ namespace App\Controllers\IndentAllotment;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\ProductionPlanning\PlanningProductionModel;
-use App\Models\MasterModels\PpCustomerMaster;
-use App\Models\Material_Model;
-use App\Models\MRMaterial_Model;
+use App\Models\Customer\CustomerModel;
+use App\Models\Material\MaterialModel;
+use App\Models\Material\MRMaterialModel;
 
 class ScheduleDateApi extends ResourceController
 {
@@ -18,9 +18,9 @@ class ScheduleDateApi extends ResourceController
     public function __construct()
     {
         $this->planningModel = new PlanningProductionModel();
-        $this->ppCustomerMaster = new PpCustomerMaster();
-        $this->materialModel = new Material_Model();
-        $this->mrMaterialModel = new MRMaterial_Model();
+        $this->ppCustomerMaster = new CustomerModel();
+        $this->materialModel = new MaterialModel();
+        $this->mrMaterialModel = new MRMaterialModel();
     }
 
     public function getScheduleDetails()
@@ -56,12 +56,12 @@ class ScheduleDateApi extends ResourceController
         }
 
         $customerType = $this->ppCustomerMaster
-            ->select('CUSTOMER_TYPE')
-            ->where('CUSTOMER_CODE', $customerno)
+            ->select('customer_type')
+            ->where('cust_no', $customerno)
             ->first();
 
-        if (empty($customerType) || ($customerType['CUSTOMER_TYPE'] !== 'KC1' && $customerType['CUSTOMER_TYPE'] !== 'KC2')) {
-            $customerType['CUSTOMER_TYPE'] = 'NKC';
+        if (empty($customerType) || ($customerType['customer_type'] !== 'KC1' && $customerType['customer_type'] !== 'KC2')) {
+            $customerType['customer_type'] = 'NKC';
         }
 
         if (!empty($materialcode && $materialcode !== null)) {
@@ -86,7 +86,7 @@ class ScheduleDateApi extends ResourceController
         $finishmaterialcode = $material['FINISH_MATERIAL_CODE'] ?? null;
         $packagingdays = (int) 5;
         $currentDateTime = date('Y-m-d H:i:s');
-        $customerTypeBalanceQtyField = $customerType['CUSTOMER_TYPE'] . "_BALANCE_QTY_MT";
+        $customerTypeBalanceQtyField = $customerType['customer_type'] . "_BALANCE_QTY_MT";
 
         $materialCodes = array_filter([$mrmaterialcode, $finishmaterialcode]);
 

@@ -33,7 +33,7 @@ class Dashboard extends BaseController
 	public function index()
 	{
 
-		// if ($this->session->get('erp_user_id')) {
+		if ($this->session->get('erp_user_id')) {
 
 		// $arr = array("PP_ID" => 1);
 		// $result["settings"] = $this->crudModel->select("pp_settings", $arr, "PP_ID", "ASC");
@@ -43,8 +43,14 @@ class Dashboard extends BaseController
 		// $arr = array("PP_ID" => $user_id);
 		// $result["user_details"] = $this->crudModel->select("pp_users_master", $arr, "PP_ID", "ASC");
 
-		$tomorrowStart = date('Y-m-d 00:00:00', strtotime('+1 day'));
-		$tomorrowEnd   = date('Y-m-d 23:59:59', strtotime('+1 day'));
+		// $tomorrowStart = date('Y-m-d 00:00:00', strtotime('+1 day'));
+		// $tomorrowEnd   = date('Y-m-d 23:59:59', strtotime('+1 day'));
+
+		// $weekStart = date('Y-m-d 00:00:00', strtotime('monday this week'));
+		// $weekEnd   = date('Y-m-d 23:59:59', strtotime('sunday this week'));
+
+		$startDate = date('Y-m-d 00:00:00', strtotime('+1 day'));
+		$endDate   = date('Y-m-d 23:59:59', strtotime('+7 day'));
 
 		$totalPlanning = $this->planningProductionModel
 			->select("
@@ -52,9 +58,8 @@ class Dashboard extends BaseController
 					SUM(UTILISED_QTY) as totalUtilized,
 					SUM(QTY_MT) as totalScheduled
 				")
-			->where('FROM_DATE_TIME >=', $tomorrowStart)
-			->where('FROM_DATE_TIME <=', $tomorrowEnd)
-			->groupBy('MACHINE')
+			->where('FROM_DATE_TIME >=', $startDate)
+			->where('FROM_DATE_TIME <=', $endDate)
 			->get()
 			->getRow();
 
@@ -92,12 +97,12 @@ class Dashboard extends BaseController
 
 		$result['gradePlanning'] = $this->planningProductionModel
 			->select("
-        m.MACHINE_TPM_ID,
-        mr.GRADE,
-        SUM(pp_production_planning_master.BALANCE_QTY) as totalBalance,
-        SUM(pp_production_planning_master.UTILISED_QTY) as totalUtilized,
-        SUM(pp_production_planning_master.QTY_MT) as totalScheduled
-        ")
+				m.MACHINE_TPM_ID,
+				mr.GRADE,
+				SUM(pp_production_planning_master.BALANCE_QTY) as totalBalance,
+				SUM(pp_production_planning_master.UTILISED_QTY) as totalUtilized,
+				SUM(pp_production_planning_master.QTY_MT) as totalScheduled
+				")
 			->join(
 				'pp_machine_master m',
 				'm.PP_ID = pp_production_planning_master.MACHINE',
@@ -161,8 +166,8 @@ class Dashboard extends BaseController
 		echo view('header', $result);
 		echo view('dashboard/dashboard_view', $result);
 		echo view('footer');
-		// } else {
-		// 	return redirect()->to('Auth/login');
-		// }
+		} else {
+			return redirect()->to('Auth/login');
+		}
 	}
 }

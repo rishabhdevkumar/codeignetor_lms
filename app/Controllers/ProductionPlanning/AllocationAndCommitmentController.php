@@ -3,16 +3,16 @@
 namespace App\Controllers\ProductionPlanning;
 
 use App\Controllers\BaseController;
-use App\Models\MasterModels\FinishStock;
+use App\Models\Material\FinishStockModel;
 use App\Models\OrderGeneration\IndentModel;
 use App\Models\OrderGeneration\IndentDetailsModel;
 use App\Models\IndentAllotment\IndentAllotmentModel;
-use App\Models\MasterModels\PpCustomerMaster;
-use App\Models\MasterModels\TransitMaster;
-use App\Models\Material_Model;
-use App\Models\Machine_Model;
+use App\Models\Customer\CustomerModel;
+use App\Models\Customer\CustomerTransitModel;
+use App\Models\Material\MaterialModel;
+use App\Models\Machine\MachineModel;
 use App\Models\ProductionPlanning\PlanningProductionModel;
-use App\Models\MRMaterial_Model;
+use App\Models\Material\MRMaterialModel;
 
 
 class AllocationAndCommitmentController extends BaseController
@@ -32,14 +32,14 @@ class AllocationAndCommitmentController extends BaseController
     {
         $this->indentModel = new IndentModel();
         $this->indentDetailsModel = new IndentDetailsModel();
-        $this->ppCustomerMaster = new PpCustomerMaster();
-        $this->finishStock = new FinishStock();
-        $this->materialModel = new Material_Model();
-        $this->machineModel = new Machine_Model();
-        $this->transitMaster = new TransitMaster();
+        $this->ppCustomerMaster = new CustomerModel();
+        $this->finishStock = new FinishStockModel();
+        $this->materialModel = new MaterialModel();
+        $this->machineModel = new MachineModel();
+        $this->transitMaster = new CustomerTransitModel();
         $this->indentAllotment = new IndentAllotmentModel();
         $this->planningProductionModel = new PlanningProductionModel();
-        $this->mrMaterialModel = new MRMaterial_Model();
+        $this->mrMaterialModel = new MRMaterialModel();
     }
 
     public function createAllocation()
@@ -70,23 +70,23 @@ class AllocationAndCommitmentController extends BaseController
             $pendingIndents[$key]['order_details'] = $orderDetails;
 
             $customerType = $this->ppCustomerMaster
-                ->select('CUSTOMER_TYPE')
-                ->where('CUSTOMER_CODE', $indent['bill_to_code'])
+                ->select('customer_type')
+                ->where('cust_no', $indent['bill_to_code'])
                 ->first();
 
-            if (empty($customerType) || ($customerType['CUSTOMER_TYPE'] !== 'KC1' && $customerType['CUSTOMER_TYPE'] !== 'KC2')) {
-                $customerType['CUSTOMER_TYPE'] = 'NKC';
+            if (empty($customerType) || ($customerType['customer_type'] !== 'KC1' && $customerType['customer_type'] !== 'KC2')) {
+                $customerType['customer_type'] = 'NKC';
             }
 
-            $pendingIndents[$key]['CUSTOMER_TYPE'] =
-                $customerType['CUSTOMER_TYPE'] ?? 'NKC';
+            $pendingIndents[$key]['customer_type'] =
+                $customerType['customer_type'] ?? 'NKC';
 
             $customerPinCode = $this->ppCustomerMaster
-                ->select('PIN_CODE')
-                ->where('CUSTOMER_CODE', $indent['ship_to_code'])
+                ->select('postal_code')
+                ->where('cust_no', $indent['ship_to_code'])
                 ->first();
 
-            $pendingIndents[$key]['CUSTOMER_PIN_CODE'] = $customerPinCode['PIN_CODE'] ?? null;
+            $pendingIndents[$key]['CUSTOMER_PIN_CODE'] = $customerPinCode['postal_code'] ?? null;
 
 
             foreach ($orderDetails as $odKey => $od) {
@@ -191,12 +191,12 @@ class AllocationAndCommitmentController extends BaseController
 
                     // Fetch machine related details
                     $machine = $this->machineModel
-                        ->select('FINISH_LOSS_PERCENT, PIN_CODE')
+                        ->select('FINISH_LOSS_PERCENT, postal_code')
                         ->where('SAP_PLANT', $pendingIndents[$key]['order_details'][$odKey]['plant'])
                         ->first();
 
                     $pendingIndents[$key]['order_details'][$odKey]['finish_loss_percent'] = $machine['FINISH_LOSS_PERCENT'];
-                    $pendingIndents[$key]['order_details'][$odKey]['machine_pincode'] = $machine['PIN_CODE'];
+                    $pendingIndents[$key]['order_details'][$odKey]['machine_pincode'] = $machine['postal_code'];
 
                     // Fetch Transit data
                     $transit = $this->transitMaster
@@ -259,7 +259,7 @@ class AllocationAndCommitmentController extends BaseController
                         'DOOR_STEP_DEL_DATE' => $doorStepDelDate,
                         'PACKAGING_TIME' => $packagingDays,
                         'TRANSIT_TIME' => $transitDays,
-                        'CUSTOMER_TYPE' => $pendingIndents[$key]['CUSTOMER_TYPE'],
+                        'customer_type' => $pendingIndents[$key]['customer_type'],
                         'CALENDAR_TYPE' => 'S',
                         'PO_NO' => '',
                         'PO_LINE_ITEM' => '',
@@ -271,7 +271,7 @@ class AllocationAndCommitmentController extends BaseController
                     // Query Production Planning
                     $currentDateTime = date('Y-m-d H:i:s');
 
-                    $customerTypeBalanceQtyField = $pendingIndents[$key]['CUSTOMER_TYPE'] . "_BALANCE_QTY_MT";
+                    $customerTypeBalanceQtyField = $pendingIndents[$key]['customer_type'] . "_BALANCE_QTY_MT";
 
                     $baseQuery = $this->planningProductionModel
                         ->where('FROM_DATE_TIME >', $currentDateTime)
@@ -300,13 +300,13 @@ class AllocationAndCommitmentController extends BaseController
                         }
 
                         $machine = $this->machineModel
-                            ->select('FINISH_LOSS_PERCENT, TYPE, PIN_CODE')
+                            ->select('FINISH_LOSS_PERCENT, TYPE, postal_code')
                             ->where('PP_ID', $plan['MACHINE'])
                             ->first();
 
                         if (!empty($machine)) {
                             $plan['MACHINE_TYPE'] = $machine['TYPE'] ?? null;
-                            $plan['MACHINE_PINCODE'] = $machine['PIN_CODE'] ?? null;
+                            $plan['MACHINE_PINCODE'] = $machine['postal_code'] ?? null;
 
                             // Apply finish loss only for OWN machines
                             if (($machine['TYPE'] ?? null) === 'OWN') {
@@ -567,7 +567,7 @@ class AllocationAndCommitmentController extends BaseController
                             $allocationRecord['calendar_type'] = "T";
 
                             // Update Production Planning Master
-                            $customer_type = $pendingIndents[$key]['CUSTOMER_TYPE'];
+                            $customer_type = $pendingIndents[$key]['customer_type'];
                             $actual_qty = $pendingIndents[$key]['order_details'][$odKey]['quantity'];
 
                             $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = $actual_qty;
@@ -650,7 +650,7 @@ class AllocationAndCommitmentController extends BaseController
                             $allocationRecord['calendar_type'] = "M";
 
                             // Update Production Planning Master
-                            $customer_type = $pendingIndents[$key]['CUSTOMER_TYPE'];
+                            $customer_type = $pendingIndents[$key]['customer_type'];
                             $actual_qty = $qtyWithFinishLossPercentage;
 
                             $pendingIndents[$key]['order_details'][$odKey]['alloted_qty'] = $actual_qty;
@@ -685,7 +685,7 @@ class AllocationAndCommitmentController extends BaseController
                             'DOOR_STEP_DEL_DATE' => $allocationRecord['door_step_delivery_date'],
                             'PACKAGING_TIME' => $packagingDays,
                             'TRANSIT_TIME' => $transitDays,
-                            'CUSTOMER_TYPE' => $pendingIndents[$key]['CUSTOMER_TYPE'],
+                            'customer_type' => $pendingIndents[$key]['customer_type'],
                             'CALENDAR_TYPE' => $allocationRecord['CALENDAR_TYPE'],
                             'PO_NO' => $allocationRecord['PO_NO'],
                             'PO_LINE_ITEM' => $allocationRecord['PO_LINE_ITEM'],

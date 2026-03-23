@@ -86,17 +86,55 @@
 
                 <div class="collapse navbar-collapse backgroundMenu">
                     <ul class="navbar-nav m-auto">
-                        <?= menu(session()->get('erp_user_id')) ?>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="<?php echo base_url() ?>">Dashboard </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="<?php echo base_url() ?>MasterManagement">Master </a>
+                        </li>
+                        <li class="nav-item dropdown">Planning &nbsp;<i class="fa fa-angle-double-down"></i>
+                            <ul class="dropdown-content">
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning">Upload</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">View</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/process-machine-breakdown">Downtime Calculation</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning">Planning Calendar Upload</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning-calendar">Calendar View</a>
+                        </li> -->
+                        <li class="nav-item dropdown">Indent &nbsp;<i class="fa fa-angle-double-down"></i>
+                            <ul class="dropdown-content">
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/allocation">Allocation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>IndentAllotmentView">Allotment View</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?php echo base_url() ?>production-planning/auto-allocation">UnUtilised Plan Transfer</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning/allocation">Indent Allocation</a>
+                        </li> -->
+                        <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning/dragDrop">Drag Drop</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning/planning-approval">Planning Approval</a>
+                        </li>
+
+                        <!-- <li class="nav-item ">
+                            <a class="nav-link" href="<?php echo base_url() ?>production-planning/planning-approval">Planning Approval</a>
+                        </li> -->
                     </ul>
                 </div>
 
                 <ul class="nav navbar-top-links ">
                     <li class="nav-item"><a href="<?= base_url('User/view/' . session()->get('erp_user_id')) ?>">
-                            <i class="fa fa-user" style="color:#A3243C; font-size:30px;"></i></a>
+                        <i class="fa fa-user" style="color:#A3243C; font-size:30px;"></i></a>
                     </li>
                     <li class="nav-item"><a href="<?php echo base_url() ?>Auth/logout">
-                            <i class="fa fa-sign-out" style="color:#A3243C; font-size:30px;"></i></a>
-                    </li>
+                        <i class="fa fa-sign-out" style="color:#A3243C; font-size:30px;"></i></a>
+                    </li>     
                 </ul>
             </nav>
         </div>

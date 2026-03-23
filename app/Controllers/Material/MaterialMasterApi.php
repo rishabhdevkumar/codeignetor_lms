@@ -40,6 +40,7 @@ class MaterialMasterApi extends ResourceController
                 'SAP_PLANT'              => $item['sapplant'],
                 'GRADE'                  => $item['grade'] ?? null,
                 'GSM'                    => $item['gsm'] ?? null,
+                'MATERIAL_TYPE'          => $item['materialtype'] ?? null,
                 'DELIVERY_PLANT_YN'      => $item['deliveryplant'],
                 'MACHINE_OUTPUT_KG_HR'   => $item['machineoutput'] ?? null,
                 'DESCRIPTION'            => $item['mrmaterialdesc'] ?? null,

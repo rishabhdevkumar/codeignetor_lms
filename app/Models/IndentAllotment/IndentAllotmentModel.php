@@ -48,8 +48,10 @@ class IndentAllotmentModel extends Model
         $builder = $this->db->table('pp_indent_allotment i');
         
         $builder->select('
-            i.*
+            i.*, p.FROM_DATE_TIME, p.TO_DATE_TIME
         ');
+        
+        $builder->join('pp_production_planning_master p','p.PP_ID = i.PLANNING_CAL_ID','left');
         if (!empty($whereCondition)) {
             $builder->where($whereCondition);
         }

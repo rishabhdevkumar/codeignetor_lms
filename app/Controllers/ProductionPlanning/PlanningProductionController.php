@@ -7,8 +7,8 @@ use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\ProductionPlanning\PpCalendarApprovalModel;
 use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
 use App\Models\IndentAllotment\IndentAllotmentModel;
-use App\Models\MasterModels\TransitMaster;
-use App\Models\Material_Model;
+use App\Models\Customer\CustomerTransitModel;
+use App\Models\Material\MaterialModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class PlanningProductionController extends BaseController
@@ -27,8 +27,8 @@ class PlanningProductionController extends BaseController
         $this->calendarApprovalModel = new PpCalendarApprovalModel();
         $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
         $this->indentAllotment = new IndentAllotmentModel();
-        $this->transitMaster = new TransitMaster();
-        $this->materialModel = new Material_Model();
+        $this->transitMaster = new CustomerTransitModel();
+        $this->materialModel = new MaterialModel();
     }
 
     /* -------------------------------------------------------------
@@ -209,6 +209,7 @@ class PlanningProductionController extends BaseController
             $prevGrade = null;
             $prevGsm = null;
             $prevMachineId = null;
+            $prevmaterialtype = null;
 
             // This will change as production progresses
             $startDateTime = clone $initialStartDateTime;
@@ -296,22 +297,56 @@ class PlanningProductionController extends BaseController
                 $machineOutputKgHr = $motherRoll['MACHINE_OUTPUT_KG_HR'];
                 $grade = $motherRoll['GRADE'];
                 $gsm = $motherRoll['GSM'];
+                $materialtype = $motherRoll['MATERIAL_TYPE'];
+
+                if (!$materialtype) {
+                    return redirect()->back()->with(
+                        'error',
+                        "Material type not maintained: $machineMaterialCode (Plant: $sapplant)"
+                    );
+                }
 
                 $gradeChanged = false;
                 $gsmChanged = false;
 
-                if ($prevMachineId === null) {
-                    // First row → compare grade/gsm
-                    $gradeChanged = ($grade !== $prevGrade);
-                    $gsmChanged = ($gsm !== $prevGsm);
-                } elseif ($prevMachineId !== $machinePPId) {
+                // if ($prevMachineId === null) {
+                //     // First row → compare grade/gsm
+                //     $gradeChanged = ($grade !== $prevGrade);
+                //     $gsmChanged = ($gsm !== $prevGsm);
+                // } elseif ($prevMachineId !== $machinePPId) {
 
-                    // Machine changed → reset clock
+                //     // Machine changed → reset clock
+                //     $startDateTime = clone $initialStartDateTime;
+                // } else {
+                //     // Same machine → compare grade/gsm
+                //     $gradeChanged = ($grade !== $prevGrade);
+                //     $gsmChanged = ($gsm !== $prevGsm);
+                // }
+
+
+                // Machine changed
+                if ($prevMachineId !== null && $prevMachineId !== $machinePPId) {
+
+                    // Reset clock
                     $startDateTime = clone $initialStartDateTime;
-                } else {
-                    // Same machine → compare grade/gsm
+                }
+                // Same machine OR first row
+                else {
+
                     $gradeChanged = ($grade !== $prevGrade);
+
                     $gsmChanged = ($gsm !== $prevGsm);
+
+                    // Special Material Rule
+                    if ($prevmaterialtype === 'KRAFT' && $materialtype === 'POSTER') {
+                        $gradeChanged = true;
+                        $gsmChanged = false;
+                    } else {
+                        if ($gradeChanged) {
+                            $gradeChanged = false;
+                            $gsmChanged = true;
+                        }
+                    }
                 }
 
                 // Additional time for machine changeover
@@ -428,6 +463,9 @@ class PlanningProductionController extends BaseController
         }
 
         $data['items'] = $this->model
+            ->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.DESCRIPTION')
+            ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT')
             ->where('FROM_DATE_TIME >=', date('Y-m-d 00:00:00'))
             ->where('UTILISED_QTY =', 0.00)
             ->orderBy('FROM_DATE_TIME', 'ASC')
@@ -446,11 +484,17 @@ class PlanningProductionController extends BaseController
     {
 
         $data['originalPlans'] = $this->model
+            ->select('pp_production_planning_master.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.DESCRIPTION')
+            ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_production_planning_master.MACHINE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_production_planning_master.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT')
             ->orderBy('MACHINE', 'ASC')
             ->orderBy('FROM_DATE_TIME', 'ASC')
             ->findAll();
 
         $data['pendingReorders'] = $this->calendarApprovalModel
+            ->select('pp_calendar_approval.*, pp_machine_master.MACHINE_TPM_ID, pp_mr_material_master.DESCRIPTION')
+            ->join('pp_machine_master', 'pp_machine_master.PP_ID = pp_calendar_approval.MACHINE')
+            ->join('pp_mr_material_master', 'pp_mr_material_master.MR_MATERIAL_CODE = pp_calendar_approval.SAP_MR_FG_CODE AND pp_mr_material_master.SAP_PLANT = pp_machine_master.SAP_PLANT')
             ->where('APPROVAL_STATUS', 'P') // Pending
             ->orderBy('MACHINE', 'ASC')
             ->orderBy('FROM_DATE_TIME', 'ASC')

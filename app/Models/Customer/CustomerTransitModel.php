@@ -8,7 +8,7 @@ class CustomerTransitModel extends Model
 {
     protected $table            = 'pp_transit_master';
     protected $primaryKey       = 'PP_ID';
-    // protected $useAutoIncrement = true;
+    protected $useAutoIncrement = true;
 
     protected $returnType       = 'array';
     // protected $useSoftDeletes   = false;

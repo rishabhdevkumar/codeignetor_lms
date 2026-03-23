@@ -7,7 +7,6 @@ use CodeIgniter\Controller;
 use App\Models\ProductionPlanning\PlanningProductionModel;
 use App\Models\ProductionPlanning\PpCalendarApprovalModel;
 use App\Models\ProductionPlanning\PpMachineAvailabilityModel;
-use App\Models\ProductionPlanning\PlanningProductionHistoryModel;
 use App\Models\Machine\MachineModel;
 use App\Models\Customer\CustomerTransitModel;
 use App\Models\Material\MaterialModel;
@@ -21,7 +20,6 @@ class MachineBreakdownController extends Controller
     protected $availabilityModel;
     protected $machineMasterModel;
     protected $indentAllotment;
-    protected $planningCalhistoryModel;
     protected $materialModel;
     protected $transitMaster;
     protected $indentModel;
@@ -35,7 +33,6 @@ class MachineBreakdownController extends Controller
         $this->availabilityModel = new PpMachineAvailabilityModel();
         $this->machineMasterModel = new MachineModel();
         $this->indentAllotment = new IndentAllotmentModel();
-        $this->planningCalhistoryModel = new PlanningProductionHistoryModel();
         $this->materialModel = new MaterialModel();
         $this->transitMaster = new CustomerTransitModel();
         $this->indentModel = new IndentModel();
@@ -103,37 +100,24 @@ class MachineBreakdownController extends Controller
                     $planFrom = new \DateTime($plan['FROM_DATE_TIME']);
                     $planTo = new \DateTime($plan['TO_DATE_TIME']);
 
-                     $oldPlanning = $this->planningModel
-                        ->where('PP_ID', $plan['PP_ID'])
-                        ->first();
-
-                    $oldPlanning['PLANNING_CAL_ID'] = $plan['PP_ID'];
-                    $oldPlanning['REMARKS'] = 'Downtime';
-                    $this->planningCalhistoryModel->insert($oldPlanning);
-
                     $durationSeconds = $planTo->getTimestamp() - $planFrom->getTimestamp();
 
                     // If plan starts before breakdown and overlaps
                     if ($planTo > $bdFrom && $planFrom < $bdTo) {
 
-                        $overlapStart = max($planFrom->getTimestamp(), $bdFrom->getTimestamp());
-                        $overlapEnd = min($planTo->getTimestamp(), $bdTo->getTimestamp());
+                        // Push end by breakdown duration
+                        $planTo->modify("+{$shiftSeconds} seconds");
 
-                        $shiftSeconds = $overlapEnd - $overlapStart;
-
-                        if ($shiftSeconds > 0) {
-                            $planTo->modify("+{$shiftSeconds} seconds");
-
-                            if ($planFrom >= $bdFrom) {
-                                $planFrom->modify("+{$shiftSeconds} seconds");
-                            }
+                        // If not yet started fully, shift start too
+                        if ($planFrom >= $bdFrom) {
+                            $planFrom->modify("+{$shiftSeconds} seconds");
                         }
-                    } elseif ($planFrom >= $bdTo) {
+                    }
+                    // Plans fully after breakdown
+                    elseif ($planFrom >= $bdFrom) {
 
-                        $bdDuration = $bdTo->getTimestamp() - $bdFrom->getTimestamp();
-
-                        $planFrom->modify("+{$bdDuration} seconds");
-                        $planTo->modify("+{$bdDuration} seconds");
+                        $planFrom->modify("+{$shiftSeconds} seconds");
+                        $planTo->modify("+{$shiftSeconds} seconds");
                     }
 
                     // Maintain continuity (important!)
@@ -228,8 +212,8 @@ class MachineBreakdownController extends Controller
 
         foreach ($allotments as $index => $allotment) {
 
-            $oldFrom = new \DateTime($allotment['FROM_DATE']);
-            $oldTo = new \DateTime($allotment['TO_DATE']);
+            $oldFrom = new \DateTime($allotment['OLD_FROM_DATE'] ?? $allotment['FROM_DATE']);
+            $oldTo = new \DateTime($allotment['OLD_TO_DATE'] ?? $allotment['TO_DATE']);
 
             $durationSeconds = $oldTo->getTimestamp() - $oldFrom->getTimestamp();
 
@@ -242,19 +226,42 @@ class MachineBreakdownController extends Controller
             $toDate = clone $fromDate;
             $toDate->modify("+{$durationSeconds} seconds");
 
-            $packagingDays = (int) ($allotment['PACKAGING_TIME'] ?? 0);
+            $indent = $this->indentModel
+                ->select('bill_to_code')
+                ->where('in_no', $allotment['INDENT_NO'])
+                ->first();
+
+            // $customerPincode = $this->ppCustomerMaster
+            //     ->select('PIN_CODE')
+            //     ->where('CUSTOMER_CODE', $indent['bill_to_code'])
+            //     ->first();
+
+
+
+            $material = $this->materialModel
+                ->select('PACKAGING_TIME')
+                ->where('FINISH_MATERIAL_CODE', $allotment['FINISH_MATERIAL_CODE'])
+                ->first();
+
+            $packagingDays = (int) ($material['PACKAGING_TIME'] ?? 0);
 
             $finishingDate = clone $toDate;
             if ($packagingDays > 0) {
                 $finishingDate->add(new \DateInterval("P{$packagingDays}D"));
             }
 
-            $transitDays = (int) ($allotment['TRANSIT_TIME'] ?? 0);
+            // $transit = $this->transitMaster
+            //     ->select('TRANSIT_TIME')
+            //     ->where('FROM_PINCODE', $newPlanning['MACHINE_PINCODE'] ?? null)
+            //     ->where('TO_PINCODE', $customerPincode ?? null)
+            //     ->first();
+
+            $transitHours = (int) ($allotment['TRANSIT_TIME'] ?? 0);
 
             $doorStepDate = clone $finishingDate;
 
-            if ($transitDays > 0) {
-                $doorStepDate->add(new \DateInterval("P{$transitDays}D"));
+            if ($transitHours > 0) {
+                $doorStepDate->add(new \DateInterval("P{$transitHours}D"));
             }
 
 
@@ -263,13 +270,6 @@ class MachineBreakdownController extends Controller
                 'TO_DATE' => $toDate->format('Y-m-d H:i:s'),
                 'FINISHING_DATE' => $finishingDate->format('Y-m-d H:i:s'),
                 'DOOR_STEP_DEL_DATE' => $doorStepDate->format('Y-m-d H:i:s'),
-
-                
-                'OLD_FROM_DATE' => $allotment['FROM_DATE'],
-                'OLD_TO_DATE' => $allotment['TO_DATE'],
-                'OLD_FINISHING_DATE' => $allotment['FINISHING_DATE'],
-                'OLD_DOOR_STEP_DEL_DATE' => $allotment['DOOR_STEP_DEL_DATE'],
-
                 'MODIFICATION_FLAG' => 1
             ]);
 
